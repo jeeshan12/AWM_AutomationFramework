@@ -1,0 +1,33 @@
+{
+  "web": {
+    "screenshot": {
+      "enabled": true,
+      "path": "./target/screenshots"
+    },
+    "browser": "chrome",
+    "isHeadless": false,
+    "browserOptions": {
+      "chrome": {
+        "options": ["--incognito", "--window-size=1200,800"],
+        "downloadOption": {
+          "isDownloadRequired": false,
+          "downloadOptions": ["download.default_directory=path/to/download/directory"]
+        }
+      },
+      "firefox": {
+        "options": [],
+        "downloadOption": {
+          "isDownloadRequired": false,
+          "downloadOption": ["browser.download.dir=path/to/download/directory", "browser.download.folderList=2", "browser.helperApps.neverAsk.saveToDisk=application/octet-stream"]
+        }
+      }
+    }
+  },
+  "mobile": {
+    "screenshot": {
+      "enabled": true,
+      "path": "./target/screenshots"
+    }
+  },
+  "api": { }
+}
