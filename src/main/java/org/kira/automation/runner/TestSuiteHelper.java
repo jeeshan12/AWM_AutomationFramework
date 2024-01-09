@@ -14,6 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
+import org.apache.commons.codec.binary.Base64;
 import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Api;
 import org.kira.automation.annotations.Chrome;
@@ -29,6 +32,7 @@ import org.kira.automation.report.ExtentTestManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.io.FileHandler;
+import org.testng.ITestResult;
 
 public class TestSuiteHelper {
 
@@ -109,32 +113,25 @@ public class TestSuiteHelper {
         );
     }
 
-     static void takeScreenShot(final MethodContextImpl context, final Configuration configuration ) {
-        Optional<String> screenShotPathOptional;
-        if (context.method.isAnnotationPresent (Web.class) && configuration.getWeb ()
-            .getScreenshotConfiguration ().enabled ()) {
-            screenShotPathOptional = Optional.ofNullable (configuration.getWeb ()
-                .getScreenshotConfiguration ().path ());
-        }
-       else if (context.method.isAnnotationPresent (Mobile.class) && configuration.getMobile ()
-            .getScreenshotConfiguration ()
-            .enabled ()) {
-            screenShotPathOptional = Optional.ofNullable (configuration.getMobile ()
-                .getScreenshotConfiguration ().path ());
-        } else {
-           return;
-        }
-        String screenShotPath = screenShotPathOptional.orElseGet(() -> DEFAULT_SCREENSHOTS_FOLDER);
-        File screenshotTarget = new File(screenShotPath, getMethodNameWithClassName(
-                context.method) + ".png");
-            File screenshot = ((TakesScreenshot) context.getWebDriver())
-                .getScreenshotAs(OutputType.FILE);
-        try {
-            FileHandler.copy (screenshot, screenshotTarget);
-        } catch (IOException e) {
-            throw new FrameworkGenericException ("File not found " + e.getMessage ());
+     static void takeScreenShot(MethodContextImpl context,  Configuration configuration ) {
+        if (!(context.method.isAnnotationPresent (Web.class) && configuration.getWeb ()
+            .getScreenshot ().isEnabled ()) ||
+            !(context.method.isAnnotationPresent (Mobile.class) && configuration.getMobile ()
+                .getScreenshot ()
+                .isEnabled ())
+        ) {
+            return;
         }
 
+
+         System.out.println ("I am in");
+
+
+         String screenshot = ((TakesScreenshot) context.getWebDriver())
+                .getScreenshotAs(OutputType.BASE64);
+         context.getTest ().fail(MediaEntityBuilder.createScreenCaptureFromBase64String (screenshot).build());
+         context.getTest ().log (Status.FAIL, String.format ( "Test %s failed", context.method.getName () ));
+         context.getTest ().addScreenCaptureFromBase64String (screenshot);
     }
 
     private static String getMethodNameWithClassName (final Method method) {
@@ -145,5 +142,16 @@ public class TestSuiteHelper {
         context.setExtentTest (
             ExtentTestManager.startTest (getMethodNameWithClassName(context.method), context.method.getName ())
         );
+    }
+
+    static void takeScreenShotAndLogOnFailure (MethodContextImpl context, Configuration configuration, ITestResult testResult) {
+        if (testResult.getStatus() == ITestResult.FAILURE && !context.method.isAnnotationPresent (Api.class)) {
+            takeScreenShot (context, configuration);
+        } else if (testResult.getStatus() == ITestResult.SUCCESS ){
+            context.getTest ().log (Status.PASS, String.format ("Test %s passed", context.method.getName ()));
+        } else {
+            context.getTest ().log (Status.SKIP, String.format ("Test %s Skipped", context.method.getName ()));
+        }
+
     }
 }

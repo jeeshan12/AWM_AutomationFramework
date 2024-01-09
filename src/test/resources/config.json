@@ -2,10 +2,10 @@
   "web": {
     "screenshot": {
       "enabled": true,
-      "path": "./target/screenshots"
+      "path": "target/spark/"
     },
     "browser": "chrome",
-    "isHeadless": false,
+    "isHeadless": true,
     "browserOptions": {
       "chrome": {
         "options": ["--incognito", "--window-size=1200,800"],

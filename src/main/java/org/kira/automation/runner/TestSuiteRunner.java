@@ -1,6 +1,5 @@
 package org.kira.automation.runner;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 
 import com.aventstack.extentreports.ExtentTest;
@@ -33,16 +32,12 @@ public class TestSuiteRunner {
     public void tearDown(ITestResult testResult)  {
 
         MethodContextImpl context = methodContextThreadLocal.get();
-
         if (context == null) {
             return;
         }
 
-        if (testResult.getStatus() == ITestResult.FAILURE && !context.method.isAnnotationPresent (Api.class)) {
-            TestSuiteHelper.takeScreenShot (context, configuration);
-        }
-
         if (!context.method.isAnnotationPresent (Api.class)) {
+            TestSuiteHelper.takeScreenShotAndLogOnFailure(context, configuration, testResult);
             context.getWebDriver().quit();
         }
         context.flushReport ();
@@ -53,7 +48,6 @@ public class TestSuiteRunner {
         MethodContextImpl context = methodContextThreadLocal.get();
         return  context.getWebDriver ();
     }
-
 
     protected ExtentTest getExtentTest() {
         MethodContextImpl context =  methodContextThreadLocal.get ();

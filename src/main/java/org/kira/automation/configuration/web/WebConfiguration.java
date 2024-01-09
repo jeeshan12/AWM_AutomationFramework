@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 public class WebConfiguration {
 
-    ScreenshotConfiguration screenshotConfiguration;
+    ScreenshotConfiguration screenshot;
     String                  browser;
     boolean                 isHeadless;
     BrowserOptionsConfig    browserOptions;
