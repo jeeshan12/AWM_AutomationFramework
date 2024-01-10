@@ -16,7 +16,6 @@ public class ExtentManager {
         if (extentReports == null) {
             synchronized (ExtentManager.class) {
                 if (extentReports == null) {
-//                    final File CONF = new File ("src/test/resources/spark.config.json");
                     extentReports = new ExtentReports();
                     ExtentSparkReporter sparkReporter = new ExtentSparkReporter("target/spark/spark.html");
                     sparkReporter.config().setReportName("Extent Report");

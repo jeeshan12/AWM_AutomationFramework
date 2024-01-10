@@ -1,4 +1,12 @@
 package org.kira.automation.configuration.web;
 
-public record ScreenshotConfiguration(boolean enabled, String path) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@AllArgsConstructor
+@ToString
+public class ScreenshotConfiguration {
+    private boolean enabled;
 }

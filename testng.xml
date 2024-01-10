@@ -6,6 +6,7 @@
     <test name="Tests" >
         <classes>
             <class name="org.kira.automation.TestBrowserWithRunner" />
+            <class name="org.kira.automation.TestScreenshot"></class>
         </classes>
     </test>
 </suite>

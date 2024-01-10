@@ -1,11 +1,10 @@
 {
   "web": {
     "screenshot": {
-      "enabled": true,
-      "path": "./target/screenshots"
+      "enabled": true
     },
     "browser": "chrome",
-    "isHeadless": false,
+    "isHeadless": true,
     "browserOptions": {
       "chrome": {
         "options": ["--incognito", "--window-size=1200,800"],
@@ -25,8 +24,7 @@
   },
   "mobile": {
     "screenshot": {
-      "enabled": true,
-      "path": "./target/screenshots"
+      "enabled": true
     }
   },
   "api": { }

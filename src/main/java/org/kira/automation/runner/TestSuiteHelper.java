@@ -13,7 +13,11 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiPredicate;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
+import org.apache.commons.codec.binary.Base64;
 import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Api;
 import org.kira.automation.annotations.Chrome;
@@ -29,10 +33,14 @@ import org.kira.automation.report.ExtentTestManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.io.FileHandler;
+import org.testng.ITestResult;
 
 public class TestSuiteHelper {
 
     private TestSuiteHelper(){}
+
+    private static final BiPredicate<Method, Boolean> SCREENSHOT_REQUIRED= (method, enabled) -> method.isAnnotationPresent (Web.class) && enabled ||
+        method.isAnnotationPresent (Mobile.class) && enabled;
 
     static void addWebDriver(MethodContextImpl context, final Configuration configuration) {
         Method method = context.method;
@@ -109,32 +117,26 @@ public class TestSuiteHelper {
         );
     }
 
-     static void takeScreenShot(final MethodContextImpl context, final Configuration configuration ) {
-        Optional<String> screenShotPathOptional;
-        if (context.method.isAnnotationPresent (Web.class) && configuration.getWeb ()
-            .getScreenshotConfiguration ().enabled ()) {
-            screenShotPathOptional = Optional.ofNullable (configuration.getWeb ()
-                .getScreenshotConfiguration ().path ());
+     static void takeScreenShot(MethodContextImpl context,  Configuration configuration ) {
+        if (!isScreenShotEnabled(context, configuration)
+        ) {
+            return;
         }
-       else if (context.method.isAnnotationPresent (Mobile.class) && configuration.getMobile ()
-            .getScreenshotConfiguration ()
-            .enabled ()) {
-            screenShotPathOptional = Optional.ofNullable (configuration.getMobile ()
-                .getScreenshotConfiguration ().path ());
-        } else {
-           return;
-        }
-        String screenShotPath = screenShotPathOptional.orElseGet(() -> DEFAULT_SCREENSHOTS_FOLDER);
-        File screenshotTarget = new File(screenShotPath, getMethodNameWithClassName(
-                context.method) + ".png");
-            File screenshot = ((TakesScreenshot) context.getWebDriver())
-                .getScreenshotAs(OutputType.FILE);
-        try {
-            FileHandler.copy (screenshot, screenshotTarget);
-        } catch (IOException e) {
-            throw new FrameworkGenericException ("File not found " + e.getMessage ());
-        }
+         String screenshot = ((TakesScreenshot) context.getWebDriver())
+                .getScreenshotAs(OutputType.BASE64);
+         context.getTest ().fail(MediaEntityBuilder.createScreenCaptureFromBase64String (screenshot).build());
+         context.getTest ().addScreenCaptureFromBase64String (screenshot);
+    }
 
+    private static boolean isScreenShotEnabled (final MethodContextImpl context, final Configuration configuration) {
+        if (SCREENSHOT_REQUIRED.test (context.method, configuration.getWeb ()
+            .getScreenshot ()
+            .isEnabled ()) && SCREENSHOT_REQUIRED.test (context.method, configuration.getMobile ()
+            .getScreenshot ()
+            .isEnabled ())) {
+            return true;
+        }
+        return false;
     }
 
     private static String getMethodNameWithClassName (final Method method) {
@@ -145,5 +147,17 @@ public class TestSuiteHelper {
         context.setExtentTest (
             ExtentTestManager.startTest (getMethodNameWithClassName(context.method), context.method.getName ())
         );
+    }
+
+    static void takeScreenShotAndLogOnFailure (MethodContextImpl context, Configuration configuration, ITestResult testResult) {
+        if (testResult.getStatus() == ITestResult.FAILURE && !context.method.isAnnotationPresent (Api.class)) {
+            takeScreenShot (context, configuration);
+            context.getTest ().log (Status.FAIL, String.format ( "Test %s failed", context.method.getName () ));
+        } else if (testResult.getStatus() == ITestResult.SUCCESS ){
+            context.getTest ().log (Status.PASS, String.format ("Test %s passed", context.method.getName ()));
+        } else {
+            context.getTest ().log (Status.SKIP, String.format ("Test %s Skipped", context.method.getName ()));
+        }
+
     }
 }
