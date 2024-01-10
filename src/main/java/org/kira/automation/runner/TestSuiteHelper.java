@@ -2,22 +2,16 @@ package org.kira.automation.runner;
 
 import static org.kira.automation.constants.FrameworkConstants.BROWSER;
 import static org.kira.automation.constants.FrameworkConstants.CHROME;
-import static org.kira.automation.constants.FrameworkConstants.DEFAULT_SCREENSHOTS_FOLDER;
 import static org.kira.automation.constants.FrameworkConstants.FIREFOX;
-import static org.kira.automation.constants.FrameworkConstants.MANDATE_ANNOTATIONS;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.BiPredicate;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
-import org.apache.commons.codec.binary.Base64;
 import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Api;
 import org.kira.automation.annotations.Chrome;
@@ -26,23 +20,31 @@ import org.kira.automation.annotations.Mobile;
 import org.kira.automation.annotations.Web;
 import org.kira.automation.annotations.iOS;
 import org.kira.automation.configuration.Configuration;
+import org.kira.automation.constants.FrameworkConstants;
 import org.kira.automation.exceptions.AnnotationMissingException;
-import org.kira.automation.exceptions.FrameworkGenericException;
 import org.kira.automation.factory.WebDriverFactorySupplier;
 import org.kira.automation.report.ExtentTestManager;
+import org.kira.automation.utils.FileUtils;
+import org.kira.automation.utils.JsonParserUtil;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.io.FileHandler;
 import org.testng.ITestResult;
 
 public class TestSuiteHelper {
-
     private TestSuiteHelper(){}
-
     private static final BiPredicate<Method, Boolean> SCREENSHOT_REQUIRED= (method, enabled) -> method.isAnnotationPresent (Web.class) && enabled ||
         method.isAnnotationPresent (Mobile.class) && enabled;
 
-    static void addWebDriver(MethodContextImpl context, final Configuration configuration) {
+    /**
+     * Method to return the framework configuration.
+     * @return {@link Configuration}
+     */
+     static Configuration getConfiguration() {
+         return JsonParserUtil.readJsonFile (FileUtils.readFileAsString (
+                 FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME
+             ), Configuration.class);
+     }
+    static void addWebDriver(MethodContextImpl context) {
         Method method = context.method;
         if (method.isAnnotationPresent (Api.class)) {
             context.setWebDriver (null);
@@ -56,12 +58,10 @@ public class TestSuiteHelper {
         }
 
         if (!method.isAnnotationPresent (Chrome.class) && !method.isAnnotationPresent (Firefox.class)) {
-            addDefaultWebDriver (context, configuration);
+            addDefaultWebDriver (context, getConfiguration());
             return;
         }
-        
-        setWebDriver(context, configuration);
-
+        setWebDriver(context, getConfiguration());
     }
 
     private static void setWebDriver (final MethodContextImpl context, final Configuration configuration) {
@@ -88,7 +88,7 @@ public class TestSuiteHelper {
             .map (annotation -> annotation.annotationType ()
                 .getName ())
             .toList ();
-        return Arrays.stream (MANDATE_ANNOTATIONS)
+        return Arrays.stream (FrameworkConstants.getMandateAnnotations())
             .anyMatch (annotationsNameList::contains);
     }
 
@@ -129,14 +129,8 @@ public class TestSuiteHelper {
     }
 
     private static boolean isScreenShotEnabled (final MethodContextImpl context, final Configuration configuration) {
-        if (SCREENSHOT_REQUIRED.test (context.method, configuration.getWeb ()
-            .getScreenshot ()
-            .isEnabled ()) && SCREENSHOT_REQUIRED.test (context.method, configuration.getMobile ()
-            .getScreenshot ()
-            .isEnabled ())) {
-            return true;
-        }
-        return false;
+        return SCREENSHOT_REQUIRED.test(context.method, configuration.getWeb().getScreenshot().isEnabled()) &&
+            SCREENSHOT_REQUIRED.test(context.method, configuration.getMobile().getScreenshot().isEnabled());
     }
 
     private static String getMethodNameWithClassName (final Method method) {
@@ -149,9 +143,9 @@ public class TestSuiteHelper {
         );
     }
 
-    static void takeScreenShotAndLogOnFailure (MethodContextImpl context, Configuration configuration, ITestResult testResult) {
+    static void takeScreenShotAndLogOnFailure (MethodContextImpl context, ITestResult testResult) {
         if (testResult.getStatus() == ITestResult.FAILURE && !context.method.isAnnotationPresent (Api.class)) {
-            takeScreenShot (context, configuration);
+            takeScreenShot (context, getConfiguration());
             context.getTest ().log (Status.FAIL, String.format ( "Test %s failed", context.method.getName () ));
         } else if (testResult.getStatus() == ITestResult.SUCCESS ){
             context.getTest ().log (Status.PASS, String.format ("Test %s passed", context.method.getName ()));

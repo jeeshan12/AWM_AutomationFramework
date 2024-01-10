@@ -7,6 +7,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
 public class ExtentTestManager {
+    private ExtentTestManager() {}
 
     static Map<Integer, ExtentTest> extentTestMap = new HashMap<> ();
     static ExtentReports            extent        = ExtentManager.getInstance ();

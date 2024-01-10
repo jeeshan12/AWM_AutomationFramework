@@ -7,31 +7,38 @@ import org.kira.automation.annotations.Api;
 import org.kira.automation.annotations.Chrome;
 import org.kira.automation.annotations.Firefox;
 import org.kira.automation.annotations.Web;
+import org.kira.automation.runner.TestSuiteHelper;
 import org.kira.automation.runner.TestSuiteRunner;
 import org.testng.annotations.Test;
 
 public class TestBrowserWithRunner extends TestSuiteRunner {
 
-    @Test @Web @Firefox
+    @Test
+    @Web
+    @Firefox
     public void testFirefoxBrowser() {
         getExtentTest().log (Status.INFO, "Test Firefox Browser");
         getDriver ().navigate ().to ("https://google.com/");
     }
 
-    @Test @Chrome @Web
+    @Test
+    @Chrome
+    @Web
     public void testChromeBrowser() {
         getExtentTest().log (Status.INFO, "Test Chrome Browser");
         getDriver ().navigate ().to ("https://google.com/");
     }
 
 
-    @Test @Web
+    @Test
+    @Web
     public void testDefaultBrowserFromConfig() {
         getExtentTest().log (Status.INFO, "Logging default browser from config");
         getDriver ().navigate ().to ("https://google.com/");
     }
 
-    @Test @Api
+    @Test
+    @Api
     public void testAPIAnnotation() {
         getExtentTest().log (Status.INFO, "Test API annotation");
         System.out.println ("Api tests");;

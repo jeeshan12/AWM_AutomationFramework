@@ -4,6 +4,7 @@ import org.kira.automation.configuration.Configuration;
 import org.kira.automation.constants.FrameworkConstants;
 import org.kira.automation.utils.FileUtils;
 import org.kira.automation.utils.JsonParserUtil;
+import org.testng.annotations.Test;
 
 /**
  * Unit test for simple App.
@@ -11,7 +12,8 @@ import org.kira.automation.utils.JsonParserUtil;
 
 public class AppTest {
 
-    public static void main (String[] args) {
+    @Test
+    public  void testConfiguration () {
         Configuration webConfiguration =     JsonParserUtil.readJsonFile (FileUtils.readFileAsString (FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME),
             Configuration.class);
         System.out.println (webConfiguration.getWeb ().getBrowser ());

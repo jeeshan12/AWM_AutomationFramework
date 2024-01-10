@@ -27,5 +27,8 @@
       "enabled": true
     }
   },
-  "api": { }
+  "api": { },
+  "report": {
+    "path": "target/spark/spark.html"
+  }
 }

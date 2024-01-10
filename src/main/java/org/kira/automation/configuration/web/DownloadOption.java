@@ -10,7 +10,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 public class DownloadOption {
-
     private boolean      isDownloadRequired;
     private List<String> downloadOptions;
 }
