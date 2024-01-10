@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiPredicate;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
@@ -37,6 +38,9 @@ import org.testng.ITestResult;
 public class TestSuiteHelper {
 
     private TestSuiteHelper(){}
+
+    private static final BiPredicate<Method, Boolean> SCREENSHOT_REQUIRED= (method, enabled) -> method.isAnnotationPresent (Web.class) && enabled ||
+        method.isAnnotationPresent (Mobile.class) && enabled;
 
     static void addWebDriver(MethodContextImpl context, final Configuration configuration) {
         Method method = context.method;
@@ -114,24 +118,25 @@ public class TestSuiteHelper {
     }
 
      static void takeScreenShot(MethodContextImpl context,  Configuration configuration ) {
-        if (!(context.method.isAnnotationPresent (Web.class) && configuration.getWeb ()
-            .getScreenshot ().isEnabled ()) ||
-            !(context.method.isAnnotationPresent (Mobile.class) && configuration.getMobile ()
-                .getScreenshot ()
-                .isEnabled ())
+        if (!isScreenShotEnabled(context, configuration)
         ) {
             return;
         }
-
-
-         System.out.println ("I am in");
-
-
          String screenshot = ((TakesScreenshot) context.getWebDriver())
                 .getScreenshotAs(OutputType.BASE64);
          context.getTest ().fail(MediaEntityBuilder.createScreenCaptureFromBase64String (screenshot).build());
-         context.getTest ().log (Status.FAIL, String.format ( "Test %s failed", context.method.getName () ));
          context.getTest ().addScreenCaptureFromBase64String (screenshot);
+    }
+
+    private static boolean isScreenShotEnabled (final MethodContextImpl context, final Configuration configuration) {
+        if (SCREENSHOT_REQUIRED.test (context.method, configuration.getWeb ()
+            .getScreenshot ()
+            .isEnabled ()) && SCREENSHOT_REQUIRED.test (context.method, configuration.getMobile ()
+            .getScreenshot ()
+            .isEnabled ())) {
+            return true;
+        }
+        return false;
     }
 
     private static String getMethodNameWithClassName (final Method method) {
@@ -147,6 +152,7 @@ public class TestSuiteHelper {
     static void takeScreenShotAndLogOnFailure (MethodContextImpl context, Configuration configuration, ITestResult testResult) {
         if (testResult.getStatus() == ITestResult.FAILURE && !context.method.isAnnotationPresent (Api.class)) {
             takeScreenShot (context, configuration);
+            context.getTest ().log (Status.FAIL, String.format ( "Test %s failed", context.method.getName () ));
         } else if (testResult.getStatus() == ITestResult.SUCCESS ){
             context.getTest ().log (Status.PASS, String.format ("Test %s passed", context.method.getName ()));
         } else {

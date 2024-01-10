@@ -1,8 +1,7 @@
 {
   "web": {
     "screenshot": {
-      "enabled": true,
-      "path": "target/spark/"
+      "enabled": true
     },
     "browser": "chrome",
     "isHeadless": true,
@@ -25,8 +24,7 @@
   },
   "mobile": {
     "screenshot": {
-      "enabled": true,
-      "path": "./target/screenshots"
+      "enabled": true
     }
   },
   "api": { }
