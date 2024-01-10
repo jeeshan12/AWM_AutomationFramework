@@ -2,9 +2,10 @@ package org.kira.automation.constants;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.apache.commons.lang3.SystemUtils;
-
+import org.kira.automation.runner.TestSuiteHelper;
 
 public final class FrameworkConstants {
     private FrameworkConstants() {}
@@ -13,7 +14,7 @@ public final class FrameworkConstants {
 
     public static final String MAIN_RESOURCE_FOLDER = USER_DIRECTORY + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
     public static final String CONFIG_FILE_NAME = "config.json";
-    public static final String DEFAULT_REPORTS_FOLDER = "target/spark/spark.html";
+    public static final String DEFAULT_REPORTS_FOLDER = Optional.ofNullable (TestSuiteHelper.getConfiguration ().getReport ().getPath ()).orElse ("target/spark/spark.html");
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
     public static final String BROWSER = "browser";
@@ -21,7 +22,6 @@ public final class FrameworkConstants {
     public static String[] getMandateAnnotations() {
         return Arrays.copyOf(MANDATE_ANNOTATIONS, MANDATE_ANNOTATIONS.length);
     }
-
-    public static final String REPORTS_CONFIG_JSON = "src/test/resources/spark.config.json";
+    public static final String REPORTS_CONFIG_JSON = Optional.ofNullable (TestSuiteHelper.getConfiguration ().getReport ().getConfigPath ()).orElse ("src/test/resources/spark.config.json");
 
 }

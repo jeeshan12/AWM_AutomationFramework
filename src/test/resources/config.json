@@ -29,6 +29,7 @@
   },
   "api": { },
   "report": {
-    "path": "target/spark/spark.html"
+    "path": "target/spark/spark.html",
+    "configPath": "src/test/resources/spark.config.json"
   }
 }

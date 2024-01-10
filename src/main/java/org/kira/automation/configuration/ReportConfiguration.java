@@ -9,4 +9,5 @@ import lombok.ToString;
 @Getter
 public class ReportConfiguration {
     private String path;
+    private String configPath;
 }

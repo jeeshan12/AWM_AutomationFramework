@@ -25,8 +25,9 @@ public class TestSuiteRunner {
         if (context == null) {
             return;
         }
+        TestSuiteHelper.takeScreenShotAndLogOnFailure(context, testResult);
+
         if (!context.method.isAnnotationPresent (Api.class)) {
-            TestSuiteHelper.takeScreenShotAndLogOnFailure(context, testResult);
             context.getWebDriver().quit();
         }
         context.flushReport ();

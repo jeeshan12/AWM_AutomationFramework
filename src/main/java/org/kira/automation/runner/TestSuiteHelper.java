@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.function.BiPredicate;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Api;
 import org.kira.automation.annotations.Chrome;
@@ -39,7 +40,7 @@ public class TestSuiteHelper {
      * Method to return the framework configuration.
      * @return {@link Configuration}
      */
-     static Configuration getConfiguration() {
+     public static Configuration getConfiguration() {
          return JsonParserUtil.readJsonFile (FileUtils.readFileAsString (
                  FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME
              ), Configuration.class);
@@ -144,13 +145,18 @@ public class TestSuiteHelper {
     }
 
     static void takeScreenShotAndLogOnFailure (MethodContextImpl context, ITestResult testResult) {
-        if (testResult.getStatus() == ITestResult.FAILURE && !context.method.isAnnotationPresent (Api.class)) {
-            takeScreenShot (context, getConfiguration());
-            context.getTest ().log (Status.FAIL, String.format ( "Test %s failed", context.method.getName () ));
+        if (testResult.getStatus() == ITestResult.FAILURE) {
+            if (!context.method.isAnnotationPresent (Api.class)) {
+                takeScreenShot (context, getConfiguration());
+            }
+            context.getTest ().fail (
+                MarkupHelper.createLabel(String.format ( "Test %s failed", context.method.getName () ), ExtentColor.RED));
         } else if (testResult.getStatus() == ITestResult.SUCCESS ){
-            context.getTest ().log (Status.PASS, String.format ("Test %s passed", context.method.getName ()));
+            context.getTest ().pass (
+                MarkupHelper.createLabel(String.format ( "Test %s passed", context.method.getName () ), ExtentColor.GREEN));
         } else {
-            context.getTest ().log (Status.SKIP, String.format ("Test %s Skipped", context.method.getName ()));
+            context.getTest ().skip (
+                MarkupHelper.createLabel(String.format ( "Test %s skipped", context.method.getName () ), ExtentColor.AMBER));
         }
 
     }
