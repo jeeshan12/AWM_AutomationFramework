@@ -27,5 +27,9 @@
       "enabled": true
     }
   },
-  "api": { }
+  "api": { },
+  "report": {
+    "path": "target/spark/spark.html",
+    "configPath": "src/test/resources/spark.config.json"
+  }
 }

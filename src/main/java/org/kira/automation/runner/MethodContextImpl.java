@@ -3,7 +3,6 @@ package org.kira.automation.runner;
 import java.lang.reflect.Method;
 
 import com.aventstack.extentreports.ExtentTest;
-import org.kira.automation.report.ExtentTestManager;
 import org.openqa.selenium.WebDriver;
 
 public class MethodContextImpl implements MethodContext{

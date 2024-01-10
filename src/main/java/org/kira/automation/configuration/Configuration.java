@@ -19,4 +19,6 @@ public class Configuration {
     private MobileConfiguration mobile;
 
     private ApiConfiguration api;
+
+    private ReportConfiguration report;
 }

@@ -1,6 +1,5 @@
 package org.kira.automation.factory;
 
-import java.util.Map;
 
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.FirefoxOptionsConfig;

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.ChromeOptionsConfig;
+import org.kira.automation.runner.TestSuiteHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -21,11 +22,9 @@ public class ChromeBrowserDriver implements IBrowserDriver{
     @Override
     public ChromeOptions getBrowserOptions (final Configuration configuration) {
         ChromeOptions chromeOptions = new ChromeOptions ();
-
         ChromeOptionsConfig chromeOptionsConfig = configuration.getWeb ()
             .getBrowserOptions ()
             .getChrome ();
-
         chromeOptionsConfig
             .getOptions ()
              .forEach (chromeOptions::addArguments);

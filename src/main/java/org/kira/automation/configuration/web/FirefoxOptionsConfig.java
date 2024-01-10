@@ -12,5 +12,4 @@ import lombok.ToString;
 public class FirefoxOptionsConfig {
     private List<String>   options;
     private DownloadOption downloadOption;
-
 }
