@@ -10,5 +10,6 @@ import lombok.ToString;
 public class ApiConfiguration {
     private String baseurl;
     private ApiLoggingConfiguration log;
+    private int responseTimeOut;
 
 }

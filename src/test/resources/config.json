@@ -32,7 +32,8 @@
     "log": {
       "request": true,
       "response": true
-    }
+    },
+    "responseTimeOut": 3000
   },
   "report": {
     "path": "target/spark/spark.html",

@@ -13,6 +13,10 @@ import java.util.function.BiPredicate;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.http.ContentType;
 import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Api;
 import org.kira.automation.annotations.Chrome;
@@ -21,6 +25,7 @@ import org.kira.automation.annotations.Mobile;
 import org.kira.automation.annotations.Web;
 import org.kira.automation.annotations.iOS;
 import org.kira.automation.configuration.Configuration;
+import org.kira.automation.configuration.api.ApiConfiguration;
 import org.kira.automation.constants.FrameworkConstants;
 import org.kira.automation.exceptions.AnnotationMissingException;
 import org.kira.automation.factory.WebDriverFactorySupplier;
@@ -163,6 +168,24 @@ public class TestSuiteHelper {
     static void setUpApiConfig (final MethodContextImpl context) {
          Method method = context.method;
          if (!method.isAnnotationPresent (Api.class)) return;
+         RequestSpecBuilder requestSpecBuilder = getRequestSpecBuilder(getConfiguration ().getApi ());
+         context.setRequestSpecBuilder (requestSpecBuilder);
+         context.setRequestSpecification (requestSpecBuilder.build ());
+         ResponseSpecBuilder responseSpecBuilder = getResponseSpecBuilder(getConfiguration ().getApi ());
+         context.setResponseSpecBuilder (responseSpecBuilder);
+         context.setResponseSpecification (responseSpecBuilder.build ());
+    }
 
+    private static RequestSpecBuilder getRequestSpecBuilder (final ApiConfiguration apiConfiguration) {
+        RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder ();
+        return requestSpecBuilder
+            .setBaseUri (apiConfiguration.getBaseurl ())
+            .setContentType (ContentType.JSON)
+            .log (LogDetail.BODY);
+    }
+
+    private static ResponseSpecBuilder getResponseSpecBuilder (final ApiConfiguration apiConfiguration) {
+        ResponseSpecBuilder responseSpecBuilder = new ResponseSpecBuilder ();
+        return responseSpecBuilder.log (LogDetail.ALL);
     }
 }

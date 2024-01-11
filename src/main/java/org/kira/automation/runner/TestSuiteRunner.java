@@ -7,6 +7,10 @@ import static org.kira.automation.runner.TestSuiteHelper.setUpApiConfig;
 import java.lang.reflect.Method;
 
 import com.aventstack.extentreports.ExtentTest;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.kira.automation.annotations.Api;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
@@ -47,6 +51,26 @@ public class TestSuiteRunner {
     protected ExtentTest getExtentTest() {
         MethodContextImpl context =  methodContextThreadLocal.get ();
         return context.getTest ();
+    }
+
+    protected RequestSpecBuilder getRequestSpecBuilder() {
+        MethodContextImpl context =  methodContextThreadLocal.get ();
+        return context.getRequestSpecBuilder ();
+    }
+
+    protected ResponseSpecBuilder getResponseSpecBuilder() {
+        MethodContextImpl context =  methodContextThreadLocal.get ();
+        return context.getResponseSpecBuilder ();
+    }
+
+    protected RequestSpecification getRequestSpecification() {
+        MethodContextImpl context =  methodContextThreadLocal.get ();
+        return context.getRequestSpecification ();
+    }
+
+    protected ResponseSpecification getResponseSpecification() {
+        MethodContextImpl context =  methodContextThreadLocal.get ();
+        return context.getResponseSpecification ();
     }
 
 }
