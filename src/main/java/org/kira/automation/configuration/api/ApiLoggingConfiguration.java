@@ -7,8 +7,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @Getter
-public class ApiConfiguration {
-    private String baseurl;
-    private ApiLoggingConfiguration log;
-
+public class ApiLoggingConfiguration {
+    private boolean request;
+    private boolean response;
 }

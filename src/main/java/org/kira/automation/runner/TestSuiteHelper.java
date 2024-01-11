@@ -158,6 +158,11 @@ public class TestSuiteHelper {
             context.getTest ().skip (
                 MarkupHelper.createLabel(String.format ( "Test %s skipped", context.method.getName () ), ExtentColor.AMBER));
         }
+    }
+
+    static void setUpApiConfig (final MethodContextImpl context) {
+         Method method = context.method;
+         if (!method.isAnnotationPresent (Api.class)) return;
 
     }
 }

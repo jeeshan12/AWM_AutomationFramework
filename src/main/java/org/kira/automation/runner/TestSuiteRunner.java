@@ -1,5 +1,9 @@
 package org.kira.automation.runner;
 
+import static org.kira.automation.runner.TestSuiteHelper.addTestReporting;
+import static org.kira.automation.runner.TestSuiteHelper.addWebDriver;
+import static org.kira.automation.runner.TestSuiteHelper.setUpApiConfig;
+
 import java.lang.reflect.Method;
 
 import com.aventstack.extentreports.ExtentTest;
@@ -14,10 +18,12 @@ public class TestSuiteRunner {
     @BeforeMethod
     public void setUp(Method method) {
         MethodContextImpl methodContext = new MethodContextImpl(method);
-        TestSuiteHelper.addWebDriver(methodContext);
-        TestSuiteHelper.addTestReporting (methodContext);
+        setUpApiConfig(methodContext);
+        addWebDriver(methodContext);
+        addTestReporting (methodContext);
         methodContextThreadLocal.set(methodContext);
     }
+
 
     @AfterMethod (alwaysRun = true)
     public void tearDown(ITestResult testResult)  {
@@ -26,7 +32,6 @@ public class TestSuiteRunner {
             return;
         }
         TestSuiteHelper.takeScreenShotAndLogOnFailure(context, testResult);
-
         if (!context.method.isAnnotationPresent (Api.class)) {
             context.getWebDriver().quit();
         }

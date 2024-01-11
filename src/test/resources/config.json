@@ -27,7 +27,13 @@
       "enabled": true
     }
   },
-  "api": { },
+  "api": {
+    "baseurl": "https://reqres.in",
+    "log": {
+      "request": true,
+      "response": true
+    }
+  },
   "report": {
     "path": "target/spark/spark.html",
     "configPath": "src/test/resources/spark.config.json"
