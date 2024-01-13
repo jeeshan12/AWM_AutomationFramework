@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.ChromeOptionsConfig;
-import org.kira.automation.runner.TestSuiteHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;

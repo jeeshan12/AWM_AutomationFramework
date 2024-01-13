@@ -12,4 +12,6 @@ public class ApiConfiguration {
     private ApiLoggingConfiguration log;
     private int responseTimeOut;
 
+    private String basePath;
+
 }

@@ -33,7 +33,8 @@
       "request": true,
       "response": true
     },
-    "responseTimeOut": 3000
+    "responseTimeOut": 3000,
+    "basePath": "/api"
   },
   "report": {
     "path": "target/spark/spark.html",
