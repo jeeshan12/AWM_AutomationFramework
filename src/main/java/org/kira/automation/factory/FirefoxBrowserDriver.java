@@ -1,5 +1,8 @@
 package org.kira.automation.factory;
 
+import static org.kira.automation.factory.FirefoxOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
+import static org.kira.automation.factory.FirefoxOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
+import static org.kira.automation.factory.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
 
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.FirefoxOptionsConfig;
@@ -23,23 +26,14 @@ public class FirefoxBrowserDriver implements IBrowserDriver {
             .getBrowserOptions ()
             .getFirefox ();
 
-        firefoxOptionsConfig
-            .getOptions ()
-            .forEach (firefoxOptions::addArguments);
+        FIREFOX_HEADLESS_DECORATOR.accept (configuration.getWeb ().isHeadless (), firefoxOptions);
+
+        ADD_ARGUMENTS_DECORATOR.accept ( firefoxOptionsConfig.getOptions (), firefoxOptions);
 
         if (firefoxOptionsConfig.getDownloadOption ().isDownloadRequired ()) {
             FirefoxProfile firefoxProfile = new FirefoxProfile();
-            firefoxOptionsConfig
-                .getDownloadOption ()
-                .getDownloadOptions ()
-                .stream()
-                .map (options -> options.split ("="))
-                .forEach (option -> firefoxProfile.setPreference (option[0], option[1]));
+            DOWNLOAD_FILE_DECORATOR.accept ( firefoxOptionsConfig.getDownloadOption ().getDownloadOptions (), firefoxProfile);
             firefoxOptions.setProfile (firefoxProfile);
-        }
-
-        if (configuration.getWeb ().isHeadless ()) {
-            FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR.accept (firefoxOptions);
         }
 
         return firefoxOptions;

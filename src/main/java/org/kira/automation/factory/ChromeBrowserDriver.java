@@ -1,14 +1,14 @@
 package org.kira.automation.factory;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.ChromeOptionsConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
+import static org.kira.automation.factory.ChromeOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
+import static org.kira.automation.factory.ChromeOptionsDecorator.CHROME_HEADLESS_DECORATOR;
+import static org.kira.automation.factory.ChromeOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
 
 
 public class ChromeBrowserDriver implements IBrowserDriver{
@@ -24,24 +24,15 @@ public class ChromeBrowserDriver implements IBrowserDriver{
         ChromeOptionsConfig chromeOptionsConfig = configuration.getWeb ()
             .getBrowserOptions ()
             .getChrome ();
-        chromeOptionsConfig
-            .getOptions ()
-             .forEach (chromeOptions::addArguments);
 
-        if (configuration.getWeb ().isHeadless ()) {
-            ChromeOptionsDecorator.CHROME_HEADLESS_DECORATOR.accept (chromeOptions);
-        }
+        ADD_ARGUMENTS_DECORATOR.accept (chromeOptionsConfig.getOptions (), chromeOptions);
+
+        CHROME_HEADLESS_DECORATOR.accept (configuration.getWeb ().isHeadless (), chromeOptions);
 
         if (chromeOptionsConfig.getDownloadOption ().isDownloadRequired ()) {
-            Map<String, Object> chromePrefs = new HashMap<> ();
-            chromeOptionsConfig
-                .getDownloadOption ()
-                .getDownloadOptions ()
-                .stream()
-                .map (options -> options.split ("="))
-                .forEach (option -> chromePrefs.put (option[0], option[1]));
-            chromeOptions.setExperimentalOption("prefs", chromePrefs);
-
+            DOWNLOAD_FILE_DECORATOR.accept (
+                chromeOptionsConfig.getDownloadOption ().getDownloadOptions (), chromeOptions
+            );
         }
         return chromeOptions;
     }
