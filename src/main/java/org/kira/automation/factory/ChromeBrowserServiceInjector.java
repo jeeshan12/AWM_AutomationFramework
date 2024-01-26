@@ -1,7 +1,13 @@
 package org.kira.automation.factory;
 
-public class ChromeBrowserServiceInjector implements BrowserDriverServiceInjector{
-  @Override public BrowserConsumer getBrowserConsumer() {
-    return new BrowserConsumerImpl(new ChromeBrowserDriverServiceImpl());
+import com.google.inject.AbstractModule;
+
+public class ChromeBrowserServiceInjector extends AbstractModule {
+  @Override
+  protected void configure() {
+
+    bind(BrowserDriverService.class).to(ChromeBrowserDriverServiceImpl.class);
+
   }
+
 }
