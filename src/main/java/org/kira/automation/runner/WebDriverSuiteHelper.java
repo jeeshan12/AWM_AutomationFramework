@@ -1,22 +1,27 @@
 package org.kira.automation.runner;
 
-import static org.kira.automation.constants.FrameworkConstants.BROWSER;
-import static org.kira.automation.constants.FrameworkConstants.CHROME;
-import static org.kira.automation.constants.FrameworkConstants.FIREFOX;
-
 import java.lang.reflect.Method;
-
 import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Chrome;
 import org.kira.automation.annotations.Firefox;
 import org.kira.automation.annotations.iOS;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.exceptions.AnnotationMissingException;
-import org.kira.automation.factory.WebDriverFactorySupplier;
+import org.kira.automation.factory.BrowserConsumer;
+import org.kira.automation.factory.BrowserDriverServiceInjector;
+import org.kira.automation.factory.ChromeBrowserServiceInjector;
+import org.kira.automation.factory.FirefoxBrowserServiceInjector;
+
+import static org.kira.automation.constants.FrameworkConstants.BROWSER;
+import static org.kira.automation.constants.FrameworkConstants.CHROME;
+import static org.kira.automation.constants.FrameworkConstants.FIREFOX;
 
 public class WebDriverSuiteHelper {
 
     private WebDriverSuiteHelper() {}
+
+
+    private static  BrowserDriverServiceInjector browserDriverServiceInjector = null;
 
      static void setWebDriver (final MethodContextImpl context, final Configuration configuration) {
         Method method = context.method;
@@ -40,9 +45,11 @@ public class WebDriverSuiteHelper {
 
 
      static void addDefaultWebDriver (final MethodContextImpl context, final Configuration configuration) {
-        context.setWebDriver (
-            WebDriverFactorySupplier.getWebDriver (configuration.getWeb ().getBrowser ()).getWebDriver (configuration)
-        );
+       browserDriverServiceInjector = new FirefoxBrowserServiceInjector();
+       BrowserConsumer browserConsumer = browserDriverServiceInjector.getBrowserConsumer();
+       context.setWebDriver (
+           browserConsumer.getWebDriver(configuration)
+       );
     }
 
      static void addiOSDriver (final MethodContextImpl context, final Configuration configuration) {
@@ -54,13 +61,17 @@ public class WebDriverSuiteHelper {
     }
 
      static void addFirefoxDriver (final MethodContextImpl context, final Configuration configuration) {
-        context.setWebDriver (
-            WebDriverFactorySupplier.getWebDriver (FIREFOX).getWebDriver (configuration)
+       browserDriverServiceInjector = new FirefoxBrowserServiceInjector();
+       BrowserConsumer browserConsumer = browserDriverServiceInjector.getBrowserConsumer();
+       context.setWebDriver (
+           browserConsumer.getWebDriver(configuration)
         );
     }
      static void addChromeDriver (final MethodContextImpl context, final Configuration configuration) {
+       browserDriverServiceInjector = new ChromeBrowserServiceInjector();
+       BrowserConsumer browserConsumer = browserDriverServiceInjector.getBrowserConsumer();
         context.setWebDriver (
-            WebDriverFactorySupplier.getWebDriver (CHROME).getWebDriver (configuration)
+            browserConsumer.getWebDriver(configuration)
         );
     }
 }
