@@ -1,5 +1,6 @@
 package org.kira.automation.factory;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +16,9 @@ public final class ChromeOptionsDecorator {
     }
 
     static final BiConsumer<Boolean, ChromeOptions> CHROME_HEADLESS_DECORATOR = (isHeadless, chromeOptions) -> {
-        if (isHeadless) {
-            chromeOptions.addArguments ("--headless=new");
-            chromeOptions.addArguments ("--no-sandbox");
-            chromeOptions.addArguments ("--disable-gpu");
-            chromeOptions.addArguments ("--disable-dev-shm-usage");
+        if (Boolean.TRUE.equals(isHeadless)) {
+            String[] headlessOptions = new String[] {"--headless=new", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage"};
+            Arrays.stream(headlessOptions).forEach(chromeOptions::addArguments);
         }
     };
 

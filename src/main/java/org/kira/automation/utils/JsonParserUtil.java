@@ -3,7 +3,6 @@ package org.kira.automation.utils;
 
 import com.google.gson.Gson;
 import org.kira.automation.exceptions.FrameworkGenericException;
-import org.kira.automation.runner.TestSuiteHelper;
 
 public final class JsonParserUtil {
 
