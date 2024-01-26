@@ -1,9 +1,5 @@
 package org.kira.automation.runner;
 
-import static org.kira.automation.constants.FrameworkConstants.BROWSER;
-import static org.kira.automation.constants.FrameworkConstants.CHROME;
-import static org.kira.automation.constants.FrameworkConstants.FIREFOX;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -13,17 +9,14 @@ import java.util.function.BiPredicate;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Api;
 import org.kira.automation.annotations.Chrome;
 import org.kira.automation.annotations.Firefox;
 import org.kira.automation.annotations.Mobile;
 import org.kira.automation.annotations.Web;
-import org.kira.automation.annotations.iOS;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.constants.FrameworkConstants;
 import org.kira.automation.exceptions.AnnotationMissingException;
-import org.kira.automation.factory.WebDriverFactorySupplier;
 import org.kira.automation.report.ExtentTestManager;
 import org.kira.automation.utils.FileUtils;
 import org.kira.automation.utils.JsonParserUtil;
@@ -59,30 +52,19 @@ public class TestSuiteHelper {
         }
 
         if (!method.isAnnotationPresent (Chrome.class) && !method.isAnnotationPresent (Firefox.class)) {
-            addDefaultWebDriver (context, getConfiguration());
+            WebDriverSuiteHelper.addDefaultWebDriver (context, getConfiguration());
             return;
         }
-        setWebDriver(context, getConfiguration());
+        WebDriverSuiteHelper.setWebDriver(context, getConfiguration());
     }
 
-    private static void setWebDriver (final MethodContextImpl context, final Configuration configuration) {
+
+    static void setUpApiConfig (final MethodContextImpl context) {
         Method method = context.method;
-        if (method.isAnnotationPresent (Chrome.class)
-            || CHROME.equalsIgnoreCase (System.getenv (BROWSER))) {
-            addChromeDriver(context, configuration);
-        } else if (method.isAnnotationPresent (Firefox.class) ||
-            FIREFOX.equalsIgnoreCase (System.getenv (BROWSER))) {
-            addFirefoxDriver(context, configuration);
-        } else if (method.isAnnotationPresent (iOS.class) ){
-            addAndroidDriver(context, configuration);
-        } else if (method.isAnnotationPresent (Android.class)) {
-            addiOSDriver(context, configuration);
-        } else {
-            throw new AnnotationMissingException (
-                "Please provide valid annotations like  like @Chrome, @Firefox, @iOS and @Android to initialise the webdriver"
-            );
-        }
+        if (!method.isAnnotationPresent (Api.class)) return;
+        ApiSuiteHelper.setUpApiConfig (context, getConfiguration ());
     }
+
 
     private static boolean isRequiredAnnotationAvailable (final Annotation[] annotations) {
         List<String> annotationsNameList = Arrays.stream (annotations)
@@ -91,31 +73,6 @@ public class TestSuiteHelper {
             .toList ();
         return Arrays.stream (FrameworkConstants.getMandateAnnotations())
             .anyMatch (annotationsNameList::contains);
-    }
-
-    private static void addDefaultWebDriver (final MethodContextImpl context, final Configuration configuration) {
-        context.setWebDriver (
-            WebDriverFactorySupplier.getWebDriver (configuration.getWeb ().getBrowser ()).getWebDriver (configuration)
-        );
-    }
-
-    private static void addiOSDriver (final MethodContextImpl context, final Configuration configuration) {
-        // TODO document why this method is empty
-    }
-
-    private static void addAndroidDriver (final MethodContextImpl context, final Configuration configuration) {
-        // TODO document why this method is empty
-    }
-
-    private static void addFirefoxDriver (final MethodContextImpl context, final Configuration configuration) {
-        context.setWebDriver (
-            WebDriverFactorySupplier.getWebDriver (FIREFOX).getWebDriver (configuration)
-        );
-    }
-    private static void addChromeDriver (final MethodContextImpl context, final Configuration configuration) {
-        context.setWebDriver (
-            WebDriverFactorySupplier.getWebDriver (CHROME).getWebDriver (configuration)
-        );
     }
 
      static void takeScreenShot(MethodContextImpl context,  Configuration configuration ) {
@@ -158,6 +115,5 @@ public class TestSuiteHelper {
             context.getTest ().skip (
                 MarkupHelper.createLabel(String.format ( "Test %s skipped", context.method.getName () ), ExtentColor.AMBER));
         }
-
     }
 }

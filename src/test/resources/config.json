@@ -27,7 +27,15 @@
       "enabled": true
     }
   },
-  "api": { },
+  "api": {
+    "baseurl": "https://reqres.in",
+    "log": {
+      "request": true,
+      "response": true
+    },
+    "responseTimeOut": 3000,
+    "basePath": "/api"
+  },
   "report": {
     "path": "target/spark/spark.html",
     "configPath": "src/test/resources/spark.config.json"
