@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="automation-tests"
-       thread-count="3"
+       thread-count="4"
        parallel="methods">
     <test name="Tests" >
         <classes>

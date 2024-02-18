@@ -10,21 +10,20 @@ import static org.kira.automation.factory.ChromeOptionsDecorator.ADD_ARGUMENTS_D
 import static org.kira.automation.factory.ChromeOptionsDecorator.CHROME_HEADLESS_DECORATOR;
 import static org.kira.automation.factory.ChromeOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
 
+public class ChromeBrowserDriverServiceImpl implements BrowserDriverService {
 
-public class ChromeBrowserDriver implements IBrowserDriver{
     @Override
     public WebDriver getWebDriver (final Configuration configuration) {
        ChromeOptions chromeOptions =  getBrowserOptions(configuration);
        return new ChromeDriver (chromeOptions);
     }
 
-    @Override
-    public ChromeOptions getBrowserOptions (final Configuration configuration) {
+
+    private ChromeOptions getBrowserOptions (final Configuration configuration) {
         ChromeOptions chromeOptions = new ChromeOptions ();
         ChromeOptionsConfig chromeOptionsConfig = configuration.getWeb ()
             .getBrowserOptions ()
             .getChrome ();
-
         ADD_ARGUMENTS_DECORATOR.accept (chromeOptionsConfig.getOptions (), chromeOptions);
 
         CHROME_HEADLESS_DECORATOR.accept (configuration.getWeb ().isHeadless (), chromeOptions);
@@ -34,6 +33,7 @@ public class ChromeBrowserDriver implements IBrowserDriver{
                 chromeOptionsConfig.getDownloadOption ().getDownloadOptions (), chromeOptions
             );
         }
+
         return chromeOptions;
     }
 }
