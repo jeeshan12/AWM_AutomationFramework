@@ -47,7 +47,7 @@ public class WebDriverSuiteHelper {
     }
 
      static void addiOSDriver (final MethodContextImpl context, final Configuration configuration) {
-        // TODO document why this method is empty
+        // TODO document q q why this method is empty
     }
 
      static void addAndroidDriver (final MethodContextImpl context, final Configuration configuration) {
@@ -55,8 +55,8 @@ public class WebDriverSuiteHelper {
     }
 
      static void addFirefoxDriver (final MethodContextImpl context, final Configuration configuration) {
-       Injector chromeDriverInjector = Guice.createInjector(new FirefoxBrowserServiceInjector());
-       BrowserConsumer browserConsumer = chromeDriverInjector.getInstance(BrowserConsumer.class);
+       Injector firefoxDriverInjector = Guice.createInjector(new FirefoxBrowserServiceInjector());
+       BrowserConsumer browserConsumer = firefoxDriverInjector.getInstance(BrowserConsumer.class);
        context.setWebDriver (
            browserConsumer.getWebDriver(configuration)
         );
