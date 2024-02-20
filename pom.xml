@@ -34,7 +34,6 @@
     <guice.version>7.0.0</guice.version>
     <faker.version>1.0.2</faker.version>
     <assertj.version>3.25.3</assertj.version>
-    <jackson.version>2.16.1</jackson.version>
   </properties>
 
   <dependencies>
@@ -63,13 +62,6 @@
       <artifactId>gson</artifactId>
       <version>${gson.version}</version>
     </dependency>
-
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <version>${jackson.version}</version>
-    </dependency>
-
 
     <dependency>
       <groupId>org.projectlombok</groupId>
