@@ -1,29 +1,29 @@
 package org.kira.automation.runner;
 
-import static org.kira.automation.runner.TestSuiteHelper.addTestReporting;
-import static org.kira.automation.runner.TestSuiteHelper.addWebDriver;
-import static org.kira.automation.runner.TestSuiteHelper.setUpApiConfig;
-
-import java.lang.reflect.Method;
-
 import com.aventstack.extentreports.ExtentTest;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import java.lang.reflect.Method;
 import org.kira.automation.annotations.Api;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import static org.kira.automation.runner.TestSuiteHelper.addTestReporting;
+import static org.kira.automation.runner.TestSuiteHelper.addWebDriver;
+import static org.kira.automation.runner.TestSuiteHelper.setUpApiConfig;
+
 public class TestSuiteRunner {
     private final ThreadLocal<MethodContextImpl> methodContextThreadLocal = new ThreadLocal<>();
+
     @BeforeMethod
     public void setUp(Method method) {
         MethodContextImpl methodContext = new MethodContextImpl(method);
         setUpApiConfig(methodContext);
-        addWebDriver(methodContext);
+        addWebDriver (methodContext);
         addTestReporting (methodContext);
         methodContextThreadLocal.set(methodContext);
     }
