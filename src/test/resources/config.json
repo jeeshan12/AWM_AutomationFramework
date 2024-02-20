@@ -4,7 +4,7 @@
       "enabled": true
     },
     "browser": "chrome",
-    "isHeadless": true,
+    "isHeadless": false,
     "browserOptions": {
       "chrome": {
         "options": ["--incognito", "--window-size=1200,800"],

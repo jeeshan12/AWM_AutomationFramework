@@ -30,8 +30,7 @@ public class ApiSuiteHelper {
         return requestSpecBuilder
             .setBaseUri (apiConfiguration.getBaseurl ())
             .setBasePath (apiConfiguration.getBasePath ())
-            .setContentType (ContentType.JSON)
-            .log (LogDetail.BODY);
+            .setContentType (ContentType.JSON);
     }
 
     private static ResponseSpecBuilder getResponseSpecBuilder (final ApiConfiguration apiConfiguration) {

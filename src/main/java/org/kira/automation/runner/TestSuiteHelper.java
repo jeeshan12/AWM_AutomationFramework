@@ -1,14 +1,16 @@
 package org.kira.automation.runner;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
-
-import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.kira.automation.annotations.Api;
 import org.kira.automation.annotations.Chrome;
 import org.kira.automation.annotations.Firefox;
@@ -62,6 +64,8 @@ public class TestSuiteHelper {
     static void setUpApiConfig (final MethodContextImpl context) {
         Method method = context.method;
         if (!method.isAnnotationPresent (Api.class)) return;
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
         ApiSuiteHelper.setUpApiConfig (context, getConfiguration ());
     }
 

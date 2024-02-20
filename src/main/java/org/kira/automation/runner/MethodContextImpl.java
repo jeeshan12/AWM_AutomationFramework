@@ -1,12 +1,11 @@
 package org.kira.automation.runner;
 
-import java.lang.reflect.Method;
-
 import com.aventstack.extentreports.ExtentTest;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import java.lang.reflect.Method;
 import org.openqa.selenium.WebDriver;
 
 public class MethodContextImpl implements MethodContext {
@@ -18,6 +17,7 @@ public class MethodContextImpl implements MethodContext {
     private ResponseSpecification responseSpecification;
     private RequestSpecBuilder requestSpecBuilder;
     private ResponseSpecBuilder responseSpecBuilder;
+
     public MethodContextImpl(final Method method) {
         this.method = method;
     }
@@ -50,6 +50,7 @@ public class MethodContextImpl implements MethodContext {
     public void setResponseSpecBuilder (final ResponseSpecBuilder responseSpecBuilder) {
         this.responseSpecBuilder = responseSpecBuilder;
     }
+
     @Override
     public ResponseSpecification getResponseSpecification () {
         return this.responseSpecification;
@@ -62,6 +63,8 @@ public class MethodContextImpl implements MethodContext {
     public ResponseSpecBuilder getResponseSpecBuilder () {
         return this.responseSpecBuilder;
     }
+
+
     public void setWebDriver (final WebDriver webDriver) {
         this.webDriver = webDriver;
     }

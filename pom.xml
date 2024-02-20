@@ -32,6 +32,8 @@
     <lombok.version>1.18.28</lombok.version>
     <extentreports.version>5.0.9</extentreports.version>
     <guice.version>7.0.0</guice.version>
+    <faker.version>1.0.2</faker.version>
+    <assertj.version>3.25.3</assertj.version>
   </properties>
 
   <dependencies>
@@ -80,6 +82,20 @@
       <artifactId>guice</artifactId>
       <version>${guice.version}</version>
     </dependency>
+
+
+    <dependency>
+      <groupId>com.github.javafaker</groupId>
+      <artifactId>javafaker</artifactId>
+      <version>${faker.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${assertj.version}</version>
+    </dependency>
+
 
   </dependencies>
 </project>
