@@ -1,9 +1,11 @@
 package org.kira.automation.api;
 
 import com.github.javafaker.Faker;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.kira.automation.annotations.Api;
+import org.kira.automation.model.request.UserDetailsQuery;
 import org.kira.automation.model.request.UserRequest;
 import org.kira.automation.model.response.UserResponse;
 import org.kira.automation.runner.TestSuiteRunner;
@@ -42,6 +44,20 @@ public class UserApiTest extends TestSuiteRunner {
       softly.assertThat(userResponse.getId()).as("User Id").isNotEmpty();
       softly.assertThat(userResponse.getCreatedAt()).as("User Creation date").isNotEmpty();
     });
-    System.out.println(userResponse.getName());
   }
+
+
+  @Test
+  @Api
+  public void getUserDetails() {
+    UserDetailsQuery.createUserQuery("2").accept(getRequestSpecBuilder());
+
+    Response userResponse =
+        UserService.getUserDetailsWithStatusOkAndReturnResponse(getRequestSpecBuilder(),
+            "2",
+            HttpStatus.SC_OK);
+
+  }
+
+
 }
