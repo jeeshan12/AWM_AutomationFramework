@@ -1,8 +1,8 @@
 package org.kira.automation.client;
 
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.response.Response;
 import org.kira.automation.model.request.UserRequest;
+import org.kira.automation.model.response.UserDetails;
 import org.kira.automation.model.response.UserResponse;
 
 import static io.restassured.RestAssured.given;
@@ -17,8 +17,8 @@ public class UserClient {
     }
 
 
-    public static Response getUserDetailsWithStatusOkAndReturnResponse(final RequestSpecBuilder requestSpecBuilder, String page , final
+    public static UserDetails getUserDetailsWithStatusOkAndReturnUserDetailsResponse(final RequestSpecBuilder requestSpecBuilder, String page , final
     int httpStatus) {
-        return given().spec(requestSpecBuilder.build()).get (USER_ENDPOINT).then ().statusCode(httpStatus).extract ().response ();
+        return given().spec(requestSpecBuilder.build()).get (USER_ENDPOINT).then ().statusCode(httpStatus).extract ().response ().as(UserDetails.class);
     }
 }

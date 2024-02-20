@@ -1,9 +1,9 @@
 package org.kira.automation.service;
 
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.response.Response;
 import org.kira.automation.client.UserClient;
 import org.kira.automation.model.request.UserRequest;
+import org.kira.automation.model.response.UserDetails;
 import org.kira.automation.model.response.UserResponse;
 
 public class UserService {
@@ -15,7 +15,7 @@ public class UserService {
       return UserClient.createUserWithStatusCreatedAndReturnResponse(requestSpecBuilder, userRequest, statusCode);
   }
 
-  public static Response getUserDetailsWithStatusOkAndReturnResponse(final RequestSpecBuilder requestSpecBuilder, String page , final int statusCode) {
-    return UserClient.getUserDetailsWithStatusOkAndReturnResponse(requestSpecBuilder, page, statusCode);
+  public static UserDetails getUserDetailsWithStatusOkAndReturnUserDetailsResponse(final RequestSpecBuilder requestSpecBuilder, final String page , final int statusCode) {
+    return UserClient.getUserDetailsWithStatusOkAndReturnUserDetailsResponse(requestSpecBuilder, page, statusCode);
   }
 }

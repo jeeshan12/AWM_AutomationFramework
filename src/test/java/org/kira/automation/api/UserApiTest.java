@@ -1,17 +1,19 @@
 package org.kira.automation.api;
 
 import com.github.javafaker.Faker;
-import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.kira.automation.annotations.Api;
 import org.kira.automation.model.request.UserDetailsQuery;
 import org.kira.automation.model.request.UserRequest;
+import org.kira.automation.model.response.UserDetails;
 import org.kira.automation.model.response.UserResponse;
 import org.kira.automation.runner.TestSuiteRunner;
 import org.kira.automation.service.UserService;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserApiTest extends TestSuiteRunner {
 
@@ -52,11 +54,18 @@ public class UserApiTest extends TestSuiteRunner {
   public void getUserDetails() {
     UserDetailsQuery.createUserQuery("2").accept(getRequestSpecBuilder());
 
-    Response userResponse =
-        UserService.getUserDetailsWithStatusOkAndReturnResponse(getRequestSpecBuilder(),
+    UserDetails userDetails =
+        UserService.getUserDetailsWithStatusOkAndReturnUserDetailsResponse(getRequestSpecBuilder(),
             "2",
             HttpStatus.SC_OK);
 
+    SoftAssertions.assertSoftly(softly -> {
+      softly.assertThat(userDetails.getPage()).as("Page").isEqualTo(2);
+      softly.assertThat(userDetails.getPerPage()).as("User Details per page").isEqualTo(6);
+      softly.assertThat(userDetails.getTotal()).as("Total User Details").isEqualTo(12);
+      softly.assertThat(userDetails.getTotalPages()).as("Total Pages").isEqualTo(2);
+    });
+    assertThat(userDetails.getData()).hasSize(6);
   }
 
 
