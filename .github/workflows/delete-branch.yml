@@ -15,7 +15,5 @@ jobs:
 
       - name: Delete merged branch
         run: |
-          branch_name = ${{ github.event.pull_request.head.ref }}
-          git push origin --delete $branch_name
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          branch_name="${{ github.event.pull_request.head.ref }}"
+          git push origin --delete "$branch_name"

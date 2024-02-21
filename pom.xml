@@ -28,12 +28,13 @@
     <tesng.version>7.9.0</tesng.version>
     <selenium.version>4.16.1</selenium.version>
     <restassured.version>5.4.0</restassured.version>
-    <gson.version>2.8.5</gson.version>
+    <gson.version>2.10.1</gson.version>
     <lombok.version>1.18.28</lombok.version>
     <extentreports.version>5.0.9</extentreports.version>
     <guice.version>7.0.0</guice.version>
     <faker.version>1.0.2</faker.version>
     <assertj.version>3.25.3</assertj.version>
+    <jedis.version>5.0.0</jedis.version>
   </properties>
 
   <dependencies>
@@ -83,6 +84,12 @@
       <version>${guice.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>${jedis.version}</version>
+    </dependency>
+
 
     <dependency>
       <groupId>com.github.javafaker</groupId>
@@ -95,7 +102,6 @@
       <artifactId>assertj-core</artifactId>
       <version>${assertj.version}</version>
     </dependency>
-
 
   </dependencies>
 </project>

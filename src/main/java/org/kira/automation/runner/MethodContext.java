@@ -6,6 +6,7 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.openqa.selenium.WebDriver;
+import redis.clients.jedis.Jedis;
 
 public interface MethodContext {
 
@@ -16,7 +17,7 @@ public interface MethodContext {
     ResponseSpecification getResponseSpecification();
 
     RequestSpecBuilder getRequestSpecBuilder();
-
     ResponseSpecBuilder getResponseSpecBuilder();
+    Jedis getJedisConnection();
 
 }
