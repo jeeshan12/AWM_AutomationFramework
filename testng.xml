@@ -8,6 +8,8 @@
             <class name="org.kira.automation.TestBrowserWithRunner" />
             <class name="org.kira.automation.TestScreenshot"></class>
             <class name="org.kira.automation.api.UserApiTest"></class>
+            <class name="org.kira.automation.RedisConnectorTest"></class>
+
         </classes>
     </test>
 </suite>
