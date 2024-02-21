@@ -7,6 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import java.lang.reflect.Method;
 import org.openqa.selenium.WebDriver;
+import redis.clients.jedis.Jedis;
 
 public class MethodContextImpl implements MethodContext {
 
@@ -17,6 +18,8 @@ public class MethodContextImpl implements MethodContext {
     private ResponseSpecification responseSpecification;
     private RequestSpecBuilder requestSpecBuilder;
     private ResponseSpecBuilder responseSpecBuilder;
+
+    private Jedis jedis;
 
     public MethodContextImpl(final Method method) {
         this.method = method;
@@ -64,6 +67,10 @@ public class MethodContextImpl implements MethodContext {
         return this.responseSpecBuilder;
     }
 
+    @Override
+    public Jedis getJedisConnection() {
+        return null;
+    }
 
     public void setWebDriver (final WebDriver webDriver) {
         this.webDriver = webDriver;
