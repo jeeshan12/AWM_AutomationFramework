@@ -106,6 +106,47 @@
   "mobile": {
     "screenshot": {
       "enabled": true
+    },
+    "enabled": false,
+    "cloud": {
+      "enabled": true,
+      "option": "browserstack",
+      "platform": "mobile",
+      "provider": {
+        "browserstack": {
+          "sessionName": "Browserstack session",
+          "buildName": "KIRA Web Automation Execution ",
+          "projectName": "KIRA",
+          "allowAllCookies": false,
+          "userName": "mjeeshan1",
+          "accessKey": "",
+          "browserName": "chrome",
+          "video": "false",
+          "networkLogs": "true",
+          "debug": "false",
+          "chrome": {
+            "os": "Windows",
+            "os_version": "10",
+            "browser_version": "latest",
+            "resolution": "1024x768"
+          }
+        },
+        "lambdatest": {
+          "sessionName": "Lambdatest session",
+          "buildName": "KIRA Web Automation Execution ",
+          "projectName": "KIRA",
+          "allowAllCookies": false,
+          "userName": "mjeeshan1",
+          "accessKey": "",
+          "browserName": "chrome",
+          "chrome": {
+            "os": "Windows",
+            "os_version": "10",
+            "browser_version": "latest",
+            "resolution": "1024x768"
+          }
+        }
+      }
     }
   },
   "api": {

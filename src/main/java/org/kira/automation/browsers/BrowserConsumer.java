@@ -5,7 +5,7 @@ import org.kira.automation.configuration.Configuration;
 import org.openqa.selenium.WebDriver;
 
 public class BrowserConsumer {
-  private BrowserDriverService browserDriverService;
+  private final BrowserDriverService browserDriverService;
   @Inject
   public BrowserConsumer(BrowserDriverService browserDriverService) {
     this.browserDriverService = browserDriverService;
