@@ -42,21 +42,32 @@ public class TestSuiteHelper {
      }
     static void addWebDriver(MethodContextImpl context) {
         Method method = context.method;
+
+        // Check if the method is annotated with @Api, if so, set WebDriver to null and return
         if (method.isAnnotationPresent (Api.class)) {
             context.setWebDriver (null);
             return;
         }
 
+        // Check if required annotations (@Mobile, @Web, @Api) are available
         if(!isRequiredAnnotationAvailable(method.getAnnotations ())) {
             throw new AnnotationMissingException (
                 "Please provide annotations like @Mobile, @Web and @Api to distinguish the tests"
             );
         }
 
+        if (getConfiguration().getWeb().getSeleniumGrid().isGridEnabled() || getConfiguration().getWeb().getCloud().isCloudExecutionEnabled()) {
+            WebDriverSuiteHelper.setRemoteDriver(context, getConfiguration());
+            return;
+        }
+
+        // Check if the method is not annotated with @Chrome or @Firefox
         if (!method.isAnnotationPresent (Chrome.class) && !method.isAnnotationPresent (Firefox.class)) {
             WebDriverSuiteHelper.addDefaultWebDriver (context, getConfiguration());
             return;
         }
+
+        // Set the WebDriver using WebDriverSuiteHelper
         WebDriverSuiteHelper.setWebDriver(context, getConfiguration());
     }
 

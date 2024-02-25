@@ -1,11 +1,11 @@
-package org.kira.automation.factory;
+package org.kira.automation.browsers;
 
 import jakarta.inject.Inject;
 import org.kira.automation.configuration.Configuration;
 import org.openqa.selenium.WebDriver;
 
 public class BrowserConsumer {
-  private BrowserDriverService browserDriverService;
+  private final BrowserDriverService browserDriverService;
   @Inject
   public BrowserConsumer(BrowserDriverService browserDriverService) {
     this.browserDriverService = browserDriverService;

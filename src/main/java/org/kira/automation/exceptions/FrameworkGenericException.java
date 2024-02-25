@@ -5,4 +5,8 @@ public class FrameworkGenericException extends RuntimeException {
         super(message);
     }
 
+    public FrameworkGenericException (String message, Exception exception) {
+        super(message, exception);
+    }
+
 }

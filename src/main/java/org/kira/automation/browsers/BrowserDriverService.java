@@ -1,4 +1,4 @@
-package org.kira.automation.factory;
+package org.kira.automation.browsers;
 
 import org.kira.automation.configuration.Configuration;
 import org.openqa.selenium.WebDriver;

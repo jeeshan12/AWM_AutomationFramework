@@ -1,4 +1,4 @@
-package org.kira.automation.factory;
+package org.kira.automation.browsers;
 
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.FirefoxOptionsConfig;
@@ -7,9 +7,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
-import static org.kira.automation.factory.FirefoxOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
-import static org.kira.automation.factory.FirefoxOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
-import static org.kira.automation.factory.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
+import static org.kira.automation.browsers.FirefoxOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
+import static org.kira.automation.browsers.FirefoxOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
+import static org.kira.automation.browsers.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
 
 public class FirefoxBrowserDriverServiceImpl implements BrowserDriverService {
 

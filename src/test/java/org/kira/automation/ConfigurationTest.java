@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
  * Unit test for simple App.
  */
 
-public class AppTest {
+public class ConfigurationTest {
 
     @Test
     public  void testConfiguration () {
@@ -18,6 +18,9 @@ public class AppTest {
             Configuration.class);
         System.out.println (webConfiguration.getWeb ().getBrowser ());
         System.out.println (webConfiguration.getWeb ().getBrowserOptions ().getChrome ());
+        System.out.println (webConfiguration.getWeb().getCloud());
+        System.out.println (webConfiguration.getWeb().getSeleniumGrid());
+
     }
 
 }

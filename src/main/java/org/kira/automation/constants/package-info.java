@@ -1,4 +1,4 @@
 /**
- * Config classes used to store framework configuration.
+ * Constant classes used to store framework constants.
  */
 package org.kira.automation.constants;
