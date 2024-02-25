@@ -1,4 +1,4 @@
 /**
- * Factory classes used to store browser driver options.
+ * Browser driver classes used to create  web driver to run the web and mobile tests.
  */
 package org.kira.automation.browsers;

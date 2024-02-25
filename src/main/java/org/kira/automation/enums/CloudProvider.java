@@ -1,9 +1,13 @@
 package org.kira.automation.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum CloudProvider {
 
   LAMBDATEST("lambdatest"),
-  BROWSERSTACK("browserstack");
+  BROWSERSTACK("browserstack"),
+  K8S("k8s");
 
   private String providerName;
 
@@ -11,7 +15,4 @@ public enum CloudProvider {
     this.providerName = providerName;
   }
 
-  public String getProviderName() {
-    return providerName;
-  }
 }

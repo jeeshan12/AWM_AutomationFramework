@@ -56,13 +56,17 @@ public class TestSuiteHelper {
             );
         }
 
+        if (getConfiguration().getWeb().getSeleniumGrid().isGridEnabled() || getConfiguration().getWeb().getCloud().isCloudExecutionEnabled()) {
+            WebDriverSuiteHelper.setRemoteDriver(context, getConfiguration());
+            return;
+        }
+
         // Check if the method is not annotated with @Chrome or @Firefox
         if (!method.isAnnotationPresent (Chrome.class) && !method.isAnnotationPresent (Firefox.class)) {
             WebDriverSuiteHelper.addDefaultWebDriver (context, getConfiguration());
             return;
         }
 
-        WebDriverSuiteHelper.setRemoteDriver(context, getConfiguration());
         // Set the WebDriver using WebDriverSuiteHelper
         WebDriverSuiteHelper.setWebDriver(context, getConfiguration());
     }

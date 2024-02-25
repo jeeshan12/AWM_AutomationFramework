@@ -5,8 +5,11 @@
     },
     "grid": {
       "enabled": false,
-      "url": "",
-      "port": ""
+      "provider": "k8s",
+      "k8s": {
+        "url": "",
+        "port": ""
+      }
     },
     "cloud": {
       "enabled": true,
@@ -20,7 +23,7 @@
           "allowAllCookies": false,
           "userName": "mjeeshan1",
           "accessKey": "",
-          "browserName": "chrome",
+          "browserName": "safari",
           "video": "false",
           "networkLogs": "true",
           "debug": "false",

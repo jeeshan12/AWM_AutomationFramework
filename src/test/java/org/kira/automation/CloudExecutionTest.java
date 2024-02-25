@@ -11,8 +11,7 @@ public class CloudExecutionTest extends TestSuiteRunner {
 
     @Test
     @Web
-    @WebCloud
-    public void testFirefoxBrowser() {
+    public void testCloudBrowser() {
         getExtentTest().log (Status.INFO, "Opening Browser");
         getDriver ().navigate ().to ("https://google.com/");
     }

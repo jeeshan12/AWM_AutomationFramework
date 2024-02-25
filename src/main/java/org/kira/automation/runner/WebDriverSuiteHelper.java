@@ -7,11 +7,13 @@ import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Chrome;
 import org.kira.automation.annotations.Firefox;
 import org.kira.automation.annotations.iOS;
+import org.kira.automation.browsers.cloud.RemoteDriverFactory;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.exceptions.AnnotationMissingException;
 import org.kira.automation.browsers.BrowserConsumer;
 import org.kira.automation.browsers.ChromeBrowserServiceInjector;
 import org.kira.automation.browsers.FirefoxBrowserServiceInjector;
+import org.kira.automation.exceptions.FrameworkGenericException;
 
 import static org.kira.automation.constants.FrameworkConstants.BROWSER;
 import static org.kira.automation.constants.FrameworkConstants.CHROME;
@@ -71,5 +73,17 @@ public class WebDriverSuiteHelper {
     }
 
   public static void setRemoteDriver(MethodContextImpl context, Configuration configuration) {
+
+        Method method = context.method;
+
+      if (configuration.getWeb().getCloud().isCloudExecutionEnabled()) {
+          context.setWebDriver(
+                  RemoteDriverFactory.getRemoteWebDriver(configuration.getWeb().getCloud().getCloudProvider()).getWebDriver(configuration)
+          );
+      } else if (configuration.getWeb().getSeleniumGrid().isGridEnabled()) {
+          context.setWebDriver(RemoteDriverFactory.getRemoteWebDriver(configuration.getWeb().getCloud().getCloudProvider()).getWebDriver(configuration));
+      } else {
+          throw new FrameworkGenericException("Please provide valid cloud provider or grid properties for remote execution");
+      }
   }
 }
