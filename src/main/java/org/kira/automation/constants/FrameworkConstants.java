@@ -17,11 +17,20 @@ public final class FrameworkConstants {
     public static final String DEFAULT_REPORTS_FOLDER = Optional.ofNullable (TestSuiteHelper.getConfiguration ().getReport ().getPath ()).orElse ("target/spark/spark.html");
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
+
+    public static final String EDGE = "edge";
+
+    public static final String SAFARI = "safari";
+
     public static final String BROWSER = "browser";
     private static final String[] MANDATE_ANNOTATIONS = { "org.kira.automation.annotations.Web", "org.kira.automation.annotations.Api", "org.kira.automation.annotations.Mobile"};
     public static String[] getMandateAnnotations() {
         return Arrays.copyOf(MANDATE_ANNOTATIONS, MANDATE_ANNOTATIONS.length);
     }
     public static final String REPORTS_CONFIG_JSON = Optional.ofNullable (TestSuiteHelper.getConfiguration ().getReport ().getConfigPath ()).orElse ("src/test/resources/spark.config.json");
+
+    public static final String CLOUD_USERNAME = "CLOUD_USERNAME";
+
+    public static final String CLOUD_ACCESS_KEY = "CLOUD_ACCESS_KEY";
 
 }

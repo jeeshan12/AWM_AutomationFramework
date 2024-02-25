@@ -1,4 +1,4 @@
-package org.kira.automation.factory;
+package org.kira.automation.browsers;
 
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.ChromeOptionsConfig;
@@ -6,9 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static org.kira.automation.factory.ChromeOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
-import static org.kira.automation.factory.ChromeOptionsDecorator.CHROME_HEADLESS_DECORATOR;
-import static org.kira.automation.factory.ChromeOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
+import static org.kira.automation.browsers.ChromeOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
+import static org.kira.automation.browsers.ChromeOptionsDecorator.CHROME_HEADLESS_DECORATOR;
+import static org.kira.automation.browsers.ChromeOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
 
 public class ChromeBrowserDriverServiceImpl implements BrowserDriverService {
 

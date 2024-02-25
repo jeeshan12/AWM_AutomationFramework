@@ -3,6 +3,87 @@
     "screenshot": {
       "enabled": true
     },
+    "grid": {
+      "enabled": false,
+      "url": "",
+      "port": ""
+    },
+    "cloud": {
+      "enabled": true,
+      "option": "browserstack",
+      "platform": "web",
+      "provider": {
+        "browserstack": {
+          "sessionName": "Browserstack session",
+          "buildName": "KIRA Web Automation Execution ",
+          "projectName": "KIRA",
+          "allowAllCookies": false,
+          "userName": "mjeeshan1",
+          "accessKey": "",
+          "browserName": "chrome",
+          "video": "false",
+          "networkLogs": "true",
+          "debug": "false",
+          "chrome": {
+            "os": "Windows",
+            "os_version": "10",
+            "browser_version": "latest",
+            "resolution": "1024x768"
+          },
+          "firefox": {
+            "os": "Windows",
+            "os_version": "10",
+            "browser_version": "latest",
+            "resolution": "1680x1050"
+          },
+          "safari": {
+            "os": "OS X",
+            "os_version": "Monterey",
+            "browser_version": "15.6",
+            "resolution": "1680x1050"
+          },
+          "edge": {
+            "os": "Windows",
+            "os_version": "11",
+            "browser_version": "latest",
+            "resolution": "1680x1050"
+          }
+        },
+        "lambdatest": {
+          "sessionName": "Lambdatest session",
+          "buildName": "KIRA Web Automation Execution ",
+          "projectName": "KIRA",
+          "allowAllCookies": false,
+          "userName": "mjeeshan1",
+          "accessKey": "mvuPpT9gDEySyUQGxbuk",
+          "browserName": "chrome",
+          "chrome": {
+            "os": "Windows",
+            "os_version": "10",
+            "browser_version": "latest",
+            "resolution": "1024x768"
+          },
+          "firefox": {
+            "os": "Windows",
+            "os_version": "10",
+            "browser_version": "latest",
+            "resolution": "1680x1050"
+          },
+          "safari": {
+            "os": "OS X",
+            "os_version": "Monterey",
+            "browser_version": "15.6",
+            "resolution": "1680x1050"
+          },
+          "edge": {
+            "os": "Windows",
+            "os_version": "11",
+            "browser_version": "latest",
+            "resolution": "1680x1050"
+          }
+        }
+      }
+    },
     "browser": "chrome",
     "isHeadless": false,
     "browserOptions": {

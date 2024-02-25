@@ -1,4 +1,4 @@
-package org.kira.automation.factory;
+package org.kira.automation.browsers;
 
 import jakarta.inject.Inject;
 import org.kira.automation.configuration.Configuration;

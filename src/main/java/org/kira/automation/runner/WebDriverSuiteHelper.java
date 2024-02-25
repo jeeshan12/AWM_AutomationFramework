@@ -9,9 +9,9 @@ import org.kira.automation.annotations.Firefox;
 import org.kira.automation.annotations.iOS;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.exceptions.AnnotationMissingException;
-import org.kira.automation.factory.BrowserConsumer;
-import org.kira.automation.factory.ChromeBrowserServiceInjector;
-import org.kira.automation.factory.FirefoxBrowserServiceInjector;
+import org.kira.automation.browsers.BrowserConsumer;
+import org.kira.automation.browsers.ChromeBrowserServiceInjector;
+import org.kira.automation.browsers.FirefoxBrowserServiceInjector;
 
 import static org.kira.automation.constants.FrameworkConstants.BROWSER;
 import static org.kira.automation.constants.FrameworkConstants.CHROME;
@@ -23,11 +23,13 @@ public class WebDriverSuiteHelper {
 
      static void setWebDriver (final MethodContextImpl context, final Configuration configuration) {
         Method method = context.method;
-        if (method.isAnnotationPresent (Chrome.class)
-            || CHROME.equalsIgnoreCase (System.getenv (BROWSER))) {
+        String browser = System.getenv(BROWSER);
+
+       if (method.isAnnotationPresent (Chrome.class)
+            || CHROME.equalsIgnoreCase (browser)) {
             addChromeDriver(context, configuration);
         } else if (method.isAnnotationPresent (Firefox.class) ||
-            FIREFOX.equalsIgnoreCase (System.getenv (BROWSER))) {
+            FIREFOX.equalsIgnoreCase (browser)) {
             addFirefoxDriver(context, configuration);
         } else if (method.isAnnotationPresent (iOS.class) ){
             addAndroidDriver(context, configuration);
@@ -39,7 +41,6 @@ public class WebDriverSuiteHelper {
             );
         }
     }
-
 
 
      static void addDefaultWebDriver (final MethodContextImpl context, final Configuration configuration) {
@@ -68,4 +69,7 @@ public class WebDriverSuiteHelper {
             browserConsumer.getWebDriver(configuration)
         );
     }
+
+  public static void setRemoteDriver(MethodContextImpl context, Configuration configuration) {
+  }
 }
