@@ -12,12 +12,12 @@ import org.kira.automation.configuration.web.WebConfiguration;
 @Getter
 public class Configuration {
 
-    private WebConfiguration web;
+  private WebConfiguration web;
 
-    private MobileConfiguration mobile;
+  private MobileConfiguration mobile;
 
-    private ApiConfiguration api;
+  private ApiConfiguration api;
 
-    private ReportConfiguration report;
+  private ReportConfiguration report;
 
 }

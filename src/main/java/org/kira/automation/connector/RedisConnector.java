@@ -7,11 +7,7 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisConnector {
 
   private RedisConnector() {
-      throw new IllegalStateException("Singleton instance already exists for Redis connector");
-  }
-
-  private static class RedisConnectorHelper {
-    private static final RedisConnector REDIS_CONNECTOR = new RedisConnector();
+    throw new IllegalStateException("Singleton instance already exists for Redis connector");
   }
 
   public static RedisConnector getInstance() {
@@ -23,6 +19,11 @@ public class RedisConnector {
     try (JedisPool jedisPool = new JedisPool(poolConfig, url, port)) {
       return jedisPool.getResource();
     }
+  }
+
+  private static class RedisConnectorHelper {
+
+    private static final RedisConnector REDIS_CONNECTOR = new RedisConnector();
   }
 
 }

@@ -8,10 +8,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 public class ApiConfiguration {
-    private String baseurl;
-    private ApiLoggingConfiguration log;
-    private int responseTimeOut;
 
-    private String basePath;
+  private String baseurl;
+  private ApiLoggingConfiguration log;
+  private int responseTimeOut;
+
+  private String basePath;
 
 }

@@ -8,6 +8,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 public class ReportConfiguration {
-    private String path;
-    private String configPath;
+
+  private String path;
+  private String configPath;
 }

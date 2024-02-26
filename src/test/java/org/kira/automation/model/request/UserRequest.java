@@ -12,6 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder(builderMethodName = "create")
 public class UserRequest {
-    private String name;
-    private String job;
+
+  private String name;
+  private String job;
 }

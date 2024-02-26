@@ -8,6 +8,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 public class ApiLoggingConfiguration {
-    private boolean request;
-    private boolean response;
+
+  private boolean request;
+  private boolean response;
 }

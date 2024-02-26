@@ -11,6 +11,7 @@ import org.kira.automation.model.request.UserRequest;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponse extends UserRequest {
-    private String id;
-    private String createdAt;
+
+  private String id;
+  private String createdAt;
 }

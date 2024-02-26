@@ -11,46 +11,46 @@ import org.kira.automation.configuration.cloud.CloudBrowserConfig;
 @Getter
 public class LambdatestConfiguration {
 
-    private String buildName;
+  private String buildName;
 
-    private String projectName;
+  private String projectName;
 
-    private String userName;
+  private String userName;
 
-    private String accessKey;
+  private String accessKey;
 
-    private String browserName;
+  private String browserName;
 
-    private String console;
+  private String console;
 
-    private String networkThrottling;
+  private String networkThrottling;
 
-    private String timezone;
+  private String timezone;
 
-    private boolean network;
+  private boolean network;
 
-    private boolean headless;
+  private boolean headless;
 
-    private boolean video;
+  private boolean video;
 
-    private boolean visual;
+  private boolean visual;
 
-    private String seleniumVersion;
+  private String seleniumVersion;
 
-    private boolean tunnel;
+  private boolean tunnel;
 
-    @SerializedName("chrome")
-    private CloudBrowserConfig chromeConfig;
+  @SerializedName("chrome")
+  private CloudBrowserConfig chromeConfig;
 
-    @SerializedName("firefox")
-    private CloudBrowserConfig firefoxConfig;
+  @SerializedName("firefox")
+  private CloudBrowserConfig firefoxConfig;
 
-    @SerializedName("safari")
-    private CloudBrowserConfig safariConfig;
+  @SerializedName("safari")
+  private CloudBrowserConfig safariConfig;
 
-    @SerializedName("edge")
-    private CloudBrowserConfig edgeConfig;
+  @SerializedName("edge")
+  private CloudBrowserConfig edgeConfig;
 
-    @SerializedName("ie")
-    private CloudBrowserConfig ieConfig;
+  @SerializedName("ie")
+  private CloudBrowserConfig ieConfig;
 }

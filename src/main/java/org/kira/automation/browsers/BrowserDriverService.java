@@ -5,5 +5,5 @@ import org.openqa.selenium.WebDriver;
 
 public interface BrowserDriverService {
 
-    WebDriver getWebDriver(final Configuration configuration);
+  WebDriver getWebDriver(final Configuration configuration);
 }

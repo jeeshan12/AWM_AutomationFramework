@@ -10,12 +10,12 @@ import java.lang.annotation.Target;
  * Using this annotation with {@link org.testng.annotations.Test} will receive a
  * {@link org.openqa.selenium.WebDriver} instance of
  * {@link org.openqa.selenium.chrome.ChromeDriver}.
- * 
+ *
  * @author Mohammad Jeeshan
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Chrome {
-  
+
 }

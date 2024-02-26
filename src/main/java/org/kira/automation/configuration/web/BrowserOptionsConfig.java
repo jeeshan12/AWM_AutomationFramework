@@ -8,6 +8,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 public class BrowserOptionsConfig {
-    private ChromeOptionsConfig chrome;
-    private FirefoxOptionsConfig firefox;
+
+  private ChromeOptionsConfig chrome;
+  private FirefoxOptionsConfig firefox;
 }

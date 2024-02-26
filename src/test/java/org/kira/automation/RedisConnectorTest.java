@@ -1,12 +1,12 @@
 package org.kira.automation;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.testng.Assert.assertThrows;
+
 import java.lang.reflect.InvocationTargetException;
 import org.kira.automation.connector.RedisConnector;
 import org.testng.annotations.Test;
 import redis.clients.jedis.Jedis;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.testng.Assert.assertThrows;
 
 public class RedisConnectorTest {
 

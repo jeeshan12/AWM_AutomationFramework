@@ -12,11 +12,11 @@ import org.kira.automation.configuration.cloud.CloudConfiguration;
 @Getter
 public class WebConfiguration {
 
-    private ScreenshotConfiguration screenshot;
-    private String                  browser;
-    private boolean                 isHeadless;
-    private BrowserOptionsConfig    browserOptions;
-    private CloudConfiguration      cloud;
-    @SerializedName("grid")
-    private GridConfiguration       seleniumGrid;
+  private ScreenshotConfiguration screenshot;
+  private String browser;
+  private boolean isHeadless;
+  private BrowserOptionsConfig browserOptions;
+  private CloudConfiguration cloud;
+  @SerializedName("grid")
+  private GridConfiguration seleniumGrid;
 }

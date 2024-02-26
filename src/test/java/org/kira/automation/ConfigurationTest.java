@@ -12,15 +12,16 @@ import org.testng.annotations.Test;
 
 public class ConfigurationTest {
 
-    @Test
-    public  void testConfiguration () {
-        Configuration webConfiguration =     JsonParserUtil.readJsonFile (FileUtils.readFileAsString (FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME),
-            Configuration.class);
-        System.out.println (webConfiguration.getWeb ().getBrowser ());
-        System.out.println (webConfiguration.getWeb ().getBrowserOptions ().getChrome ());
-        System.out.println (webConfiguration.getWeb().getCloud());
-        System.out.println (webConfiguration.getWeb().getSeleniumGrid());
+  @Test
+  public void testConfiguration() {
+    Configuration webConfiguration = JsonParserUtil.readJsonFile(FileUtils.readFileAsString(
+            FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME),
+        Configuration.class);
+    System.out.println(webConfiguration.getWeb().getBrowser());
+    System.out.println(webConfiguration.getWeb().getBrowserOptions().getChrome());
+    System.out.println(webConfiguration.getWeb().getCloud());
+    System.out.println(webConfiguration.getWeb().getSeleniumGrid());
 
-    }
+  }
 
 }
