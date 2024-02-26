@@ -3,10 +3,10 @@ package org.kira.automation.runner;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.lang.reflect.Method;
-import org.kira.automation.annotations.Android;
-import org.kira.automation.annotations.Chrome;
-import org.kira.automation.annotations.Firefox;
-import org.kira.automation.annotations.iOS;
+import java.util.Map;
+import java.util.Optional;
+
+import org.kira.automation.annotations.*;
 import org.kira.automation.browsers.cloud.RemoteDriverFactory;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.exceptions.AnnotationMissingException;
@@ -15,9 +15,7 @@ import org.kira.automation.browsers.ChromeBrowserServiceInjector;
 import org.kira.automation.browsers.FirefoxBrowserServiceInjector;
 import org.kira.automation.exceptions.FrameworkGenericException;
 
-import static org.kira.automation.constants.FrameworkConstants.BROWSER;
-import static org.kira.automation.constants.FrameworkConstants.CHROME;
-import static org.kira.automation.constants.FrameworkConstants.FIREFOX;
+import static org.kira.automation.constants.FrameworkConstants.*;
 
 public class WebDriverSuiteHelper {
 
@@ -74,16 +72,39 @@ public class WebDriverSuiteHelper {
 
   public static void setRemoteDriver(MethodContextImpl context, Configuration configuration) {
 
-        Method method = context.method;
-
       if (configuration.getWeb().getCloud().isCloudExecutionEnabled()) {
-          context.setWebDriver(
-                  RemoteDriverFactory.getRemoteWebDriver(configuration.getWeb().getCloud().getCloudProvider()).getWebDriver(configuration)
-          );
+          setWebCloudRemoteDriver(context,  configuration);
       } else if (configuration.getWeb().getSeleniumGrid().isGridEnabled()) {
-          context.setWebDriver(RemoteDriverFactory.getRemoteWebDriver(configuration.getWeb().getCloud().getCloudProvider()).getWebDriver(configuration));
+          context.setWebDriver(RemoteDriverFactory.getRemoteWebDriver(configuration.getWeb().getCloud().getCloudProvider()).getWebDriver(configuration, Optional.empty()));
       } else {
           throw new FrameworkGenericException("Please provide valid cloud provider or grid properties for remote execution");
       }
   }
+
+    private static void setWebCloudRemoteDriver(MethodContextImpl context, Configuration configuration) {
+
+        Method method = context.method;
+
+        if (method.isAnnotationPresent(WebCloud.class)) {
+            WebCloud webCloudAnnotation = method.getAnnotation(WebCloud.class);
+            Map<String, String> capabilityMap = Map.of(
+                    BROWSER_VERSION, webCloudAnnotation.browserVersion(),
+                    OS, webCloudAnnotation.os(),
+                    OS_VERSION, webCloudAnnotation.osVersion(),
+                    BROWSER_NAME, webCloudAnnotation.browserName(),
+                    RESOLUTION, webCloudAnnotation.resolution()
+            );
+
+            context.setWebDriver(
+                    RemoteDriverFactory.getRemoteWebDriver(
+                            configuration.getWeb().getCloud().getCloudProvider()).getWebDriver(configuration, Optional.of(capabilityMap))
+            );
+
+        } else {
+            context.setWebDriver(
+                    RemoteDriverFactory.getRemoteWebDriver(
+                            configuration.getWeb().getCloud().getCloudProvider()).getWebDriver(configuration, Optional.empty())
+            );
+        }
+    }
 }

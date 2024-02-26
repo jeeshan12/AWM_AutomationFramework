@@ -14,9 +14,9 @@ public class GridConfiguration {
   private boolean isGridEnabled;
 
   @SerializedName("url")
-  private boolean gridUrl;
+  private String gridUrl;
 
   @SerializedName("port")
-  private boolean gridPort;
+  private String gridPort;
 
 }
