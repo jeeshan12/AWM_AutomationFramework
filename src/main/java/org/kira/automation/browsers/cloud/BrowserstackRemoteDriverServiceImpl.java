@@ -16,12 +16,7 @@ import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import static org.kira.automation.constants.FrameworkConstants.CHROME;
-import static org.kira.automation.constants.FrameworkConstants.CLOUD_ACCESS_KEY;
-import static org.kira.automation.constants.FrameworkConstants.CLOUD_USERNAME;
-import static org.kira.automation.constants.FrameworkConstants.EDGE;
-import static org.kira.automation.constants.FrameworkConstants.FIREFOX;
-import static org.kira.automation.constants.FrameworkConstants.SAFARI;
+import static org.kira.automation.constants.FrameworkConstants.*;
 
 public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverService {
   private static final Map<String, BrowserstackBrowserConfigRetriever> BROWSER_CONFIG_RETRIEVERS = new HashMap<>();
@@ -34,7 +29,7 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
   }
 
 
-  @Override public WebDriver getWebDriver(Configuration configuration) {
+  @Override public WebDriver getWebDriver(Configuration configuration, Optional<Map<String, String>> capabilityMapOptional) {
     BrowserstackConfiguration browserstackConfiguration = configuration.getWeb().getCloud().getProvider().getBrowserstack();
 
     String username = Optional.ofNullable(browserstackConfiguration.getUserName()).orElse(System.getProperty(CLOUD_USERNAME));
@@ -43,7 +38,7 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
     String url = String.format("https://%s:%s@hub-cloud.browserstack.com/wd/hub", username, password);
 
     try {
-      return new RemoteWebDriver(new URI(url).toURL(), getPlatformSpecificCapabilities(configuration.getWeb().getCloud()));
+      return new RemoteWebDriver(new URI(url).toURL(), getPlatformSpecificCapabilities(configuration.getWeb().getCloud(),  capabilityMapOptional));
     } catch (URISyntaxException | MalformedURLException e) {
       throw new FrameworkGenericException("Error occurred while creating remote WebDriver reference", e);
     }
@@ -58,19 +53,28 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
     }
   }
   @Override
-  public MutableCapabilities getPlatformSpecificCapabilities(CloudConfiguration cloudConfiguration) {
+  public MutableCapabilities getPlatformSpecificCapabilities(CloudConfiguration cloudConfiguration, Optional<Map<String, String>> capabilityMapOptional) {
     BrowserstackConfiguration browserstackConfiguration = cloudConfiguration.getProvider().getBrowserstack();
     MutableCapabilities capabilities = new MutableCapabilities();
     Map<String, Object> bstackOptions = new HashMap<>();
 
     String browserName = browserstackConfiguration.getBrowserName();
     BrowserstackBrowserConfig browserSpecificCapabilities = getBrowserSpecificCapabilities(browserstackConfiguration, browserName);
-
     if (Platform.WEB.name().equalsIgnoreCase(cloudConfiguration.getPlatform())) {
-      capabilities.setCapability("browserName", browserName);
-      bstackOptions.put("os", browserSpecificCapabilities.getOs());
-      bstackOptions.put("osVersion", browserSpecificCapabilities.getOsVersion());
-      bstackOptions.put("browserVersion", browserSpecificCapabilities.getBrowserVersion());
+      capabilityMapOptional.ifPresentOrElse(
+              map -> {
+                capabilities.setCapability(BROWSER_NAME, map.get(BROWSER_NAME));
+                bstackOptions.put(OS, map.get(OS));
+                bstackOptions.put(BROWSER_VERSION, map.get(BROWSER_VERSION));
+                bstackOptions.put(OS_VERSION, map.get(OS_VERSION));
+              },
+              () -> {
+                capabilities.setCapability(BROWSER_NAME, browserName);
+                bstackOptions.put(OS, browserSpecificCapabilities.getOs());
+                bstackOptions.put(OS_VERSION, browserSpecificCapabilities.getOsVersion());
+                bstackOptions.put(BROWSER_VERSION, browserSpecificCapabilities.getBrowserVersion());
+              }
+      );
     }
     bstackOptions.put("projectName", browserstackConfiguration.getProjectName());
     bstackOptions.put("buildName", browserstackConfiguration.getBuildName());

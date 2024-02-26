@@ -13,13 +13,13 @@ import static org.kira.automation.constants.FrameworkConstants.REPORTS_CONFIG_JS
 public class ExtentManager {
 
     private static class ExtentManagerHolder {
-        static final File SPARK_CONFIG_FILE = Optional.ofNullable(new File (REPORTS_CONFIG_JSON))
+        static final File SPARK_CONFIG_FILE = Optional.of(new File (REPORTS_CONFIG_JSON))
             .orElseThrow(() -> new FrameworkGenericException("Please provide the path for spark config file to load the extent reports configuration"));
-        private static final ExtentReports INSTANCE = createInstance(SPARK_CONFIG_FILE);
-        private static ExtentReports createInstance(final File sparkConfigFile) {
+        private static final ExtentReports INSTANCE = createInstance();
+        private static ExtentReports createInstance() {
             ExtentSparkReporter sparkReporter = new ExtentSparkReporter(DEFAULT_REPORTS_FOLDER);
             try {
-                sparkReporter.loadJSONConfig (sparkConfigFile);
+                sparkReporter.loadJSONConfig (ExtentManagerHolder.SPARK_CONFIG_FILE);
             } catch (IOException e) {
                 throw new FrameworkGenericException (e.getMessage ());
             }

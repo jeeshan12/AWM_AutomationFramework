@@ -28,9 +28,11 @@ public final class FrameworkConstants {
         return Arrays.copyOf(MANDATE_ANNOTATIONS, MANDATE_ANNOTATIONS.length);
     }
     public static final String REPORTS_CONFIG_JSON = Optional.ofNullable (TestSuiteHelper.getConfiguration ().getReport ().getConfigPath ()).orElse ("src/test/resources/spark.config.json");
-
     public static final String CLOUD_USERNAME = "CLOUD_USERNAME";
-
     public static final String CLOUD_ACCESS_KEY = "CLOUD_ACCESS_KEY";
-
+    public static final String BROWSER_VERSION = "browserVersion";
+    public static final String OS = "os";
+    public static final String OS_VERSION = "osVersion";
+    public static final String BROWSER_NAME = "browserName";
+    public static final String RESOLUTION = "resolution";
 }
