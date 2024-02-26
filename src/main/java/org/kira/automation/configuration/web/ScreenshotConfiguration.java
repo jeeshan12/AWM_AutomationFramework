@@ -8,5 +8,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ScreenshotConfiguration {
-    private boolean enabled;
+
+  private boolean enabled;
 }

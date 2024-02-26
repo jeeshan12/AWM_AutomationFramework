@@ -11,7 +11,7 @@ import lombok.ToString;
 public class CloudConfiguration {
 
   @SerializedName("enabled")
-  private  boolean isCloudExecutionEnabled;
+  private boolean isCloudExecutionEnabled;
 
   private String platform;
 

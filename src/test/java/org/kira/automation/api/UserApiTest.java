@@ -1,5 +1,7 @@
 package org.kira.automation.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.github.javafaker.Faker;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -12,8 +14,6 @@ import org.kira.automation.runner.TestSuiteRunner;
 import org.kira.automation.service.UserService;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserApiTest extends TestSuiteRunner {
 

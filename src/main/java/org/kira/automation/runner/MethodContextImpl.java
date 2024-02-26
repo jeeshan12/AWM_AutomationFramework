@@ -11,71 +11,81 @@ import redis.clients.jedis.Jedis;
 
 public class MethodContextImpl implements MethodContext {
 
-    final       Method       method;
-    private     WebDriver    webDriver;
-    private ExtentTest extentTest;
-    private RequestSpecification requestSpecification;
-    private ResponseSpecification responseSpecification;
-    private RequestSpecBuilder requestSpecBuilder;
-    private ResponseSpecBuilder responseSpecBuilder;
+  final Method method;
+  private WebDriver webDriver;
+  private ExtentTest extentTest;
+  private RequestSpecification requestSpecification;
+  private ResponseSpecification responseSpecification;
+  private RequestSpecBuilder requestSpecBuilder;
+  private ResponseSpecBuilder responseSpecBuilder;
 
-    private Jedis jedis;
+  private Jedis jedis;
 
-    public MethodContextImpl(final Method method) {
-        this.method = method;
-    }
-    @Override
-    public WebDriver getWebDriver () {
-        return this.webDriver;
-    }
-    @Override
-    public ExtentTest getTest () {
-        return this.extentTest;
-    }
-    @Override
-    public void flushReport () {
-        this.extentTest.getExtent ().flush ();
-    }
-    @Override
-    public RequestSpecification getRequestSpecification () {
-        return this.requestSpecification;
-    }
-    public void setRequestSpecification (final RequestSpecification requestSpecification) {
-        this.requestSpecification = requestSpecification;
-    }
-    public void setResponseSpecification (final ResponseSpecification responseSpecification) {
-        this.responseSpecification = responseSpecification;
-    }
-    public void setRequestSpecBuilder (final RequestSpecBuilder requestSpecBuilder) {
-        this.requestSpecBuilder = requestSpecBuilder;
-    }
+  public MethodContextImpl(final Method method) {
+    this.method = method;
+  }
 
-    public void setResponseSpecBuilder (final ResponseSpecBuilder responseSpecBuilder) {
-        this.responseSpecBuilder = responseSpecBuilder;
-    }
+  @Override
+  public WebDriver getWebDriver() {
+    return this.webDriver;
+  }
 
-    @Override
-    public ResponseSpecification getResponseSpecification () {
-        return this.responseSpecification;
-    }
-    @Override
-    public RequestSpecBuilder getRequestSpecBuilder () {
-        return this.requestSpecBuilder;
-    }
-    @Override
-    public ResponseSpecBuilder getResponseSpecBuilder () {
-        return this.responseSpecBuilder;
-    }
+  public void setWebDriver(final WebDriver webDriver) {
+    this.webDriver = webDriver;
+  }
 
-    @Override
-    public Jedis getJedisConnection() {
-        return null;
-    }
+  @Override
+  public ExtentTest getTest() {
+    return this.extentTest;
+  }
 
-    public void setWebDriver (final WebDriver webDriver) {
-        this.webDriver = webDriver;
-    }
-    public  void setExtentTest(final ExtentTest extentTest) {
-        this.extentTest = extentTest;
-    }
+  @Override
+  public void flushReport() {
+    this.extentTest.getExtent().flush();
+  }
+
+  @Override
+  public RequestSpecification getRequestSpecification() {
+    return this.requestSpecification;
+  }
+
+  public void setRequestSpecification(final RequestSpecification requestSpecification) {
+    this.requestSpecification = requestSpecification;
+  }
+
+  @Override
+  public ResponseSpecification getResponseSpecification() {
+    return this.responseSpecification;
+  }
+
+  public void setResponseSpecification(final ResponseSpecification responseSpecification) {
+    this.responseSpecification = responseSpecification;
+  }
+
+  @Override
+  public RequestSpecBuilder getRequestSpecBuilder() {
+    return this.requestSpecBuilder;
+  }
+
+  public void setRequestSpecBuilder(final RequestSpecBuilder requestSpecBuilder) {
+    this.requestSpecBuilder = requestSpecBuilder;
+  }
+
+  @Override
+  public ResponseSpecBuilder getResponseSpecBuilder() {
+    return this.responseSpecBuilder;
+  }
+
+  public void setResponseSpecBuilder(final ResponseSpecBuilder responseSpecBuilder) {
+    this.responseSpecBuilder = responseSpecBuilder;
+  }
+
+  @Override
+  public Jedis getJedisConnection() {
+    return null;
+  }
+
+  public void setExtentTest(final ExtentTest extentTest) {
+    this.extentTest = extentTest;
+  }
 }

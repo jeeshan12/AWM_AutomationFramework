@@ -27,108 +27,126 @@ import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestResult;
 
 public class TestSuiteHelper {
-    private TestSuiteHelper(){}
-    private static final BiPredicate<Method, Boolean> SCREENSHOT_REQUIRED= (method, enabled) -> method.isAnnotationPresent (Web.class) && enabled ||
-        method.isAnnotationPresent (Mobile.class) && enabled;
 
-    /**
-     * Method to return the framework configuration.
-     * @return {@link Configuration}
-     */
-     public static Configuration getConfiguration() {
-         return JsonParserUtil.readJsonFile (FileUtils.readFileAsString (
-                 FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME
-             ), Configuration.class);
-     }
-    static void addWebDriver(MethodContextImpl context) {
-        Method method = context.method;
+  private static final BiPredicate<Method, Boolean> SCREENSHOT_REQUIRED = (method, enabled) ->
+      method.isAnnotationPresent(Web.class) && enabled ||
+          method.isAnnotationPresent(Mobile.class) && enabled;
 
-        // Check if the method is annotated with @Api, if so, set WebDriver to null and return
-        if (method.isAnnotationPresent (Api.class)) {
-            context.setWebDriver (null);
-            return;
-        }
+  private TestSuiteHelper() {
+  }
 
-        // Check if required annotations (@Mobile, @Web, @Api) are available
-        if(!isRequiredAnnotationAvailable(method.getAnnotations ())) {
-            throw new AnnotationMissingException (
-                "Please provide annotations like @Mobile, @Web and @Api to distinguish the tests"
-            );
-        }
+  /**
+   * Method to return the framework configuration.
+   *
+   * @return {@link Configuration}
+   */
+  public static Configuration getConfiguration() {
+    return JsonParserUtil.readJsonFile(FileUtils.readFileAsString(
+        FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME
+    ), Configuration.class);
+  }
 
-        if (getConfiguration().getWeb().getSeleniumGrid().isGridEnabled() || getConfiguration().getWeb().getCloud().isCloudExecutionEnabled()) {
-            WebDriverSuiteHelper.setRemoteDriver(context, getConfiguration());
-            return;
-        }
+  static void addWebDriver(MethodContextImpl context) {
+    Method method = context.method;
 
-        // Check if the method is not annotated with @Chrome or @Firefox
-        if (!method.isAnnotationPresent (Chrome.class) && !method.isAnnotationPresent (Firefox.class)) {
-            WebDriverSuiteHelper.addDefaultWebDriver (context, getConfiguration());
-            return;
-        }
-
-        // Set the WebDriver using WebDriverSuiteHelper
-        WebDriverSuiteHelper.setWebDriver(context, getConfiguration());
+    // Check if the method is annotated with @Api, if so, set WebDriver to null and return
+    if (method.isAnnotationPresent(Api.class)) {
+      context.setWebDriver(null);
+      return;
     }
 
-
-    static void setUpApiConfig (final MethodContextImpl context) {
-        Method method = context.method;
-        if (!method.isAnnotationPresent (Api.class)) return;
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
-        ApiSuiteHelper.setUpApiConfig (context, getConfiguration ());
+    // Check if required annotations (@Mobile, @Web, @Api) are available
+    if (!isRequiredAnnotationAvailable(method.getAnnotations())) {
+      throw new AnnotationMissingException(
+          "Please provide annotations like @Mobile, @Web and @Api to distinguish the tests"
+      );
     }
 
-
-    private static boolean isRequiredAnnotationAvailable (final Annotation[] annotations) {
-        List<String> annotationsNameList = Arrays.stream (annotations)
-            .map (annotation -> annotation.annotationType ()
-                .getName ())
-            .toList ();
-        return Arrays.stream (FrameworkConstants.getMandateAnnotations())
-            .anyMatch (annotationsNameList::contains);
+    if (getConfiguration().getWeb().getSeleniumGrid().isGridEnabled() || getConfiguration().getWeb()
+        .getCloud().isCloudExecutionEnabled()) {
+      WebDriverSuiteHelper.setRemoteDriver(context, getConfiguration());
+      return;
     }
 
-     static void takeScreenShot(MethodContextImpl context,  Configuration configuration ) {
-        if (!isScreenShotEnabled(context, configuration)
-        ) {
-            return;
-        }
-         String screenshot = ((TakesScreenshot) context.getWebDriver())
-                .getScreenshotAs(OutputType.BASE64);
-         context.getTest ().fail(MediaEntityBuilder.createScreenCaptureFromBase64String (screenshot).build());
-         context.getTest ().addScreenCaptureFromBase64String (screenshot);
+    // Check if the method is not annotated with @Chrome or @Firefox
+    if (!method.isAnnotationPresent(Chrome.class) && !method.isAnnotationPresent(Firefox.class)) {
+      WebDriverSuiteHelper.addDefaultWebDriver(context, getConfiguration());
+      return;
     }
 
-    private static boolean isScreenShotEnabled (final MethodContextImpl context, final Configuration configuration) {
-        return SCREENSHOT_REQUIRED.test(context.method, configuration.getWeb().getScreenshot().isEnabled()) &&
-            SCREENSHOT_REQUIRED.test(context.method, configuration.getMobile().getScreenshot().isEnabled());
-    }
+    // Set the WebDriver using WebDriverSuiteHelper
+    WebDriverSuiteHelper.setWebDriver(context, getConfiguration());
+  }
 
-    private static String getMethodNameWithClassName (final Method method) {
-        return method.getDeclaringClass().getSimpleName () + ":" + method.getName();
-    }
 
-     static void addTestReporting (final MethodContextImpl context) {
-        context.setExtentTest (
-            ExtentTestManager.startTest (getMethodNameWithClassName(context.method), context.method.getName ())
-        );
-    }
+  static void setUpApiConfig(final MethodContextImpl context) {
+    Method method = context.method;
+      if (!method.isAnnotationPresent(Api.class)) {
+          return;
+      }
+    RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+    RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+    ApiSuiteHelper.setUpApiConfig(context, getConfiguration());
+  }
 
-    static void takeScreenShotAndLogOnFailure (MethodContextImpl context, ITestResult testResult) {
-        if (testResult.getStatus() == ITestResult.FAILURE) {
-            if (!context.method.isAnnotationPresent (Api.class)) {
-                takeScreenShot (context, getConfiguration());
-            }
-            context.getTest ().fail (
-                MarkupHelper.createLabel(String.format ( "Test %s failed", context.method.getName () ), ExtentColor.RED));
-        } else if (testResult.getStatus() == ITestResult.SUCCESS ){
-            context.getTest ().pass (
-                MarkupHelper.createLabel(String.format ( "Test %s passed", context.method.getName () ), ExtentColor.GREEN));
-        } else {
-            context.getTest ().skip (
-                MarkupHelper.createLabel(String.format ( "Test %s skipped", context.method.getName () ), ExtentColor.AMBER));
-        }
+
+  private static boolean isRequiredAnnotationAvailable(final Annotation[] annotations) {
+    List<String> annotationsNameList = Arrays.stream(annotations)
+        .map(annotation -> annotation.annotationType()
+            .getName())
+        .toList();
+    return Arrays.stream(FrameworkConstants.getMandateAnnotations())
+        .anyMatch(annotationsNameList::contains);
+  }
+
+  static void takeScreenShot(MethodContextImpl context, Configuration configuration) {
+    if (!isScreenShotEnabled(context, configuration)
+    ) {
+      return;
     }
+    String screenshot = ((TakesScreenshot) context.getWebDriver())
+        .getScreenshotAs(OutputType.BASE64);
+    context.getTest()
+        .fail(MediaEntityBuilder.createScreenCaptureFromBase64String(screenshot).build());
+    context.getTest().addScreenCaptureFromBase64String(screenshot);
+  }
+
+  private static boolean isScreenShotEnabled(final MethodContextImpl context,
+      final Configuration configuration) {
+    return
+        SCREENSHOT_REQUIRED.test(context.method, configuration.getWeb().getScreenshot().isEnabled())
+            &&
+            SCREENSHOT_REQUIRED.test(context.method,
+                configuration.getMobile().getScreenshot().isEnabled());
+  }
+
+  private static String getMethodNameWithClassName(final Method method) {
+    return method.getDeclaringClass().getSimpleName() + ":" + method.getName();
+  }
+
+  static void addTestReporting(final MethodContextImpl context) {
+    context.setExtentTest(
+        ExtentTestManager.startTest(getMethodNameWithClassName(context.method),
+            context.method.getName())
+    );
+  }
+
+  static void takeScreenShotAndLogOnFailure(MethodContextImpl context, ITestResult testResult) {
+    if (testResult.getStatus() == ITestResult.FAILURE) {
+      if (!context.method.isAnnotationPresent(Api.class)) {
+        takeScreenShot(context, getConfiguration());
+      }
+      context.getTest().fail(
+          MarkupHelper.createLabel(String.format("Test %s failed", context.method.getName()),
+              ExtentColor.RED));
+    } else if (testResult.getStatus() == ITestResult.SUCCESS) {
+      context.getTest().pass(
+          MarkupHelper.createLabel(String.format("Test %s passed", context.method.getName()),
+              ExtentColor.GREEN));
+    } else {
+      context.getTest().skip(
+          MarkupHelper.createLabel(String.format("Test %s skipped", context.method.getName()),
+              ExtentColor.AMBER));
+    }
+  }
 }

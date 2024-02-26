@@ -10,14 +10,20 @@ import redis.clients.jedis.Jedis;
 
 public interface MethodContext {
 
-    WebDriver getWebDriver();
-    ExtentTest getTest();
-    void flushReport();
-    RequestSpecification getRequestSpecification();
-    ResponseSpecification getResponseSpecification();
+  WebDriver getWebDriver();
 
-    RequestSpecBuilder getRequestSpecBuilder();
-    ResponseSpecBuilder getResponseSpecBuilder();
-    Jedis getJedisConnection();
+  ExtentTest getTest();
+
+  void flushReport();
+
+  RequestSpecification getRequestSpecification();
+
+  ResponseSpecification getResponseSpecification();
+
+  RequestSpecBuilder getRequestSpecBuilder();
+
+  ResponseSpecBuilder getResponseSpecBuilder();
+
+  Jedis getJedisConnection();
 
 }

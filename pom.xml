@@ -1,151 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.kira.automation</groupId>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>kira</artifactId>
-  <version>1.0-SNAPSHOT</version>
-
-  <packaging>jar</packaging>
-
-  <name>kira</name>
-  <url>http://maven.apache.org</url>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <tesng.version>7.9.0</tesng.version>
-    <selenium.version>4.16.1</selenium.version>
-    <restassured.version>5.4.0</restassured.version>
-    <gson.version>2.10.1</gson.version>
-    <lombok.version>1.18.30</lombok.version>
-    <extentreports.version>5.0.9</extentreports.version>
-    <guice.version>7.0.0</guice.version>
-    <faker.version>1.0.2</faker.version>
-    <assertj.version>3.25.3</assertj.version>
-    <jedis.version>5.0.0</jedis.version>
-    <maven.surefire.version>3.0.0-M7</maven.surefire.version>
-  </properties>
-
-  <dependencies>
-
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>${tesng.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>${selenium.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>rest-assured</artifactId>
-      <version>${restassured.version}</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>${gson.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>com.aventstack</groupId>
-      <artifactId>extentreports</artifactId>
-      <version>${extentreports.version}</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>com.google.inject</groupId>
-      <artifactId>guice</artifactId>
-      <version>${guice.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>redis.clients</groupId>
-      <artifactId>jedis</artifactId>
-      <version>${jedis.version}</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>com.github.javafaker</groupId>
-      <artifactId>javafaker</artifactId>
-      <version>${faker.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>${assertj.version}</version>
-    </dependency>
-
-  </dependencies>
-
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <source>19</source>
           <target>19</target>
         </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
       </plugin>
 
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>getClasspathFilenames</id>
             <goals>
               <goal>properties</goal>
             </goals>
+            <id>getClasspathFilenames</id>
           </execution>
         </executions>
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven.surefire.version}</version>
         <configuration>
           <suiteXmlFiles>
             <suiteXmlFile>${file}</suiteXmlFile>
           </suiteXmlFiles>
         </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>${maven.surefire.version}</version>
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+
+    <dependency>
+      <artifactId>testng</artifactId>
+      <groupId>org.testng</groupId>
+      <version>${tesng.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>selenium-java</artifactId>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <version>${selenium.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>rest-assured</artifactId>
+      <groupId>io.rest-assured</groupId>
+      <version>${restassured.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <artifactId>gson</artifactId>
+      <groupId>com.google.code.gson</groupId>
+      <version>${gson.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
+      <version>${lombok.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <artifactId>extentreports</artifactId>
+      <groupId>com.aventstack</groupId>
+      <version>${extentreports.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <artifactId>guice</artifactId>
+      <groupId>com.google.inject</groupId>
+      <version>${guice.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>jedis</artifactId>
+      <groupId>redis.clients</groupId>
+      <version>${jedis.version}</version>
+    </dependency>
+
+
+    <dependency>
+      <artifactId>javafaker</artifactId>
+      <groupId>com.github.javafaker</groupId>
+      <version>${faker.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>assertj-core</artifactId>
+      <groupId>org.assertj</groupId>
+      <version>${assertj.version}</version>
+    </dependency>
+
+  </dependencies>
+  <groupId>org.kira.automation</groupId>
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>kira</name>
+  <packaging>jar</packaging>
+
   <profiles>
     <profile>
-      <id>bs-test</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <suiteXmlFiles>
                 <suiteXmlFile>src/test/resources/bs-test.xml</suiteXmlFile>
               </suiteXmlFiles>
             </configuration>
+            <groupId>org.apache.maven.plugins</groupId>
           </plugin>
         </plugins>
       </build>
+      <id>bs-test</id>
     </profile>
   </profiles>
+
+  <properties>
+    <assertj.version>3.25.3</assertj.version>
+    <extentreports.version>5.0.9</extentreports.version>
+    <faker.version>1.0.2</faker.version>
+    <gson.version>2.10.1</gson.version>
+    <guice.version>7.0.0</guice.version>
+    <jedis.version>5.0.0</jedis.version>
+    <lombok.version>1.18.30</lombok.version>
+    <maven.surefire.version>3.0.0-M7</maven.surefire.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <restassured.version>5.4.0</restassured.version>
+    <selenium.version>4.16.1</selenium.version>
+    <tesng.version>7.9.0</tesng.version>
+  </properties>
+
+  <url>http://maven.apache.org</url>
+  <version>1.0-SNAPSHOT</version>
 </project>

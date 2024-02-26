@@ -10,7 +10,7 @@ import org.kira.automation.configuration.web.ScreenshotConfiguration;
 @Getter
 public class MobileConfiguration {
 
-    ScreenshotConfiguration screenshot;
+  ScreenshotConfiguration screenshot;
 
 
 }
