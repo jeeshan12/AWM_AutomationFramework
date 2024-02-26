@@ -22,6 +22,10 @@ public final class FrameworkConstants {
 
     public static final String SAFARI = "safari";
 
+    public static final String IE = "ie";
+
+    public static final String OPERA = "opera";
+
     public static final String BROWSER = "browser";
     private static final String[] MANDATE_ANNOTATIONS = { "org.kira.automation.annotations.Web", "org.kira.automation.annotations.Api", "org.kira.automation.annotations.Mobile"};
     public static String[] getMandateAnnotations() {

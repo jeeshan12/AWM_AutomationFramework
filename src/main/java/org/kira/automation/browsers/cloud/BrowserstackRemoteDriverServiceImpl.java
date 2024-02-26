@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.cloud.CloudConfiguration;
-import org.kira.automation.configuration.cloud.browserstack.BrowserstackBrowserConfig;
 import org.kira.automation.configuration.cloud.browserstack.BrowserstackConfiguration;
+import org.kira.automation.configuration.cloud.CloudBrowserConfig;
 import org.kira.automation.enums.Platform;
 import org.kira.automation.exceptions.FrameworkGenericException;
 import org.openqa.selenium.MutableCapabilities;
@@ -30,7 +30,7 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
 
 
   @Override public WebDriver getWebDriver(Configuration configuration, Optional<Map<String, String>> capabilityMapOptional) {
-    BrowserstackConfiguration browserstackConfiguration = configuration.getWeb().getCloud().getProvider().getBrowserstack();
+    BrowserstackConfiguration browserstackConfiguration = configuration.getWeb().getCloud().getProvider().getBrowserstackConfiguration();
 
     String username = Optional.ofNullable(browserstackConfiguration.getUserName()).orElse(System.getProperty(CLOUD_USERNAME));
     String password = Optional.ofNullable(browserstackConfiguration.getAccessKey()).orElse(System.getProperty(CLOUD_ACCESS_KEY));
@@ -44,35 +44,34 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
     }
   }
 
-  private BrowserstackBrowserConfig getBrowserSpecificCapabilities(BrowserstackConfiguration browserstackConfiguration, String browserName) {
+  private CloudBrowserConfig getBrowserSpecificCapabilities(BrowserstackConfiguration browserstackConfiguration, String browserName) {
     BrowserstackBrowserConfigRetriever retriever = BROWSER_CONFIG_RETRIEVERS.get(browserName.toLowerCase());
-    if (retriever != null) {
-      return retriever.retrieve(browserstackConfiguration);
-    } else {
+    if (retriever == null) {
       throw new FrameworkGenericException("Please provide valid browser (e.g., chrome, firefox, edge, safari) in the config.json file in the cloud section");
     }
+    return retriever.retrieve(browserstackConfiguration);
   }
   @Override
   public MutableCapabilities getPlatformSpecificCapabilities(CloudConfiguration cloudConfiguration, Optional<Map<String, String>> capabilityMapOptional) {
-    BrowserstackConfiguration browserstackConfiguration = cloudConfiguration.getProvider().getBrowserstack();
+    BrowserstackConfiguration browserstackConfiguration = cloudConfiguration.getProvider().getBrowserstackConfiguration();
     MutableCapabilities capabilities = new MutableCapabilities();
     Map<String, Object> bstackOptions = new HashMap<>();
-
-    String browserName = browserstackConfiguration.getBrowserName();
-    BrowserstackBrowserConfig browserSpecificCapabilities = getBrowserSpecificCapabilities(browserstackConfiguration, browserName);
+    String browserName = capabilityMapOptional.isPresent() ? capabilityMapOptional.get().get(BROWSER_NAME) : browserstackConfiguration.getBrowserName();
+    CloudBrowserConfig browserSpecificCapabilities = getBrowserSpecificCapabilities(browserstackConfiguration, browserName);
     if (Platform.WEB.name().equalsIgnoreCase(cloudConfiguration.getPlatform())) {
+      capabilities.setCapability(BROWSER_NAME, browserName);
       capabilityMapOptional.ifPresentOrElse(
               map -> {
-                capabilities.setCapability(BROWSER_NAME, map.get(BROWSER_NAME));
                 bstackOptions.put(OS, map.get(OS));
                 bstackOptions.put(BROWSER_VERSION, map.get(BROWSER_VERSION));
                 bstackOptions.put(OS_VERSION, map.get(OS_VERSION));
+                bstackOptions.put(RESOLUTION, map.get(RESOLUTION));
               },
               () -> {
-                capabilities.setCapability(BROWSER_NAME, browserName);
                 bstackOptions.put(OS, browserSpecificCapabilities.getOs());
                 bstackOptions.put(OS_VERSION, browserSpecificCapabilities.getOsVersion());
                 bstackOptions.put(BROWSER_VERSION, browserSpecificCapabilities.getBrowserVersion());
+                bstackOptions.put(RESOLUTION, browserSpecificCapabilities.getResolution());
               }
       );
     }
@@ -83,12 +82,11 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
     bstackOptions.put("networkLogs", browserstackConfiguration.getNetworkLogs());
     bstackOptions.put("debug", browserstackConfiguration.getDebug());
     capabilities.setCapability("bstack:options", bstackOptions);
-
     return capabilities;
   }
 
   @FunctionalInterface
   interface BrowserstackBrowserConfigRetriever {
-    BrowserstackBrowserConfig retrieve(BrowserstackConfiguration configuration);
+    CloudBrowserConfig retrieve(BrowserstackConfiguration configuration);
   }
 }

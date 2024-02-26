@@ -13,7 +13,7 @@
     },
     "cloud": {
       "enabled": true,
-      "option": "browserstack",
+      "option": "lambdatest",
       "platform": "web",
       "provider": {
         "browserstack": {
@@ -43,7 +43,7 @@
             "os": "OS X",
             "os_version": "Monterey",
             "browser_version": "15.6",
-            "resolution": "1680x1050"
+            "resolution": "1024x768"
           },
           "edge": {
             "os": "Windows",
@@ -53,35 +53,48 @@
           }
         },
         "lambdatest": {
-          "sessionName": "Lambdatest session",
-          "buildName": "KIRA Web Automation Execution ",
+          "tunnel": false,
+          "buildName": "KIRA Web Automation Execution from LT",
           "projectName": "KIRA",
           "allowAllCookies": false,
-          "userName": "mjeeshan1",
+          "userName": "mjeeshan77",
           "accessKey": "",
           "browserName": "chrome",
+          "console": "true",
+          "timezone": "Kolkata",
+          "network": true,
+          "headless": false,
+          "video": false,
+          "visual": false,
+          "seleniumVersion": "4.6.0",
           "chrome": {
             "os": "Windows",
             "os_version": "10",
-            "browser_version": "latest",
+            "browser_version": "122.0",
             "resolution": "1024x768"
           },
           "firefox": {
             "os": "Windows",
-            "os_version": "10",
-            "browser_version": "latest",
+            "os_version": "11",
+            "browser_version": "121.0",
             "resolution": "1680x1050"
           },
           "safari": {
-            "os": "OS X",
-            "os_version": "Monterey",
-            "browser_version": "15.6",
-            "resolution": "1680x1050"
+            "os": "macOS",
+            "os_version": "Sonoma",
+            "browser_version": "17.0",
+            "resolution": "1024x768"
           },
           "edge": {
             "os": "Windows",
             "os_version": "11",
-            "browser_version": "latest",
+            "browser_version": "122.0",
+            "resolution": "1680x1050"
+          },
+          "ie": {
+            "os": "Windows",
+            "os_version": "11",
+            "browser_version": "11.0",
             "resolution": "1680x1050"
           }
         }
