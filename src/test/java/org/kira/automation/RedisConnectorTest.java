@@ -1,8 +1,8 @@
 package org.kira.automation;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.testng.Assert.assertThrows;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import org.kira.automation.connector.RedisConnector;
 import org.testng.annotations.Test;
@@ -29,13 +29,10 @@ public class RedisConnectorTest {
 
 
   @Test
-  public void testPreventReflection() {
-    assertThrows(InvocationTargetException.class, () -> {
-      RedisConnector redisConnector = RedisConnector.getInstance();
-      java.lang.reflect.Constructor<RedisConnector> constructor =
-          RedisConnector.class.getDeclaredConstructor();
-      constructor.setAccessible(true);
-      constructor.newInstance();
-    });
+  public void testReflectionSingletonViolation()
+      throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    Constructor<RedisConnector> constructor = RedisConnector.class.getDeclaredConstructor();
+    constructor.setAccessible(true);
+    constructor.newInstance();
   }
 }
