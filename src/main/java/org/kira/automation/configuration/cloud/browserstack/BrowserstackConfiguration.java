@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+import org.kira.automation.configuration.cloud.CloudBrowserConfig;
 
 @ToString
 @AllArgsConstructor
@@ -31,15 +32,15 @@ public class BrowserstackConfiguration {
   private String debug;
 
   @SerializedName("chrome")
-  private BrowserstackBrowserConfig chromeConfig;
+  private CloudBrowserConfig chromeConfig;
 
   @SerializedName("firefox")
-  private BrowserstackBrowserConfig firefoxConfig;
+  private CloudBrowserConfig firefoxConfig;
 
   @SerializedName("safari")
-  private BrowserstackBrowserConfig safariConfig;
+  private CloudBrowserConfig safariConfig;
 
   @SerializedName("edge")
-  private BrowserstackBrowserConfig edgeConfig;
+  private CloudBrowserConfig edgeConfig;
 
 }

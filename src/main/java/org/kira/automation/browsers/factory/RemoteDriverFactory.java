@@ -1,6 +1,8 @@
-package org.kira.automation.browsers.cloud;
+package org.kira.automation.browsers.factory;
 
-import org.kira.automation.annotations.WebCloud;
+import org.kira.automation.browsers.cloud.BrowserstackRemoteDriverServiceImpl;
+import org.kira.automation.browsers.cloud.CloudRemoteDriverService;
+import org.kira.automation.browsers.cloud.LambdatestRemoteDriverServiceImpl;
 import org.kira.automation.enums.CloudProvider;
 
 import java.util.HashMap;
@@ -13,7 +15,7 @@ public class RemoteDriverFactory {
 
     private static final Supplier<CloudRemoteDriverService> BROWSERSTACK_REMOTE_DRIVER_SERVICE_SUPPLIER = BrowserstackRemoteDriverServiceImpl::new;
 
-    private static final Supplier<CloudRemoteDriverService> LAMBDATEST_REMOTE_DRIVER_SERVICE_SUPPLIER = LambdaTestRemoteDriverServiceImpl::new;
+    private static final Supplier<CloudRemoteDriverService> LAMBDATEST_REMOTE_DRIVER_SERVICE_SUPPLIER = LambdatestRemoteDriverServiceImpl::new;
 
 
     private static final Map<String, Supplier<CloudRemoteDriverService>> REMOTE_DRIVER_MAP = new HashMap<>();

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.kira.automation.annotations.*;
-import org.kira.automation.browsers.cloud.RemoteDriverFactory;
+import org.kira.automation.browsers.factory.RemoteDriverFactory;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.exceptions.AnnotationMissingException;
 import org.kira.automation.browsers.BrowserConsumer;

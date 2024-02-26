@@ -6,7 +6,7 @@ import org.kira.automation.annotations.Web;
 import org.kira.automation.runner.TestSuiteRunner;
 import org.testng.annotations.Test;
 
-public class CloudExecutionTest extends TestSuiteRunner {
+public class CloudExecutionBrowserstackTest extends TestSuiteRunner {
 
 
     @Test
