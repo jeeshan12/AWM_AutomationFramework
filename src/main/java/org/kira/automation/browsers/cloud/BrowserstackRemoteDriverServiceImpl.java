@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import org.kira.automation.configuration.Configuration;
-import org.kira.automation.configuration.cloud.CloudBrowserConfig;
+import org.kira.automation.configuration.cloud.CloudBrowserConfiguration;
 import org.kira.automation.configuration.cloud.CloudConfiguration;
 import org.kira.automation.configuration.cloud.browserstack.BrowserstackConfiguration;
 import org.kira.automation.enums.Platform;
@@ -64,7 +64,7 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
     }
   }
 
-  private CloudBrowserConfig getBrowserSpecificCapabilities(
+  private CloudBrowserConfiguration getBrowserSpecificCapabilities(
       BrowserstackConfiguration browserstackConfiguration, String browserName) {
     BrowserstackBrowserConfigRetriever retriever = BROWSER_CONFIG_RETRIEVERS.get(
         browserName.toLowerCase());
@@ -85,7 +85,7 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
     String browserName =
         capabilityMapOptional.isPresent() ? capabilityMapOptional.get().get(BROWSER_NAME)
             : browserstackConfiguration.getBrowserName();
-    CloudBrowserConfig browserSpecificCapabilities = getBrowserSpecificCapabilities(
+    CloudBrowserConfiguration browserSpecificCapabilities = getBrowserSpecificCapabilities(
         browserstackConfiguration, browserName);
     if (Platform.WEB.name().equalsIgnoreCase(cloudConfiguration.getPlatform())) {
       capabilities.setCapability(BROWSER_NAME, browserName);
@@ -117,6 +117,6 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
   @FunctionalInterface
   interface BrowserstackBrowserConfigRetriever {
 
-    CloudBrowserConfig retrieve(BrowserstackConfiguration configuration);
+    CloudBrowserConfiguration retrieve(BrowserstackConfiguration configuration);
   }
 }

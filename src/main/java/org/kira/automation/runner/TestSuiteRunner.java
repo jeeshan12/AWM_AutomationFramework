@@ -10,7 +10,9 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import java.lang.reflect.Method;
+import org.json.JSONObject;
 import org.kira.automation.annotations.Api;
+import org.kira.automation.configuration.api.GraphQLQuery;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -72,6 +74,16 @@ public class TestSuiteRunner {
   protected ResponseSpecification getResponseSpecification() {
     MethodContextImpl context = methodContextThreadLocal.get();
     return context.getResponseSpecification();
+  }
+
+  protected GraphQLQuery getGraphQlQueryInstance() {
+    MethodContextImpl context = methodContextThreadLocal.get();
+    return context.getGraphQlQueryInstance();
+  }
+
+  protected JSONObject getGraphQlQueryVariablesObject() {
+    MethodContextImpl context = methodContextThreadLocal.get();
+    return context.getGraphQlQueryVariablesObject();
   }
 
 }

@@ -1,5 +1,6 @@
 package org.kira.automation.configuration.api;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -9,10 +10,16 @@ import lombok.ToString;
 @Getter
 public class ApiConfiguration {
 
-  private String baseurl;
   private ApiLoggingConfiguration log;
+
   private int responseTimeOut;
 
-  private String basePath;
+  @SerializedName("graphql")
+  private GraphQlConfiguration graphQLConfiguration;
+
+  @SerializedName("rest")
+  private RestConfiguration restConfiguration;
+
+  private String backend;
 
 }

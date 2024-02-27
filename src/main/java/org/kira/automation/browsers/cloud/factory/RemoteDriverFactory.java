@@ -1,4 +1,4 @@
-package org.kira.automation.browsers.factory;
+package org.kira.automation.browsers.cloud.factory;
 
 import java.util.HashMap;
 import java.util.Map;

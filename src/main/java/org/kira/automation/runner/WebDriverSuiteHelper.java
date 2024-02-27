@@ -22,7 +22,7 @@ import org.kira.automation.annotations.iOS;
 import org.kira.automation.browsers.BrowserConsumer;
 import org.kira.automation.browsers.ChromeBrowserServiceInjector;
 import org.kira.automation.browsers.FirefoxBrowserServiceInjector;
-import org.kira.automation.browsers.factory.RemoteDriverFactory;
+import org.kira.automation.browsers.cloud.factory.RemoteDriverFactory;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.exceptions.AnnotationMissingException;
 import org.kira.automation.exceptions.FrameworkGenericException;

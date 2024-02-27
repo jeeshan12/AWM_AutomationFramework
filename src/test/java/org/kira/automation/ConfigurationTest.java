@@ -21,6 +21,8 @@ public class ConfigurationTest {
     System.out.println(webConfiguration.getWeb().getBrowserOptions().getChrome());
     System.out.println(webConfiguration.getWeb().getCloud());
     System.out.println(webConfiguration.getWeb().getSeleniumGrid());
+    System.out.println(webConfiguration.getApi().getRestConfiguration());
+    System.out.println(webConfiguration.getApi().getGraphQLConfiguration());
 
   }
 
