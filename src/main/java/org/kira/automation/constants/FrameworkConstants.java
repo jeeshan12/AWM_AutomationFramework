@@ -45,6 +45,10 @@ public final class FrameworkConstants {
   private FrameworkConstants() {
   }
 
+  public static final String GRAPHQL_QUERY_PATH = Optional.ofNullable(
+          TestSuiteHelper.getConfiguration().getApi().getGraphQLConfiguration().getQueryPath())
+      .orElse("src/test/resources/queries/");
+
   public static String[] getMandateAnnotations() {
     return Arrays.copyOf(MANDATE_ANNOTATIONS, MANDATE_ANNOTATIONS.length);
   }

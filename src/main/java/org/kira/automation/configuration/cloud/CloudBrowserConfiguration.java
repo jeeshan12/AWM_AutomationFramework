@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @Getter
-public class CloudBrowserConfig {
+public class CloudBrowserConfiguration {
 
   private String os;
 

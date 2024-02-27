@@ -19,9 +19,9 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import org.kira.automation.browsers.factory.LambdatestBrowserFactory;
+import org.kira.automation.browsers.cloud.factory.LambdatestBrowserFactory;
 import org.kira.automation.configuration.Configuration;
-import org.kira.automation.configuration.cloud.CloudBrowserConfig;
+import org.kira.automation.configuration.cloud.CloudBrowserConfiguration;
 import org.kira.automation.configuration.cloud.CloudConfiguration;
 import org.kira.automation.configuration.cloud.lambdatest.LambdatestConfiguration;
 import org.kira.automation.enums.Platform;
@@ -76,7 +76,7 @@ public class LambdatestRemoteDriverServiceImpl implements CloudRemoteDriverServi
     String browserName =
         capabilityMapOptional.isPresent() ? capabilityMapOptional.get().get(BROWSER_NAME)
             : lambdatestConfiguration.getBrowserName();
-    CloudBrowserConfig browserSpecificCapabilities = getBrowserSpecificCapabilities(
+    CloudBrowserConfiguration browserSpecificCapabilities = getBrowserSpecificCapabilities(
         lambdatestConfiguration, browserName);
     AbstractDriverOptions<?> browserOptions = LambdatestBrowserFactory.getBrowserOptions(
         browserName);
@@ -113,7 +113,7 @@ public class LambdatestRemoteDriverServiceImpl implements CloudRemoteDriverServi
     return browserOptions;
   }
 
-  private CloudBrowserConfig getBrowserSpecificCapabilities(
+  private CloudBrowserConfiguration getBrowserSpecificCapabilities(
       LambdatestConfiguration lambdatestConfiguration, String browserName) {
     LambdatestBrowserConfigRetriever retriever = BROWSER_CONFIG_RETRIEVERS.get(
         browserName.toLowerCase());
@@ -127,6 +127,6 @@ public class LambdatestRemoteDriverServiceImpl implements CloudRemoteDriverServi
   @FunctionalInterface
   interface LambdatestBrowserConfigRetriever {
 
-    CloudBrowserConfig retrieve(LambdatestConfiguration lambdatestConfiguration);
+    CloudBrowserConfiguration retrieve(LambdatestConfiguration lambdatestConfiguration);
   }
 }

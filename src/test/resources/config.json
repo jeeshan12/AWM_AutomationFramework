@@ -12,7 +12,7 @@
       }
     },
     "cloud": {
-      "enabled": true,
+      "enabled": false,
       "option": "lambdatest",
       "platform": "web",
       "provider": {
@@ -175,13 +175,21 @@
     }
   },
   "api": {
-    "baseurl": "https://reqres.in",
+    "backend": "rest",
+    "rest": {
+      "baseurl": "https://reqres.in",
+      "basePath": "/api"
+    },
+    "responseTimeOut": 3000,
+    "graphql": {
+      "baseurl": "https://rickandmortyapi.com",
+      "basePath": "/graphql",
+      "queryPath": "src/test/resources/queries/"
+    },
     "log": {
       "request": true,
       "response": true
-    },
-    "responseTimeOut": 3000,
-    "basePath": "/api"
+    }
   },
   "report": {
     "path": "target/spark/spark.html",

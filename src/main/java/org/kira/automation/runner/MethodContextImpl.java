@@ -6,6 +6,8 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import java.lang.reflect.Method;
+import org.json.JSONObject;
+import org.kira.automation.configuration.api.GraphQLQuery;
 import org.openqa.selenium.WebDriver;
 import redis.clients.jedis.Jedis;
 
@@ -18,6 +20,10 @@ public class MethodContextImpl implements MethodContext {
   private ResponseSpecification responseSpecification;
   private RequestSpecBuilder requestSpecBuilder;
   private ResponseSpecBuilder responseSpecBuilder;
+
+  private GraphQLQuery graphQLQuery;
+
+  private JSONObject graphQlObject;
 
   private Jedis jedis;
 
@@ -82,10 +88,32 @@ public class MethodContextImpl implements MethodContext {
 
   @Override
   public Jedis getJedisConnection() {
-    return null;
+    return this.jedis;
+  }
+
+  @Override
+  public GraphQLQuery getGraphQlQueryInstance() {
+    return this.graphQLQuery;
+  }
+
+  @Override
+  public JSONObject getGraphQlQueryVariablesObject() {
+    return this.graphQlObject;
   }
 
   public void setExtentTest(final ExtentTest extentTest) {
     this.extentTest = extentTest;
+  }
+
+  public void setGraphQLQuery(GraphQLQuery graphQLQuery) {
+    this.graphQLQuery = graphQLQuery;
+  }
+
+  public void setGraphQlVariablesObject(JSONObject graphQlObject) {
+    this.graphQlObject = graphQlObject;
+  }
+
+  public void setJedis(Jedis jedis) {
+    this.jedis = jedis;
   }
 }

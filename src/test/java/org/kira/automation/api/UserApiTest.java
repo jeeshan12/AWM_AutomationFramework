@@ -38,7 +38,8 @@ public class UserApiTest extends TestSuiteRunner {
     UserResponse userResponse =
         UserService.createUserWithStatusCreatedAndReturnResponse(getRequestSpecBuilder(),
             userRequest,
-            HttpStatus.SC_CREATED);
+            HttpStatus.SC_CREATED
+        );
 
     SoftAssertions.assertSoftly(softly -> {
       softly.assertThat(userResponse.getName()).as("User name").isEqualTo(userRequest.getName());
@@ -57,7 +58,8 @@ public class UserApiTest extends TestSuiteRunner {
     UserDetails userDetails =
         UserService.getUserDetailsWithStatusOkAndReturnUserDetailsResponse(getRequestSpecBuilder(),
             "2",
-            HttpStatus.SC_OK);
+            HttpStatus.SC_OK
+        );
 
     SoftAssertions.assertSoftly(softly -> {
       softly.assertThat(userDetails.getPage()).as("Page").isEqualTo(2);

@@ -1,4 +1,4 @@
-package org.kira.automation.browsers.factory;
+package org.kira.automation.browsers.cloud.factory;
 
 import static org.kira.automation.constants.FrameworkConstants.CHROME;
 import static org.kira.automation.constants.FrameworkConstants.EDGE;
