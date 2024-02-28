@@ -137,7 +137,7 @@
     <faker.version>1.0.2</faker.version>
     <gson.version>2.10.1</gson.version>
     <guice.version>7.0.0</guice.version>
-    <jedis.version>5.0.0</jedis.version>
+    <jedis.version>jedis-3.6.2</jedis.version>
     <lombok.version>1.18.30</lombok.version>
     <maven.surefire.version>3.0.0-M7</maven.surefire.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
