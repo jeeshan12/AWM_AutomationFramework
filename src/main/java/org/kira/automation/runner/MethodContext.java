@@ -8,7 +8,6 @@ import io.restassured.specification.ResponseSpecification;
 import org.json.JSONObject;
 import org.kira.automation.configuration.api.GraphQLQuery;
 import org.openqa.selenium.WebDriver;
-import redis.clients.jedis.Jedis;
 
 public interface MethodContext {
 
@@ -25,8 +24,6 @@ public interface MethodContext {
   RequestSpecBuilder getRequestSpecBuilder();
 
   ResponseSpecBuilder getResponseSpecBuilder();
-
-  Jedis getJedisConnection();
 
   GraphQLQuery getGraphQlQueryInstance();
 

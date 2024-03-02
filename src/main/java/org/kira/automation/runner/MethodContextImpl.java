@@ -9,7 +9,6 @@ import java.lang.reflect.Method;
 import org.json.JSONObject;
 import org.kira.automation.configuration.api.GraphQLQuery;
 import org.openqa.selenium.WebDriver;
-import redis.clients.jedis.Jedis;
 
 public class MethodContextImpl implements MethodContext {
 
@@ -24,8 +23,6 @@ public class MethodContextImpl implements MethodContext {
   private GraphQLQuery graphQLQuery;
 
   private JSONObject graphQlObject;
-
-  private Jedis jedis;
 
   public MethodContextImpl(final Method method) {
     this.method = method;
@@ -82,13 +79,9 @@ public class MethodContextImpl implements MethodContext {
     return this.responseSpecBuilder;
   }
 
+
   public void setResponseSpecBuilder(final ResponseSpecBuilder responseSpecBuilder) {
     this.responseSpecBuilder = responseSpecBuilder;
-  }
-
-  @Override
-  public Jedis getJedisConnection() {
-    return this.jedis;
   }
 
   @Override
@@ -113,7 +106,4 @@ public class MethodContextImpl implements MethodContext {
     this.graphQlObject = graphQlObject;
   }
 
-  public void setJedis(Jedis jedis) {
-    this.jedis = jedis;
-  }
 }

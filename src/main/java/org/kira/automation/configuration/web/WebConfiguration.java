@@ -19,4 +19,7 @@ public class WebConfiguration {
   private CloudConfiguration cloud;
   @SerializedName("grid")
   private GridConfiguration seleniumGrid;
+
+  @SerializedName("storageState")
+  private StorageStateConfiguration storageStateConfiguration;
 }
