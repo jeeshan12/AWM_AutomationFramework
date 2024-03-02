@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.kira.automation.exceptions.FrameworkGenericException;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 
@@ -64,7 +65,9 @@ public class CookieUtils {
         try {
           builder.expiresOn(new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z").parse(cookieMap.get("Expires")));
         } catch (ParseException e) {
-          e.printStackTrace();
+          throw new FrameworkGenericException(String.format(
+              "Error while parsing date %s", e.getMessage()
+          ));
         }
       }
 
