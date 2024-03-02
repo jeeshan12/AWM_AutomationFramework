@@ -22,7 +22,7 @@ public class RedisManager {
 
   public void storeState(Set<String> state) {
     try (Jedis jedis = redisConnector.getRedisConnection(this.url, this.port)) {
-      if (!jedis.exists(this.stateKey)) {
+      if (!Boolean.TRUE.equals(jedis.exists(this.stateKey))) {
         jedis.sadd(this.stateKey, state.toArray(new String[0]));
       }
     }
