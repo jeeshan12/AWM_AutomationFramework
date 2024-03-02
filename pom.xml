@@ -91,6 +91,12 @@
       <version>${jedis.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>${json.version}</version>
+    </dependency>
+
 
     <dependency>
       <artifactId>javafaker</artifactId>
@@ -144,6 +150,7 @@
     <restassured.version>5.4.0</restassured.version>
     <selenium.version>4.16.1</selenium.version>
     <tesng.version>7.9.0</tesng.version>
+    <json.version>20240205</json.version>
   </properties>
 
   <url>http://maven.apache.org</url>
