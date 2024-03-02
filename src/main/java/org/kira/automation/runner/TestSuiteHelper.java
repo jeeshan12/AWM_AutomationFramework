@@ -17,6 +17,8 @@ import org.kira.automation.annotations.Firefox;
 import org.kira.automation.annotations.Mobile;
 import org.kira.automation.annotations.Web;
 import org.kira.automation.configuration.Configuration;
+import org.kira.automation.configuration.web.StorageStateConfiguration;
+import org.kira.automation.connector.RedisManager;
 import org.kira.automation.constants.FrameworkConstants;
 import org.kira.automation.exceptions.AnnotationMissingException;
 import org.kira.automation.report.ExtentTestManager;
@@ -148,5 +150,16 @@ public class TestSuiteHelper {
           MarkupHelper.createLabel(String.format("Test %s skipped", context.method.getName()),
               ExtentColor.AMBER));
     }
+  }
+
+   static void setUpRedis(SuiteContextImpl suiteContext) {
+     StorageStateConfiguration storageStateConfiguration = TestSuiteHelper.getConfiguration()
+         .getWeb().getStorageStateConfiguration();
+     if (storageStateConfiguration.isStorageStateEnabled() && storageStateConfiguration.isRedisEnabled()) {
+       RedisManager redisManager = new RedisManager(
+           storageStateConfiguration.getRedisUrl(), storageStateConfiguration.getRedisPort(), storageStateConfiguration.getStorageStateKey()
+       );
+       suiteContext.setRedisManager(redisManager);
+     }
   }
 }

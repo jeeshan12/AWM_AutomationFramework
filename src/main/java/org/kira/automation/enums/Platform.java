@@ -1,5 +1,8 @@
 package org.kira.automation.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Platform {
 
   WEB("web"),
@@ -11,7 +14,4 @@ public enum Platform {
     this.platformForExecution = platform;
   }
 
-  public String getPlatform() {
-    return platformForExecution;
-  }
 }
