@@ -1,10 +1,10 @@
 package org.kira.automation.web.tests;
 
-import java.util.Set;
 import org.kira.automation.annotations.Chrome;
+import org.kira.automation.annotations.Firefox;
 import org.kira.automation.annotations.Web;
 import org.kira.automation.runner.TestSuiteRunner;
-import org.kira.automation.utils.CookieUtils;
+import org.kira.automation.utils.SessionStorageUtil;
 import org.kira.automation.web.pages.LoginPage;
 import org.kira.automation.web.pages.ProductPage;
 import org.testng.Assert;
@@ -17,6 +17,8 @@ public class LoginTest extends TestSuiteRunner {
 
   private ProductPage productPage;
 
+  private String sessionStorage;
+
   @BeforeMethod
   public void setUp() {
     this.loginPage = new LoginPage(getDriver());
@@ -26,13 +28,20 @@ public class LoginTest extends TestSuiteRunner {
 
   @Test
   @Web
-  @Chrome
+  @Firefox
   public void performLogin() {
     this.loginPage.performLogin("standard_user", "secret_sauce");
     Assert.assertEquals( this.productPage.retrieveProductLabelText(), "Products");
-    Set<String> cookiesAsSet = CookieUtils.getCookiesAsSet(getDriver());
-    System.out.println(getDriver().manage().getCookies());
-    System.out.println(cookiesAsSet);
+    sessionStorage = SessionStorageUtil.getSessionStorage(getDriver());
+  }
+
+  @Test(dependsOnMethods = "performLogin")
+  @Web
+  @Chrome
+  public void testSessionStorage() {
+    SessionStorageUtil.setSessionStorage(getDriver(), "www.saucedemo.com", sessionStorage);
+    getDriver().navigate().to("https://www.saucedemo.com/v1/inventory.html");
+    Assert.assertEquals( this.productPage.retrieveProductLabelText(), "Products");
   }
 
 }
