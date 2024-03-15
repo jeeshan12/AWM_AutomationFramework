@@ -9,7 +9,7 @@ import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class RemoteDriverServiceImpl implements BrowserDriverService {
+public class RemoteDriverServiceImpl implements WebDriverService {
 
   @Override
   public WebDriver getWebDriver(Configuration configuration) {

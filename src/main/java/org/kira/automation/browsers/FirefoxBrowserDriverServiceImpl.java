@@ -11,7 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
-public class FirefoxBrowserDriverServiceImpl implements BrowserDriverService {
+public class FirefoxBrowserDriverServiceImpl implements WebDriverService {
 
   @Override
   public WebDriver getWebDriver(final Configuration configuration) {

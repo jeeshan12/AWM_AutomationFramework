@@ -7,7 +7,7 @@ public class ChromeBrowserServiceInjector extends AbstractModule {
   @Override
   protected void configure() {
 
-    bind(BrowserDriverService.class).to(ChromeBrowserDriverServiceImpl.class);
+    bind(WebDriverService.class).to(ChromeBrowserDriverServiceImpl.class);
 
   }
 

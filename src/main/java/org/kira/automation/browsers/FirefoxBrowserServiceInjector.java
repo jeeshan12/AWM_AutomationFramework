@@ -7,7 +7,7 @@ public class FirefoxBrowserServiceInjector extends AbstractModule {
   @Override
   protected void configure() {
 
-    bind(BrowserDriverService.class).to(FirefoxBrowserDriverServiceImpl.class);
+    bind(WebDriverService.class).to(FirefoxBrowserDriverServiceImpl.class);
 
   }
 }

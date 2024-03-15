@@ -105,6 +105,13 @@
     </dependency>
 
     <dependency>
+      <groupId>io.appium</groupId>
+      <artifactId>java-client</artifactId>
+      <version>${appium.version}</version>
+    </dependency>
+
+
+    <dependency>
       <artifactId>assertj-core</artifactId>
       <groupId>org.assertj</groupId>
       <version>${assertj.version}</version>
@@ -151,6 +158,7 @@
     <selenium.version>4.16.1</selenium.version>
     <tesng.version>7.9.0</tesng.version>
     <json.version>20240205</json.version>
+    <appium.version>9.1.0</appium.version>
   </properties>
 
   <url>http://maven.apache.org</url>

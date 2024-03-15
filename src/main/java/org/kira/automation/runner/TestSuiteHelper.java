@@ -119,7 +119,7 @@ public class TestSuiteHelper {
         SCREENSHOT_REQUIRED.test(context.method, configuration.getWeb().getScreenshot().isEnabled())
             &&
             SCREENSHOT_REQUIRED.test(context.method,
-                configuration.getMobile().getScreenshot().isEnabled());
+                configuration.getMobile().getScreenshotConfiguration().isEnabled());
   }
 
   private static String getMethodNameWithClassName(final Method method) {

@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class ChromeBrowserDriverServiceImpl implements BrowserDriverService {
+public class ChromeBrowserDriverServiceImpl implements WebDriverService {
 
   @Override
   public WebDriver getWebDriver(final Configuration configuration) {
