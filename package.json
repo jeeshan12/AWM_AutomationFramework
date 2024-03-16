@@ -1,0 +1,36 @@
+{
+  "name": "kira",
+  "version": "1.0.0",
+  "description": "Framework for mobile, web and api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeeshan12/AWM_AutomationFramework.git"
+  },
+  "keywords": [
+    "web",
+    "mobile",
+    "api",
+    "appium",
+    "restassured",
+    "graphql",
+    "selenium",
+    "webdriver",
+    "testng"
+  ],
+  "author": "Mohammad Jeeshan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeeshan12/AWM_AutomationFramework/issues"
+  },
+  "homepage": "https://github.com/jeeshan12/AWM_AutomationFramework#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^19.2.0",
+    "@commitlint/config-conventional": "^19.1.0",
+    "husky": "^9.0.11"
+  }
+}

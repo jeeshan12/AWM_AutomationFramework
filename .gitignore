@@ -16,3 +16,5 @@ buildNumber.properties
 .idea
 logs/browserstack-plugin.log
 .auth/
+
+node_modules
