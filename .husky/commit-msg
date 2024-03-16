@@ -1,1 +1,4 @@
-npx --no -- commitlint --edit $1
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+mvn clean install -f pom.xml -DskipTests
