@@ -54,4 +54,6 @@ public class AndroidConfiguration {
 
   @SerializedName("deviceLock")
   private DeviceLockConfiguration deviceLockConfiguration;
+
+  private String chromedriverExecutable;
 }

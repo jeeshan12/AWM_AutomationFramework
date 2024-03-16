@@ -7,6 +7,8 @@ import io.appium.java_client.android.AndroidDriver;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.mobile.AndroidConfiguration;
 import org.kira.automation.drivers.WebDriverService;
@@ -22,9 +24,15 @@ public class AndroidDriverServiceImpl implements WebDriverService {
     MutableCapabilities capabilities = new MutableCapabilities();
     addGlobalCapabilitiesForAppium(configuration.getMobile(), capabilities);
     configureCapabilities(androidConfiguration, capabilities);
-    if (androidConfiguration.getDeviceLockConfiguration().isDeviceLockEnabled()) {
-      addDeviceLockCapabilities(androidConfiguration, capabilities);
-    }
+    Optional.ofNullable(androidConfiguration.getDeviceLockConfiguration().isDeviceLockEnabled())
+        .filter(Boolean::booleanValue)
+        .ifPresent(enabled -> addDeviceLockCapabilities(androidConfiguration, capabilities));
+    Optional.ofNullable(androidConfiguration.getBrowserName())
+        .filter(StringUtils::isNotEmpty)
+        .ifPresent(browserName -> capabilities.setCapability("browserName", browserName));
+    Optional.ofNullable(androidConfiguration.getChromedriverExecutable())
+        .filter(StringUtils::isNotEmpty)
+        .ifPresent(chromedriverExecutable -> capabilities.setCapability(WebDriverService.getCapabilityWithAppiumPrefix("chromedriverExecutable"), chromedriverExecutable));
     addAdditionalCapabilities(androidConfiguration.getAdditionalCapabilities(), capabilities);
     try {
       return new AndroidDriver(
@@ -32,7 +40,7 @@ public class AndroidDriverServiceImpl implements WebDriverService {
               configuration.getMobile().getPort())
           ).toURL(), capabilities);
     } catch (MalformedURLException | URISyntaxException e) {
-      throw new FrameworkGenericException("Error while creating the webdriver reference", e);
+      throw new FrameworkGenericException("Error while creating the web driver reference", e);
     }
   }
 
