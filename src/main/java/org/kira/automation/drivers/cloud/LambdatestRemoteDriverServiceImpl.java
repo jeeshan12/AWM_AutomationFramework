@@ -1,4 +1,4 @@
-package org.kira.automation.browsers.cloud;
+package org.kira.automation.drivers.cloud;
 
 import static org.kira.automation.constants.FrameworkConstants.BROWSER_NAME;
 import static org.kira.automation.constants.FrameworkConstants.BROWSER_VERSION;
@@ -19,7 +19,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import org.kira.automation.browsers.cloud.factory.LambdatestBrowserFactory;
+import org.kira.automation.drivers.cloud.factory.LambdatestBrowserFactory;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.cloud.CloudBrowserConfiguration;
 import org.kira.automation.configuration.cloud.CloudConfiguration;

@@ -1,8 +1,9 @@
-package org.kira.automation.browsers;
+package org.kira.automation.drivers.remote;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import org.kira.automation.drivers.WebDriverService;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.exceptions.FrameworkGenericException;
 import org.openqa.selenium.MutableCapabilities;

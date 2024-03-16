@@ -1,9 +1,10 @@
-package org.kira.automation.browsers;
+package org.kira.automation.drivers.web;
 
-import static org.kira.automation.browsers.FirefoxOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
-import static org.kira.automation.browsers.FirefoxOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
-import static org.kira.automation.browsers.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
+import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
+import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
+import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
 
+import org.kira.automation.drivers.WebDriverService;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.FirefoxOptionsConfig;
 import org.openqa.selenium.WebDriver;

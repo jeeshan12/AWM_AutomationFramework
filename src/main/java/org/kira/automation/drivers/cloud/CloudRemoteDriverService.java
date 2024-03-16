@@ -1,4 +1,4 @@
-package org.kira.automation.browsers.cloud;
+package org.kira.automation.drivers.cloud;
 
 import java.util.Map;
 import java.util.Optional;

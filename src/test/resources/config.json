@@ -149,15 +149,15 @@
     "eventTimings": false,
     "printPageSourceOnFindFailure": false,
     "platform": "android",
-    "deviceLock" : {
-      "skipUnlock": true,
-      "unlockType": "",
-      "unlockKey": "",
-      "unlockStrategy": "locksettings",
-      "unlockSuccessTimeout": "25000"
-    },
-
     "android": {
+      "deviceLock" : {
+        "enabled": false,
+        "skipUnlock": true,
+        "unlockType": "",
+        "unlockKey": "",
+        "unlockStrategy": "locksettings",
+        "unlockSuccessTimeout": 25000
+      },
       "isParallel": false,
       "isHeadless": false,
       "appPath": "src/test/resources/apps/android/",
@@ -165,11 +165,11 @@
       "automationName": "UiAutomator2",
       "browserName": "",
       "appName": "ApiDemos-debug.apk",
-      "deviceName": "",
-      "platformVersion": "",
+      "deviceName": "pixel_7_pro",
+      "platformVersion": "14",
       "appActivity": "",
       "appPackage": "",
-      "udid": "",
+      "udid": "emulator-5554",
       "systemPort": 8201,
       "options": ["autoGrantPermissions=true,autoLaunch=true,appWaitDuration=20000"]
     },

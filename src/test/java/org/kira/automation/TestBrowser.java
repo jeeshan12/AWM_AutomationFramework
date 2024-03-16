@@ -4,11 +4,11 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.util.HashMap;
 import java.util.Map;
-import org.kira.automation.browsers.BrowserConsumer;
-import org.kira.automation.browsers.ChromeBrowserServiceInjector;
-import org.kira.automation.browsers.FirefoxBrowserServiceInjector;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.constants.FrameworkConstants;
+import org.kira.automation.drivers.DriverConsumer;
+import org.kira.automation.drivers.web.ChromeBrowserServiceInjector;
+import org.kira.automation.drivers.web.FirefoxBrowserServiceInjector;
 import org.kira.automation.utils.FileUtils;
 import org.kira.automation.utils.JsonParserUtil;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +33,7 @@ public class TestBrowser {
   @Test
   public void testFirefoxBrowser() {
     Injector firefoxDriverInjector = Guice.createInjector(new FirefoxBrowserServiceInjector());
-    BrowserConsumer browserConsumer = firefoxDriverInjector.getInstance(BrowserConsumer.class);
+    DriverConsumer browserConsumer = firefoxDriverInjector.getInstance(DriverConsumer.class);
     this.driver = browserConsumer.getWebDriver(this.webConfiguration);
     this.driver.navigate().to("https://google.com/");
   }
@@ -42,8 +42,8 @@ public class TestBrowser {
   public void testChromeBrowser() {
     Map<String, String> map = new HashMap<>();
     Injector chromeDriverInjector = Guice.createInjector(new ChromeBrowserServiceInjector());
-    BrowserConsumer browserConsumer = chromeDriverInjector.getInstance(BrowserConsumer.class);
-    this.driver = browserConsumer.getWebDriver(this.webConfiguration);
+    DriverConsumer driverConsumer = chromeDriverInjector.getInstance(DriverConsumer.class);
+    this.driver = driverConsumer.getWebDriver(this.webConfiguration);
     this.driver.navigate().to("https://google.com/");
   }
 

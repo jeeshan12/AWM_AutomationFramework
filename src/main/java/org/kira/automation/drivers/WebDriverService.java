@@ -1,4 +1,4 @@
-package org.kira.automation.browsers;
+package org.kira.automation.drivers;
 
 import io.appium.java_client.internal.CapabilityHelpers;
 import java.util.List;
@@ -12,22 +12,26 @@ public interface WebDriverService {
 
   WebDriver getWebDriver(final Configuration configuration);
 
-  default String getCapabilityWithAppiumPrefix(String capabilityName) {
+  static String getCapabilityWithAppiumPrefix(String capabilityName) {
     return String.format("%s%s", CapabilityHelpers.APPIUM_PREFIX, capabilityName);
   }
 
   default void addAdditionalCapabilities(List<String> additionalCapabilities, MutableCapabilities capabilities) {
     for (String capability : additionalCapabilities) {
-      String[] caps = capability.split("=");
-      String key = caps[0];
-      String value = caps[1];
-      if (ConverterUtil.isBoolean(value)) {
-        capabilities.setCapability(key, Boolean.parseBoolean(value));
-      } else if (ConverterUtil.isNumeric(caps[1])) {
-        capabilities.setCapability(key, Integer.parseInt(value));
-      } else {
-        capabilities.setCapability(key, value);
+      String[] caps = capability.split(",");
+      for (String cap: caps) {
+        String[] capArray =  cap.split("=");
+        String key = capArray[0];
+        String value = capArray[1];
+        if (ConverterUtil.isBoolean(value)) {
+          capabilities.setCapability(key, Boolean.parseBoolean(value));
+        } else if (ConverterUtil.isNumeric(value)) {
+          capabilities.setCapability(key, Integer.parseInt(value));
+        } else {
+          capabilities.setCapability(key, value);
+        }
       }
+
     }
   }
 

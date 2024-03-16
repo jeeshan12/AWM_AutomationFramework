@@ -51,4 +51,7 @@ public class AndroidConfiguration {
 
   @SerializedName("options")
   private List<String> additionalCapabilities;
+
+  @SerializedName("deviceLock")
+  private DeviceLockConfiguration deviceLockConfiguration;
 }

@@ -30,9 +30,6 @@ public class MobileConfiguration {
 
   private String  platform;
 
-  @SerializedName("deviceLock")
-  private DeviceLockConfiguration deviceLockConfiguration;
-
   @SerializedName("android")
   private AndroidConfiguration androidConfiguration;
 

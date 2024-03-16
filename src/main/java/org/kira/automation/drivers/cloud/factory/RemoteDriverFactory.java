@@ -1,11 +1,11 @@
-package org.kira.automation.browsers.cloud.factory;
+package org.kira.automation.drivers.cloud.factory;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-import org.kira.automation.browsers.cloud.BrowserstackRemoteDriverServiceImpl;
-import org.kira.automation.browsers.cloud.CloudRemoteDriverService;
-import org.kira.automation.browsers.cloud.LambdatestRemoteDriverServiceImpl;
+import org.kira.automation.drivers.cloud.BrowserstackRemoteDriverServiceImpl;
+import org.kira.automation.drivers.cloud.CloudRemoteDriverService;
+import org.kira.automation.drivers.cloud.LambdatestRemoteDriverServiceImpl;
 import org.kira.automation.enums.CloudProvider;
 
 public class RemoteDriverFactory {

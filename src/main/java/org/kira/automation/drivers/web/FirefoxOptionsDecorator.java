@@ -1,4 +1,4 @@
-package org.kira.automation.browsers;
+package org.kira.automation.drivers.web;
 
 import java.util.List;
 import java.util.function.BiConsumer;

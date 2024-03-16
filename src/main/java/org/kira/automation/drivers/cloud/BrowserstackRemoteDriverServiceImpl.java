@@ -1,4 +1,4 @@
-package org.kira.automation.browsers.cloud;
+package org.kira.automation.drivers.cloud;
 
 import static org.kira.automation.constants.FrameworkConstants.BROWSER_NAME;
 import static org.kira.automation.constants.FrameworkConstants.BROWSER_VERSION;

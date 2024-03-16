@@ -1,9 +1,10 @@
-package org.kira.automation.browsers;
+package org.kira.automation.drivers.web;
 
-import static org.kira.automation.browsers.ChromeOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
-import static org.kira.automation.browsers.ChromeOptionsDecorator.CHROME_HEADLESS_DECORATOR;
-import static org.kira.automation.browsers.ChromeOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
+import static org.kira.automation.drivers.web.ChromeOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
+import static org.kira.automation.drivers.web.ChromeOptionsDecorator.CHROME_HEADLESS_DECORATOR;
+import static org.kira.automation.drivers.web.ChromeOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
 
+import org.kira.automation.drivers.WebDriverService;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.ChromeOptionsConfig;
 import org.openqa.selenium.WebDriver;
