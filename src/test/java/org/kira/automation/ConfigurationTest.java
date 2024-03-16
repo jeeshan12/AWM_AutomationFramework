@@ -23,7 +23,7 @@ public class ConfigurationTest {
     System.out.println(webConfiguration.getWeb().getSeleniumGrid());
     System.out.println(webConfiguration.getApi().getRestConfiguration());
     System.out.println(webConfiguration.getApi().getGraphQLConfiguration());
-
+    System.out.println(webConfiguration.getMobile());
   }
 
 }

@@ -11,19 +11,23 @@ import static org.kira.automation.constants.FrameworkConstants.RESOLUTION;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Optional;
 import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Chrome;
 import org.kira.automation.annotations.Firefox;
+import org.kira.automation.annotations.Mobile;
+import org.kira.automation.annotations.Web;
 import org.kira.automation.annotations.WebCloud;
 import org.kira.automation.annotations.iOS;
-import org.kira.automation.browsers.BrowserConsumer;
-import org.kira.automation.browsers.ChromeBrowserServiceInjector;
-import org.kira.automation.browsers.FirefoxBrowserServiceInjector;
-import org.kira.automation.browsers.cloud.factory.RemoteDriverFactory;
 import org.kira.automation.configuration.Configuration;
+import org.kira.automation.drivers.cloud.factory.RemoteDriverFactory;
+import org.kira.automation.drivers.DriverConsumer;
+import org.kira.automation.drivers.mobile.AndroidDriverServiceInjector;
+import org.kira.automation.drivers.web.ChromeBrowserServiceInjector;
+import org.kira.automation.drivers.web.FirefoxBrowserServiceInjector;
 import org.kira.automation.exceptions.AnnotationMissingException;
 import org.kira.automation.exceptions.FrameworkGenericException;
 
@@ -35,20 +39,19 @@ public class WebDriverSuiteHelper {
   static void setWebDriver(final MethodContextImpl context, final Configuration configuration) {
     Method method = context.method;
     String browser = System.getenv(BROWSER);
-
-    if (method.isAnnotationPresent(Chrome.class)
-        || CHROME.equalsIgnoreCase(browser)) {
+    if ((isAnnotationPresent(method, Chrome.class)
+        || CHROME.equalsIgnoreCase(browser)) && isAnnotationPresent(method, Web.class)) {
       addChromeDriver(context, configuration);
-    } else if (method.isAnnotationPresent(Firefox.class) ||
-        FIREFOX.equalsIgnoreCase(browser)) {
+    } else if ((isAnnotationPresent(method, Firefox.class) ||
+        FIREFOX.equalsIgnoreCase(browser)) && isAnnotationPresent(method, Web.class)) {
       addFirefoxDriver(context, configuration);
-    } else if (method.isAnnotationPresent(iOS.class)) {
-      addAndroidDriver(context, configuration);
-    } else if (method.isAnnotationPresent(Android.class)) {
+    } else if ((isAnnotationPresent(method, iOS.class)) && isAnnotationPresent(method, Mobile.class)) {
       addiOSDriver(context, configuration);
+    } else if ((isAnnotationPresent(method, Android.class)) && isAnnotationPresent(method, Mobile.class)) {
+      addAndroidDriver(context, configuration);
     } else {
       throw new AnnotationMissingException(
-          "Please provide valid annotations like  like @Chrome, @Firefox, @iOS and @Android to initialise the webdriver"
+          "Please provide valid annotations like  like @Web , @Chrome, @Firefox, @Mobile, @iOS and @Android to initialise the webdriver"
       );
     }
   }
@@ -60,26 +63,30 @@ public class WebDriverSuiteHelper {
   }
 
   static void addiOSDriver(final MethodContextImpl context, final Configuration configuration) {
-    // TODO document q q why this method is empty
+    addChromeDriver(context, configuration);
   }
 
   static void addAndroidDriver(final MethodContextImpl context, final Configuration configuration) {
-    // TODO document why this method is empty
+    Injector androidDriverServiceInjector = Guice.createInjector(new AndroidDriverServiceInjector());
+    DriverConsumer driverConsumer = androidDriverServiceInjector.getInstance(DriverConsumer.class);
+    context.setWebDriver(
+        driverConsumer.getWebDriver(configuration)
+    );
   }
 
   static void addFirefoxDriver(final MethodContextImpl context, final Configuration configuration) {
     Injector firefoxDriverInjector = Guice.createInjector(new FirefoxBrowserServiceInjector());
-    BrowserConsumer browserConsumer = firefoxDriverInjector.getInstance(BrowserConsumer.class);
+    DriverConsumer driverConsumer = firefoxDriverInjector.getInstance(DriverConsumer.class);
     context.setWebDriver(
-        browserConsumer.getWebDriver(configuration)
+        driverConsumer.getWebDriver(configuration)
     );
   }
 
   static void addChromeDriver(final MethodContextImpl context, final Configuration configuration) {
     Injector chromeDriverInjector = Guice.createInjector(new ChromeBrowserServiceInjector());
-    BrowserConsumer browserConsumer = chromeDriverInjector.getInstance(BrowserConsumer.class);
+    DriverConsumer driverConsumer = chromeDriverInjector.getInstance(DriverConsumer.class);
     context.setWebDriver(
-        browserConsumer.getWebDriver(configuration)
+        driverConsumer.getWebDriver(configuration)
     );
   }
 
@@ -125,5 +132,11 @@ public class WebDriverSuiteHelper {
               .getWebDriver(configuration, Optional.empty())
       );
     }
+  }
+
+  private static boolean isAnnotationPresent(
+      Method method, Class<? extends Annotation> annotation
+  ) {
+      return method.isAnnotationPresent(annotation);
   }
 }

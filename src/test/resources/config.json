@@ -141,6 +141,38 @@
     "screenshot": {
       "enabled": true
     },
+    "serverUrl": "http://127.0.0.1",
+    "port": 4723,
+    "newCommandTimeout": 30,
+    "noReset": false,
+    "fullReset": true,
+    "eventTimings": false,
+    "printPageSourceOnFindFailure": false,
+    "platform": "android",
+    "android": {
+      "deviceLock" : {
+        "enabled": false,
+        "skipUnlock": true,
+        "unlockType": "",
+        "unlockKey": "",
+        "unlockStrategy": "locksettings",
+        "unlockSuccessTimeout": 25000
+      },
+      "isParallel": false,
+      "isHeadless": false,
+      "appPath": "src/test/resources/apps/android/",
+      "appUrl": "",
+      "automationName": "UiAutomator2",
+      "browserName": "",
+      "appName": "ApiDemos-debug.apk",
+      "deviceName": "pixel_7_pro",
+      "platformVersion": "14",
+      "appActivity": "",
+      "appPackage": "",
+      "udid": "emulator-5554",
+      "systemPort": 8201,
+      "options": ["autoGrantPermissions=true,autoLaunch=true,appWaitDuration=20000"]
+    },
     "enabled": false,
     "cloud": {
       "enabled": true,
