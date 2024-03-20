@@ -33,6 +33,7 @@ public class MobileConfiguration {
   @SerializedName("android")
   private AndroidConfiguration androidConfiguration;
 
-
+  @SerializedName("ios")
+  private  IosConfiguration iosConfiguration;
 
 }

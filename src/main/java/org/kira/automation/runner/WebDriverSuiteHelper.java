@@ -26,6 +26,7 @@ import org.kira.automation.configuration.Configuration;
 import org.kira.automation.drivers.cloud.factory.RemoteDriverFactory;
 import org.kira.automation.drivers.DriverConsumer;
 import org.kira.automation.drivers.mobile.AndroidDriverServiceInjector;
+import org.kira.automation.drivers.mobile.IosDriverServiceInjector;
 import org.kira.automation.drivers.web.ChromeBrowserServiceInjector;
 import org.kira.automation.drivers.web.FirefoxBrowserServiceInjector;
 import org.kira.automation.exceptions.AnnotationMissingException;
@@ -49,6 +50,8 @@ public class WebDriverSuiteHelper {
       addiOSDriver(context, configuration);
     } else if ((isAnnotationPresent(method, Android.class)) && isAnnotationPresent(method, Mobile.class)) {
       addAndroidDriver(context, configuration);
+    } else if (isAnnotationPresent(method, Mobile.class)) {
+      addAndroidDriver(context, configuration);
     } else {
       throw new AnnotationMissingException(
           "Please provide valid annotations like  like @Web , @Chrome, @Firefox, @Mobile, @iOS and @Android to initialise the webdriver"
@@ -63,7 +66,11 @@ public class WebDriverSuiteHelper {
   }
 
   static void addiOSDriver(final MethodContextImpl context, final Configuration configuration) {
-    addChromeDriver(context, configuration);
+    Injector iosDriverServiceInjector = Guice.createInjector(new IosDriverServiceInjector());
+    DriverConsumer driverConsumer = iosDriverServiceInjector.getInstance(DriverConsumer.class);
+    context.setWebDriver(
+        driverConsumer.getWebDriver(configuration)
+    );
   }
 
   static void addAndroidDriver(final MethodContextImpl context, final Configuration configuration) {

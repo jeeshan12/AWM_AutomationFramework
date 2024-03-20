@@ -21,7 +21,7 @@ public interface WebDriverService {
       String[] caps = capability.split(",");
       for (String cap: caps) {
         String[] capArray =  cap.split("=");
-        String key = capArray[0];
+        String key = getCapabilityWithAppiumPrefix(capArray[0]);
         String value = capArray[1];
         if (ConverterUtil.isBoolean(value)) {
           capabilities.setCapability(key, Boolean.parseBoolean(value));
