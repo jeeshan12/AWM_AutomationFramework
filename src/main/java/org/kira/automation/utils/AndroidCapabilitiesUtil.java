@@ -3,7 +3,6 @@ package org.kira.automation.utils;
 import static org.kira.automation.drivers.WebDriverService.getCapabilityWithAppiumPrefix;
 
 import io.appium.java_client.remote.AutomationName;
-import java.util.Optional;
 import org.apache.commons.lang3.SystemUtils;
 import org.kira.automation.configuration.mobile.AndroidConfiguration;
 import org.kira.automation.configuration.mobile.DeviceLockConfiguration;
@@ -20,7 +19,9 @@ public class AndroidCapabilitiesUtil {
     capabilities.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANDROID);
     capabilities.setCapability(getCapabilityWithAppiumPrefix("appPackage"), androidConfiguration.getAppPackage());
     capabilities.setCapability(getCapabilityWithAppiumPrefix("appActivity"), androidConfiguration.getAppActivity());
-    capabilities.setCapability(getCapabilityWithAppiumPrefix("app"), getAppLocation(androidConfiguration.getAppPath(), androidConfiguration.getAppName()).orElseGet(androidConfiguration::getAppUrl));
+    String appName = androidConfiguration.getApp();
+    capabilities.setCapability(getCapabilityWithAppiumPrefix("app"), appName.startsWith("http") ? appName
+        : String.format("%s/%s", SystemUtils.getUserDir(), appName));
     capabilities.setCapability(getCapabilityWithAppiumPrefix("automationName"), AutomationName.ANDROID_UIAUTOMATOR2);
     capabilities.setCapability(getCapabilityWithAppiumPrefix("udid"), androidConfiguration.getUdid());
     capabilities.setCapability(getCapabilityWithAppiumPrefix("platformVersion"), androidConfiguration.getPlatformVersion());
@@ -35,12 +36,5 @@ public class AndroidCapabilitiesUtil {
     capabilities.setCapability("unlockStrategy", deviceLockConfiguration.getUnlockStrategy());
     capabilities.setCapability("unlockSuccessTimeout", deviceLockConfiguration.getUnlockSuccessTimeout());
 
-  }
-
-  private static Optional<String> getAppLocation(String appPath, String appName) {
-    if (appPath == null || appName == null) {
-      return Optional.empty();
-    }
-    return Optional.of(String.format("%s/%s%s", SystemUtils.getUserDir(), appPath, appName));
   }
 }

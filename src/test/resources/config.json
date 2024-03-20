@@ -162,10 +162,7 @@
       "chromedriverExecutable": "",
       "isParallel": false,
       "isHeadless": false,
-      "appPath": "src/test/resources/apps/android/",
-      "appUrl": "",
-      "automationName": "UiAutomator2",
-      "appName": "ApiDemos-debug.apk",
+      "app": "src/test/resources/apps/android/ApiDemos-debug.apk",
       "deviceName": "pixel_7_pro",
       "platformVersion": "14",
       "appActivity": "",
@@ -185,7 +182,6 @@
       "isHeadless": false,
       "wdaLocalPort": 8100,
       "options": ["shutdownOtherSimulators=false"]
-
     },
     "enabled": false,
     "cloud": {
