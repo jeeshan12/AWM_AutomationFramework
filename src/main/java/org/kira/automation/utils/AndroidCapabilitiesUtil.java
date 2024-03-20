@@ -23,6 +23,9 @@ public class AndroidCapabilitiesUtil {
     capabilities.setCapability(getCapabilityWithAppiumPrefix("app"), getAppLocation(androidConfiguration.getAppPath(), androidConfiguration.getAppName()).orElseGet(androidConfiguration::getAppUrl));
     capabilities.setCapability(getCapabilityWithAppiumPrefix("automationName"), AutomationName.ANDROID_UIAUTOMATOR2);
     capabilities.setCapability(getCapabilityWithAppiumPrefix("udid"), androidConfiguration.getUdid());
+    capabilities.setCapability(getCapabilityWithAppiumPrefix("platformVersion"), androidConfiguration.getPlatformVersion());
+    capabilities.setCapability(getCapabilityWithAppiumPrefix("deviceName"), androidConfiguration.getDeviceName());
+
   }
   public static void addDeviceLockCapabilities(AndroidConfiguration androidConfiguration, MutableCapabilities capabilities) {
     DeviceLockConfiguration deviceLockConfiguration = androidConfiguration.getDeviceLockConfiguration();
