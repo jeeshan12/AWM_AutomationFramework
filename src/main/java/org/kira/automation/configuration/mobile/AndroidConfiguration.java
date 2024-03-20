@@ -11,35 +11,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Builder
-public class AndroidConfiguration {
-
-  @Builder.Default
-  private String appPath= "";
-
-  private String browserName;
-
-  private String platformName;
-
-  private String automationName;
-
-  private String platformVersion;
+public class AndroidConfiguration extends CommonMobileConfiguration{
 
   @Builder.Default
   private String appActivity = "";
 
   @Builder.Default
-  private String appName = "";
-
-  @Builder.Default
-  private String appUrl = "";
-
-  private String deviceName;
-
-  @Builder.Default
   private String appPackage = "";
-
-  @Builder.Default
-  private String udid = "";
 
   @SerializedName("isHeadless")
   private boolean headless;
