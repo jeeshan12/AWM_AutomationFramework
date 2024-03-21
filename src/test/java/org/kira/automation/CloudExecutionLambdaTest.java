@@ -8,14 +8,12 @@ import org.testng.annotations.Test;
 
 public class CloudExecutionLambdaTest extends TestSuiteRunner {
 
-
   @Test
   @Web
   public void testLambdatestCloudBrowser() {
     getExtentTest().log(Status.INFO, "Opening Browser to test cloud execution");
     getDriver().navigate().to("https://google.com/");
   }
-
 
   @Test
   @Web
@@ -24,5 +22,4 @@ public class CloudExecutionLambdaTest extends TestSuiteRunner {
     getExtentTest().log(Status.INFO, "Opening Browser for test with annotation");
     getDriver().navigate().to("https://google.com/");
   }
-
 }

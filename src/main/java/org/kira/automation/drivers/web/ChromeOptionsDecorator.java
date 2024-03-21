@@ -10,27 +10,40 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public final class ChromeOptionsDecorator {
 
-  static final BiConsumer<Boolean, ChromeOptions> CHROME_HEADLESS_DECORATOR = (isHeadless, chromeOptions) -> {
+  static final BiConsumer<Boolean, ChromeOptions> CHROME_HEADLESS_DECORATOR = (
+    isHeadless,
+    chromeOptions
+  ) -> {
     if (Boolean.TRUE.equals(isHeadless)) {
-      String[] headlessOptions = new String[]{"--headless=new", "--no-sandbox", "--disable-gpu",
-          "--disable-dev-shm-usage"};
+      String[] headlessOptions = new String[] {
+        "--headless=new",
+        "--no-sandbox",
+        "--disable-gpu",
+        "--disable-dev-shm-usage",
+      };
       Arrays.stream(headlessOptions).forEach(chromeOptions::addArguments);
     }
   };
-  static final BiConsumer<List<String>, ChromeOptions> ADD_ARGUMENTS_DECORATOR = (arguments, chromeOptions) -> arguments.forEach(
-      chromeOptions::addArguments);
-  static final BiConsumer<List<String>, ChromeOptions> DOWNLOAD_FILE_DECORATOR = (arguments, chromeOptions) -> {
+  static final BiConsumer<List<String>, ChromeOptions> ADD_ARGUMENTS_DECORATOR = (
+      arguments,
+      chromeOptions
+    ) ->
+    arguments.forEach(chromeOptions::addArguments);
+  static final BiConsumer<List<String>, ChromeOptions> DOWNLOAD_FILE_DECORATOR = (
+    arguments,
+    chromeOptions
+  ) -> {
     Map<String, Object> chromePrefs = new HashMap<>();
     arguments
-        .stream()
-        .map(options -> options.split("="))
-        .forEach(option -> chromePrefs.put(option[0], option[1]));
+      .stream()
+      .map(options -> options.split("="))
+      .forEach(option -> chromePrefs.put(option[0], option[1]));
     chromeOptions.setExperimentalOption("prefs", chromePrefs);
   };
 
   private ChromeOptionsDecorator() {
     throw new FrameworkGenericException(
-        "You can not use the constructor to create object of this class");
+      "You can not use the constructor to create object of this class"
+    );
   }
-
 }

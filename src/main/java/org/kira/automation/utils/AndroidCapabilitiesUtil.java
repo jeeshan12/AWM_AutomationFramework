@@ -12,29 +12,59 @@ import org.openqa.selenium.remote.CapabilityType;
 
 public class AndroidCapabilitiesUtil {
 
-  private AndroidCapabilitiesUtil(){}
+  private AndroidCapabilitiesUtil() {}
 
   public static void configureCapabilities(
-      AndroidConfiguration androidConfiguration, MutableCapabilities capabilities) {
+    AndroidConfiguration androidConfiguration,
+    MutableCapabilities capabilities
+  ) {
     capabilities.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANDROID);
-    capabilities.setCapability(getCapabilityWithAppiumPrefix("appPackage"), androidConfiguration.getAppPackage());
-    capabilities.setCapability(getCapabilityWithAppiumPrefix("appActivity"), androidConfiguration.getAppActivity());
+    capabilities.setCapability(
+      getCapabilityWithAppiumPrefix("appPackage"),
+      androidConfiguration.getAppPackage()
+    );
+    capabilities.setCapability(
+      getCapabilityWithAppiumPrefix("appActivity"),
+      androidConfiguration.getAppActivity()
+    );
     String appName = androidConfiguration.getApp();
-    capabilities.setCapability(getCapabilityWithAppiumPrefix("app"), appName.startsWith("http") ? appName
-        : String.format("%s/%s", SystemUtils.getUserDir(), appName));
-    capabilities.setCapability(getCapabilityWithAppiumPrefix("automationName"), AutomationName.ANDROID_UIAUTOMATOR2);
-    capabilities.setCapability(getCapabilityWithAppiumPrefix("udid"), androidConfiguration.getUdid());
-    capabilities.setCapability(getCapabilityWithAppiumPrefix("platformVersion"), androidConfiguration.getPlatformVersion());
-    capabilities.setCapability(getCapabilityWithAppiumPrefix("deviceName"), androidConfiguration.getDeviceName());
-
+    capabilities.setCapability(
+      getCapabilityWithAppiumPrefix("app"),
+      appName.startsWith("http")
+        ? appName
+        : String.format("%s/%s", SystemUtils.getUserDir(), appName)
+    );
+    capabilities.setCapability(
+      getCapabilityWithAppiumPrefix("automationName"),
+      AutomationName.ANDROID_UIAUTOMATOR2
+    );
+    capabilities.setCapability(
+      getCapabilityWithAppiumPrefix("udid"),
+      androidConfiguration.getUdid()
+    );
+    capabilities.setCapability(
+      getCapabilityWithAppiumPrefix("platformVersion"),
+      androidConfiguration.getPlatformVersion()
+    );
+    capabilities.setCapability(
+      getCapabilityWithAppiumPrefix("deviceName"),
+      androidConfiguration.getDeviceName()
+    );
   }
-  public static void addDeviceLockCapabilities(AndroidConfiguration androidConfiguration, MutableCapabilities capabilities) {
-    DeviceLockConfiguration deviceLockConfiguration = androidConfiguration.getDeviceLockConfiguration();
+
+  public static void addDeviceLockCapabilities(
+    AndroidConfiguration androidConfiguration,
+    MutableCapabilities capabilities
+  ) {
+    DeviceLockConfiguration deviceLockConfiguration =
+      androidConfiguration.getDeviceLockConfiguration();
     capabilities.setCapability("skipUnlock", deviceLockConfiguration.isDeviceUnlock());
     capabilities.setCapability("unlockType", deviceLockConfiguration.getUnlockType());
     capabilities.setCapability("unlockKey", deviceLockConfiguration.getUnlockKey());
     capabilities.setCapability("unlockStrategy", deviceLockConfiguration.getUnlockStrategy());
-    capabilities.setCapability("unlockSuccessTimeout", deviceLockConfiguration.getUnlockSuccessTimeout());
-
+    capabilities.setCapability(
+      "unlockSuccessTimeout",
+      deviceLockConfiguration.getUnlockSuccessTimeout()
+    );
   }
 }

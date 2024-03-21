@@ -8,12 +8,13 @@ import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 
 public interface CloudRemoteDriverService {
+  WebDriver getWebDriver(
+    final Configuration configuration,
+    Optional<Map<String, String>> capabilityMapOptional
+  );
 
-  WebDriver getWebDriver(final Configuration configuration,
-      Optional<Map<String, String>> capabilityMapOptional);
-
-  MutableCapabilities getPlatformSpecificCapabilities(CloudConfiguration cloudConfiguration,
-      Optional<Map<String, String>> capabilityMapOptional);
-
-
+  MutableCapabilities getPlatformSpecificCapabilities(
+    CloudConfiguration cloudConfiguration,
+    Optional<Map<String, String>> capabilityMapOptional
+  );
 }

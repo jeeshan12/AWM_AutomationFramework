@@ -1,6 +1,5 @@
 package org.kira.automation.drivers.mobile;
 
-
 import static org.kira.automation.utils.IosCapabilitiesUtil.configureCapabilities;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -25,17 +24,22 @@ public class IosDriverServiceImpl implements WebDriverService {
     addGlobalCapabilitiesForAppium(configuration.getMobile(), capabilities);
     configureCapabilities(iosConfiguration, capabilities);
     Optional.ofNullable(iosConfiguration.getBrowserName())
-        .filter(StringUtils::isNotEmpty)
-        .ifPresent(browserName -> capabilities.setCapability("browserName", browserName));
+      .filter(StringUtils::isNotEmpty)
+      .ifPresent(browserName -> capabilities.setCapability("browserName", browserName));
     addAdditionalCapabilities(iosConfiguration.getAdditionalCapabilities(), capabilities);
     try {
       return new IOSDriver(
-          new URI(String.format("%s:%s", configuration.getMobile().getServerUrl(),
-              configuration.getMobile().getPort())
-          ).toURL(), capabilities);
+        new URI(
+          String.format(
+            "%s:%s",
+            configuration.getMobile().getServerUrl(),
+            configuration.getMobile().getPort()
+          )
+        ).toURL(),
+        capabilities
+      );
     } catch (MalformedURLException | URISyntaxException e) {
       throw new FrameworkGenericException("Error while creating the web driver reference", e);
     }
   }
-
 }

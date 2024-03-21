@@ -34,6 +34,7 @@ public class TestSuiteRunner {
     setUpRedis(suiteContext);
     suiteContextThreadLocal.set(suiteContext);
   }
+
   @BeforeMethod
   public void setUp(Method method) {
     MethodContextImpl methodContext = new MethodContextImpl(method);
@@ -42,7 +43,6 @@ public class TestSuiteRunner {
     addTestReporting(methodContext);
     methodContextThreadLocal.set(methodContext);
   }
-
 
   @AfterMethod(alwaysRun = true)
   public void tearDown(ITestResult testResult) {
@@ -57,7 +57,6 @@ public class TestSuiteRunner {
     context.flushReport();
     methodContextThreadLocal.remove();
   }
-
 
   @AfterSuite(alwaysRun = true)
   public void cleanUpStates() {
@@ -110,7 +109,6 @@ public class TestSuiteRunner {
 
   protected RedisManager getRedisManager() {
     SuiteContextImpl context = suiteContextThreadLocal.get();
-    return  context.getRedisManager();
+    return context.getRedisManager();
   }
-
 }

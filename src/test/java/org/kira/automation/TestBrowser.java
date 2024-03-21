@@ -25,9 +25,11 @@ public class TestBrowser {
   @BeforeClass
   public void setUp() {
     this.webConfiguration = JsonParserUtil.readJsonFile(
-        FileUtils.readFileAsString(
-            FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME),
-        Configuration.class);
+      FileUtils.readFileAsString(
+        FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME
+      ),
+      Configuration.class
+    );
   }
 
   @Test

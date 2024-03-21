@@ -9,5 +9,4 @@ public class ChromeBrowserServiceInjector extends AbstractModule {
   protected void configure() {
     bind(WebDriverService.class).to(ChromeBrowserDriverServiceImpl.class);
   }
-
 }

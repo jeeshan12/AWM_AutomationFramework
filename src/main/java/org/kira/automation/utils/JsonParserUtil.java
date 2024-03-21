@@ -9,7 +9,8 @@ public final class JsonParserUtil {
 
   private JsonParserUtil() {
     throw new FrameworkGenericException(
-        "Can not use constructor to create the object of this class");
+      "Can not use constructor to create the object of this class"
+    );
   }
 
   public static <T> T readJsonFile(final String fileContent, Class<T> classz) {

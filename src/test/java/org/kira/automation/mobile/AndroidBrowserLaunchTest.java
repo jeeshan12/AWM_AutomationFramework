@@ -8,11 +8,11 @@ import org.testng.annotations.Test;
 
 public class AndroidBrowserLaunchTest extends TestSuiteRunner {
 
-
-  @Test @Android @Mobile
+  @Test
+  @Android
+  @Mobile
   public void launchBrowser() {
     getDriver().navigate().to("https://www.google.com/");
     Assert.assertEquals(getDriver().getTitle(), "Google");
   }
-
 }

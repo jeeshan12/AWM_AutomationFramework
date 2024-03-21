@@ -25,7 +25,7 @@ public class DemoQaLoginTest extends TestSuiteRunner {
       getDriver().navigate().to("https://demoqa.com/login");
       getDriver().manage().window().maximize();
       demoQaLoginPage.performLogin("Admin", "admin@12");
-      Assert.assertEquals( bookStoreLandingPage.isLoaded(), true);
+      Assert.assertEquals(bookStoreLandingPage.isLoaded(), true);
       Assert.assertEquals(bookStoreLandingPage.retrieveLogoutButtonText(), "Log out");
       getRedisManager().storeState(CookieUtils.getCookiesAsSet(getDriver()));
     } else {
@@ -33,7 +33,6 @@ public class DemoQaLoginTest extends TestSuiteRunner {
       CookieUtils.restoreState(getDriver(), storedState);
     }
   }
-
 
   @Test
   @Web
@@ -44,5 +43,4 @@ public class DemoQaLoginTest extends TestSuiteRunner {
     Set<String> cookiesAsSet = CookieUtils.getCookiesAsSet(getDriver());
     System.out.println(cookiesAsSet);
   }
-
 }

@@ -31,7 +31,7 @@ public class LoginTest extends TestSuiteRunner {
   @Firefox
   public void performLogin() {
     this.loginPage.performLogin("standard_user", "secret_sauce");
-    Assert.assertEquals( this.productPage.retrieveProductLabelText(), "Products");
+    Assert.assertEquals(this.productPage.retrieveProductLabelText(), "Products");
     sessionStorage = SessionStorageUtil.getSessionStorage(getDriver());
   }
 
@@ -41,7 +41,6 @@ public class LoginTest extends TestSuiteRunner {
   public void testSessionStorage() {
     SessionStorageUtil.setSessionStorage(getDriver(), "www.saucedemo.com", sessionStorage);
     getDriver().navigate().to("https://www.saucedemo.com/v1/inventory.html");
-    Assert.assertEquals( this.productPage.retrieveProductLabelText(), "Products");
+    Assert.assertEquals(this.productPage.retrieveProductLabelText(), "Products");
   }
-
 }

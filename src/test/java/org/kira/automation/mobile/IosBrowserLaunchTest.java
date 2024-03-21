@@ -8,11 +8,11 @@ import org.testng.annotations.Test;
 
 public class IosBrowserLaunchTest extends TestSuiteRunner {
 
-
-  @Test @iOS @Mobile
+  @Test
+  @iOS
+  @Mobile
   public void launchBrowser() {
     getDriver().navigate().to("https://www.google.com/");
     Assert.assertEquals(getDriver().getTitle(), "Google");
   }
-
 }

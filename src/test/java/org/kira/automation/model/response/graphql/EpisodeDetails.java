@@ -16,6 +16,7 @@ public class EpisodeDetails {
   @AllArgsConstructor
   @ToString
   public static class Data {
+
     private Episode episode;
   }
 
@@ -25,15 +26,14 @@ public class EpisodeDetails {
   public static class Episode {
 
     @SerializedName("air_date")
-    private  String airDate;
+    private String airDate;
 
-    private  String created;
+    private String created;
 
-    private  String episode;
+    private String episode;
 
-    private  String name;
+    private String name;
 
-    private  String id;
+    private String id;
   }
-
 }

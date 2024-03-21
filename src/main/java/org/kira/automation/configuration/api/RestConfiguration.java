@@ -11,6 +11,7 @@ import org.kira.automation.api.ServiceConfiguration;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RestConfiguration implements ServiceConfiguration {
+
   private String baseurl;
   private String basePath;
 }

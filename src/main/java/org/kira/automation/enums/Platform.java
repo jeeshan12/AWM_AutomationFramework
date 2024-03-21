@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum Platform {
-
   WEB("web"),
   MOBILE("mobile");
 
@@ -13,5 +12,4 @@ public enum Platform {
   Platform(String platform) {
     this.platformForExecution = platform;
   }
-
 }

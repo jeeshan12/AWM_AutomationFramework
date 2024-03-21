@@ -14,9 +14,12 @@ public class ConfigurationTest {
 
   @Test
   public void testConfiguration() {
-    Configuration webConfiguration = JsonParserUtil.readJsonFile(FileUtils.readFileAsString(
-            FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME),
-        Configuration.class);
+    Configuration webConfiguration = JsonParserUtil.readJsonFile(
+      FileUtils.readFileAsString(
+        FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME
+      ),
+      Configuration.class
+    );
     System.out.println(webConfiguration.getWeb().getBrowser());
     System.out.println(webConfiguration.getWeb().getBrowserOptions().getChrome());
     System.out.println(webConfiguration.getWeb().getCloud());
@@ -25,5 +28,4 @@ public class ConfigurationTest {
     System.out.println(webConfiguration.getApi().getGraphQLConfiguration());
     System.out.println(webConfiguration.getMobile());
   }
-
 }

@@ -15,8 +15,7 @@ import org.kira.automation.runner.MethodContextImpl;
 
 public class MobileDriverFactory {
 
-  private MobileDriverFactory() {
-  }
+  private MobileDriverFactory() {}
 
   private static final Map<String, Class<? extends AbstractModule>> INJECTOR_MAP = new HashMap<>();
 
@@ -26,8 +25,11 @@ public class MobileDriverFactory {
   }
 
   @SneakyThrows
-  public static void addMobileDriver(MethodContextImpl context, Configuration configuration,
-      String platform) {
+  public static void addMobileDriver(
+    MethodContextImpl context,
+    Configuration configuration,
+    String platform
+  ) {
     Class<? extends AbstractModule> injectorClass = INJECTOR_MAP.get(platform);
     if (injectorClass != null) {
       Constructor<? extends AbstractModule> constructor = injectorClass.getConstructor();

@@ -25,23 +25,34 @@ public class AndroidDriverServiceImpl implements WebDriverService {
     addGlobalCapabilitiesForAppium(configuration.getMobile(), capabilities);
     configureCapabilities(androidConfiguration, capabilities);
     Optional.ofNullable(androidConfiguration.getDeviceLockConfiguration().isDeviceLockEnabled())
-        .filter(Boolean::booleanValue)
-        .ifPresent(enabled -> addDeviceLockCapabilities(androidConfiguration, capabilities));
+      .filter(Boolean::booleanValue)
+      .ifPresent(enabled -> addDeviceLockCapabilities(androidConfiguration, capabilities));
     Optional.ofNullable(androidConfiguration.getBrowserName())
-        .filter(StringUtils::isNotEmpty)
-        .ifPresent(browserName -> capabilities.setCapability("browserName", browserName));
+      .filter(StringUtils::isNotEmpty)
+      .ifPresent(browserName -> capabilities.setCapability("browserName", browserName));
     Optional.ofNullable(androidConfiguration.getChromedriverExecutable())
-        .filter(StringUtils::isNotEmpty)
-        .ifPresent(chromedriverExecutable -> capabilities.setCapability(WebDriverService.getCapabilityWithAppiumPrefix("chromedriverExecutable"), chromedriverExecutable));
+      .filter(StringUtils::isNotEmpty)
+      .ifPresent(
+        chromedriverExecutable ->
+          capabilities.setCapability(
+            WebDriverService.getCapabilityWithAppiumPrefix("chromedriverExecutable"),
+            chromedriverExecutable
+          )
+      );
     addAdditionalCapabilities(androidConfiguration.getAdditionalCapabilities(), capabilities);
     try {
       return new AndroidDriver(
-          new URI(String.format("%s:%s", configuration.getMobile().getServerUrl(),
-              configuration.getMobile().getPort())
-          ).toURL(), capabilities);
+        new URI(
+          String.format(
+            "%s:%s",
+            configuration.getMobile().getServerUrl(),
+            configuration.getMobile().getPort()
+          )
+        ).toURL(),
+        capabilities
+      );
     } catch (MalformedURLException | URISyntaxException e) {
       throw new FrameworkGenericException("Error while creating the web driver reference", e);
     }
   }
-
 }

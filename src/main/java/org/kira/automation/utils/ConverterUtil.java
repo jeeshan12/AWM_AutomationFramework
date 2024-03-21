@@ -14,7 +14,6 @@ public final class ConverterUtil {
   }
 
   public static boolean isBoolean(String str) {
-    return str.equalsIgnoreCase("true") || str.equalsIgnoreCase("false");
+    return (str.equalsIgnoreCase("true") || str.equalsIgnoreCase("false"));
   }
-
 }

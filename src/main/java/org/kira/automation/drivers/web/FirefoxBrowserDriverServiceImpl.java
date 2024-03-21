@@ -4,9 +4,9 @@ import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.ADD_ARGUME
 import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
 import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
 
-import org.kira.automation.drivers.WebDriverService;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.FirefoxOptionsConfig;
+import org.kira.automation.drivers.WebDriverService;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -22,9 +22,10 @@ public class FirefoxBrowserDriverServiceImpl implements WebDriverService {
 
   private FirefoxOptions getBrowserOptions(final Configuration configuration) {
     FirefoxOptions firefoxOptions = new FirefoxOptions();
-    FirefoxOptionsConfig firefoxOptionsConfig = configuration.getWeb()
-        .getBrowserOptions()
-        .getFirefox();
+    FirefoxOptionsConfig firefoxOptionsConfig = configuration
+      .getWeb()
+      .getBrowserOptions()
+      .getFirefox();
 
     FIREFOX_HEADLESS_DECORATOR.accept(configuration.getWeb().isHeadless(), firefoxOptions);
 
@@ -32,8 +33,10 @@ public class FirefoxBrowserDriverServiceImpl implements WebDriverService {
 
     if (firefoxOptionsConfig.getDownloadOption().isDownloadRequired()) {
       FirefoxProfile firefoxProfile = new FirefoxProfile();
-      DOWNLOAD_FILE_DECORATOR.accept(firefoxOptionsConfig.getDownloadOption().getDownloadOptions(),
-          firefoxProfile);
+      DOWNLOAD_FILE_DECORATOR.accept(
+        firefoxOptionsConfig.getDownloadOption().getDownloadOptions(),
+        firefoxProfile
+      );
       firefoxOptions.setProfile(firefoxProfile);
     }
 

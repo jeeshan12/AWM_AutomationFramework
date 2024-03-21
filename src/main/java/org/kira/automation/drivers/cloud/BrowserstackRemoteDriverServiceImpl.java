@@ -30,7 +30,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverService {
 
-  private static final Map<String, BrowserstackBrowserConfigRetriever> BROWSER_CONFIG_RETRIEVERS = new HashMap<>();
+  private static final Map<String, BrowserstackBrowserConfigRetriever> BROWSER_CONFIG_RETRIEVERS =
+    new HashMap<>();
 
   static {
     BROWSER_CONFIG_RETRIEVERS.put(CHROME, BrowserstackConfiguration::getChromeConfig);
@@ -39,69 +40,90 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
     BROWSER_CONFIG_RETRIEVERS.put(SAFARI, BrowserstackConfiguration::getSafariConfig);
   }
 
-
   @Override
-  public WebDriver getWebDriver(Configuration configuration,
-      Optional<Map<String, String>> capabilityMapOptional) {
-    BrowserstackConfiguration browserstackConfiguration = configuration.getWeb().getCloud()
-        .getProvider().getBrowserstackConfiguration();
+  public WebDriver getWebDriver(
+    Configuration configuration,
+    Optional<Map<String, String>> capabilityMapOptional
+  ) {
+    BrowserstackConfiguration browserstackConfiguration = configuration
+      .getWeb()
+      .getCloud()
+      .getProvider()
+      .getBrowserstackConfiguration();
 
-    String username = Optional.ofNullable(browserstackConfiguration.getUserName())
-        .orElse(System.getProperty(CLOUD_USERNAME));
-    String password = Optional.ofNullable(browserstackConfiguration.getAccessKey())
-        .orElse(System.getProperty(CLOUD_ACCESS_KEY));
+    String username = Optional.ofNullable(browserstackConfiguration.getUserName()).orElse(
+      System.getProperty(CLOUD_USERNAME)
+    );
+    String password = Optional.ofNullable(browserstackConfiguration.getAccessKey()).orElse(
+      System.getProperty(CLOUD_ACCESS_KEY)
+    );
 
-    String url = String.format("https://%s:%s@hub-cloud.browserstack.com/wd/hub", username,
-        password);
+    String url = String.format(
+      "https://%s:%s@hub-cloud.browserstack.com/wd/hub",
+      username,
+      password
+    );
 
     try {
-      return new RemoteWebDriver(new URI(url).toURL(),
-          getPlatformSpecificCapabilities(configuration.getWeb().getCloud(),
-              capabilityMapOptional));
+      return new RemoteWebDriver(
+        new URI(url).toURL(),
+        getPlatformSpecificCapabilities(configuration.getWeb().getCloud(), capabilityMapOptional)
+      );
     } catch (URISyntaxException | MalformedURLException e) {
       throw new FrameworkGenericException(
-          "Error occurred while creating remote WebDriver reference", e);
+        "Error occurred while creating remote WebDriver reference",
+        e
+      );
     }
   }
 
   private CloudBrowserConfiguration getBrowserSpecificCapabilities(
-      BrowserstackConfiguration browserstackConfiguration, String browserName) {
+    BrowserstackConfiguration browserstackConfiguration,
+    String browserName
+  ) {
     BrowserstackBrowserConfigRetriever retriever = BROWSER_CONFIG_RETRIEVERS.get(
-        browserName.toLowerCase());
+      browserName.toLowerCase()
+    );
     if (retriever == null) {
       throw new FrameworkGenericException(
-          "Please provide valid browser (e.g., chrome, firefox, edge, safari) in the config.json file in the cloud section");
+        "Please provide valid browser (e.g., chrome, firefox, edge, safari) in the config.json file in the cloud section"
+      );
     }
     return retriever.retrieve(browserstackConfiguration);
   }
 
   @Override
-  public MutableCapabilities getPlatformSpecificCapabilities(CloudConfiguration cloudConfiguration,
-      Optional<Map<String, String>> capabilityMapOptional) {
-    BrowserstackConfiguration browserstackConfiguration = cloudConfiguration.getProvider()
-        .getBrowserstackConfiguration();
+  public MutableCapabilities getPlatformSpecificCapabilities(
+    CloudConfiguration cloudConfiguration,
+    Optional<Map<String, String>> capabilityMapOptional
+  ) {
+    BrowserstackConfiguration browserstackConfiguration = cloudConfiguration
+      .getProvider()
+      .getBrowserstackConfiguration();
     MutableCapabilities capabilities = new MutableCapabilities();
     Map<String, Object> bstackOptions = new HashMap<>();
-    String browserName =
-        capabilityMapOptional.isPresent() ? capabilityMapOptional.get().get(BROWSER_NAME)
-            : browserstackConfiguration.getBrowserName();
+    String browserName = capabilityMapOptional.isPresent()
+      ? capabilityMapOptional.get().get(BROWSER_NAME)
+      : browserstackConfiguration.getBrowserName();
     CloudBrowserConfiguration browserSpecificCapabilities = getBrowserSpecificCapabilities(
-        browserstackConfiguration, browserName);
+      browserstackConfiguration,
+      browserName
+    );
     if (Platform.WEB.name().equalsIgnoreCase(cloudConfiguration.getPlatform())) {
       capabilities.setCapability(BROWSER_NAME, browserName);
       capabilityMapOptional.ifPresentOrElse(
-          map -> {
-            bstackOptions.put(OS, map.get(OS));
-            bstackOptions.put(BROWSER_VERSION, map.get(BROWSER_VERSION));
-            bstackOptions.put(OS_VERSION, map.get(OS_VERSION));
-            bstackOptions.put(RESOLUTION, map.get(RESOLUTION));
-          },
-          () -> {
-            bstackOptions.put(OS, browserSpecificCapabilities.getOs());
-            bstackOptions.put(OS_VERSION, browserSpecificCapabilities.getOsVersion());
-            bstackOptions.put(BROWSER_VERSION, browserSpecificCapabilities.getBrowserVersion());
-            bstackOptions.put(RESOLUTION, browserSpecificCapabilities.getResolution());
-          }
+        map -> {
+          bstackOptions.put(OS, map.get(OS));
+          bstackOptions.put(BROWSER_VERSION, map.get(BROWSER_VERSION));
+          bstackOptions.put(OS_VERSION, map.get(OS_VERSION));
+          bstackOptions.put(RESOLUTION, map.get(RESOLUTION));
+        },
+        () -> {
+          bstackOptions.put(OS, browserSpecificCapabilities.getOs());
+          bstackOptions.put(OS_VERSION, browserSpecificCapabilities.getOsVersion());
+          bstackOptions.put(BROWSER_VERSION, browserSpecificCapabilities.getBrowserVersion());
+          bstackOptions.put(RESOLUTION, browserSpecificCapabilities.getResolution());
+        }
       );
     }
     bstackOptions.put("projectName", browserstackConfiguration.getProjectName());
@@ -116,7 +138,6 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
 
   @FunctionalInterface
   interface BrowserstackBrowserConfigRetriever {
-
     CloudBrowserConfiguration retrieve(BrowserstackConfiguration configuration);
   }
 }

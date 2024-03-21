@@ -8,14 +8,12 @@ import org.testng.annotations.Test;
 
 public class CloudExecutionBrowserstackTest extends TestSuiteRunner {
 
-
   @Test
   @Web
   public void testCloudBrowser() {
     getExtentTest().log(Status.INFO, "Opening Browser to test cloud execution");
     getDriver().navigate().to("https://google.com/");
   }
-
 
   @Test
   @Web
@@ -24,5 +22,4 @@ public class CloudExecutionBrowserstackTest extends TestSuiteRunner {
     getExtentTest().log(Status.INFO, "Opening Browser for test with annotation");
     getDriver().navigate().to("https://google.com/");
   }
-
 }

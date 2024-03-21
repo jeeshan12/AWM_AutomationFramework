@@ -5,7 +5,7 @@ import redis.clients.jedis.Jedis;
 
 public class RedisManager {
 
-  private  final String stateKey;
+  private final String stateKey;
 
   private final RedisConnector redisConnector;
 

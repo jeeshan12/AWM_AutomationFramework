@@ -6,8 +6,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class RedisConnector {
 
-  private RedisConnector() {
-  }
+  private RedisConnector() {}
 
   public static RedisConnector getInstance() {
     return RedisConnectorHelper.REDIS_CONNECTOR;
@@ -21,7 +20,7 @@ public class RedisConnector {
   }
 
   private static class RedisConnectorHelper {
+
     private static final RedisConnector REDIS_CONNECTOR = new RedisConnector();
   }
-
 }

@@ -36,7 +36,6 @@ public class CookieUtils {
     return stringBuilder.toString();
   }
 
-
   public static void restoreState(WebDriver driver, Set<String> state) {
     driver.manage().deleteAllCookies();
     state.forEach(cookie -> driver.manage().addCookie(parseCookie(cookie)));
@@ -54,20 +53,24 @@ public class CookieUtils {
       }
     }
 
-    if (cookieMap.containsKey("Domain") && cookieMap.containsKey("Path") && cookieMap.containsKey("Value")) {
-      Cookie.Builder builder = new Cookie.Builder(
-          cookieMap.get("Name"),
-          cookieMap.get("Value"))
-          .domain(cookieMap.get("Domain"))
-          .path(cookieMap.get("Path"));
+    if (
+      cookieMap.containsKey("Domain") &&
+      cookieMap.containsKey("Path") &&
+      cookieMap.containsKey("Value")
+    ) {
+      Cookie.Builder builder = new Cookie.Builder(cookieMap.get("Name"), cookieMap.get("Value"))
+        .domain(cookieMap.get("Domain"))
+        .path(cookieMap.get("Path"));
 
       if (cookieMap.containsKey("Expires")) {
         try {
-          builder.expiresOn(new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z").parse(cookieMap.get("Expires")));
+          builder.expiresOn(
+            new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z").parse(cookieMap.get("Expires"))
+          );
         } catch (ParseException e) {
-          throw new FrameworkGenericException(String.format(
-              "Error while parsing date %s", e.getMessage()
-          ));
+          throw new FrameworkGenericException(
+            String.format("Error while parsing date %s", e.getMessage())
+          );
         }
       }
 

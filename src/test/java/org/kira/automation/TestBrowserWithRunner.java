@@ -25,12 +25,10 @@ public class TestBrowserWithRunner extends TestSuiteRunner {
     getDriver().navigate().to("https://google.com/");
   }
 
-
   @Test
   @Web
   public void testDefaultBrowserFromConfig() {
     getExtentTest().log(Status.INFO, "Logging default browser from config");
     getDriver().navigate().to("https://google.com/");
   }
-
 }

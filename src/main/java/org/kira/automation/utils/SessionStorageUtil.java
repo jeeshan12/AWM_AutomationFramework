@@ -5,15 +5,15 @@ import org.openqa.selenium.WebDriver;
 
 public class SessionStorageUtil {
 
-  private SessionStorageUtil() {
-  }
-  public static  void setSessionStorage(WebDriver driver, String hostName, String sessionStorage) {
+  private SessionStorageUtil() {}
+
+  public static void setSessionStorage(WebDriver driver, String hostName, String sessionStorage) {
     JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
     String sessionStorageScript = getSessionStorageScript(hostName, sessionStorage);
     jsExecutor.executeScript(sessionStorageScript);
   }
 
-  public static  String getSessionStorage(WebDriver driver) {
+  public static String getSessionStorage(WebDriver driver) {
     JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
     return (String) jsExecutor.executeScript("return JSON.stringify(window.sessionStorage);");
   }
@@ -28,5 +28,4 @@ public class SessionStorageUtil {
     }
     """.formatted(hostname, sessionStorage);
   }
-
 }
