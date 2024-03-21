@@ -30,8 +30,11 @@ public class EmulatorUtil {
 
   private static String executeCommand(String command) {
     StringBuilder builder = new StringBuilder();
-    ProcessBuilder processBuilder = new ProcessBuilder();
-    processBuilder.command("bash", "-c", command);
+    File bashExecutable = new File("/bin/bash");
+
+    ProcessBuilder processBuilder = new ProcessBuilder().inheritIO();
+    processBuilder.directory(new File(System.getProperty("user.dir")));
+    processBuilder.command(bashExecutable.getAbsolutePath(), "-c", command);
 
     try {
       Process process = processBuilder.start();
