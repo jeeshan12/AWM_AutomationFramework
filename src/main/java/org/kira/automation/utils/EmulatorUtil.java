@@ -8,6 +8,7 @@ import org.kira.automation.exceptions.FrameworkGenericException;
 import org.testng.log4testng.Logger;
 
 public class EmulatorUtil {
+
   private static final Logger LOGGER = Logger.getLogger(EmulatorUtil.class);
 
   private EmulatorUtil() {
@@ -20,17 +21,17 @@ public class EmulatorUtil {
       return;
     }
 
-    String commandOutput = executeCommand(adbPath + " devices");
+    String commandOutput = executeCommand("/bin/bash", adbPath + " devices");
     if (commandOutput.contains(emulatorName)) {
       LOGGER.error(String.format("Emulator %s is already running", emulatorName));
       return;
     }
-    executeCommand(adbPath + " emulator -avd " + emulatorName);
+    executeCommand("/bin/bash", adbPath + " emulator -avd " + emulatorName);
   }
 
-  private static String executeCommand(String command) {
+  private static String executeCommand(String shellPath, String command) {
     StringBuilder builder = new StringBuilder();
-    File bashExecutable = new File("/bin/bash");
+    File bashExecutable = new File(shellPath);
 
     ProcessBuilder processBuilder = new ProcessBuilder().inheritIO();
     processBuilder.directory(new File(System.getProperty("user.dir")));
