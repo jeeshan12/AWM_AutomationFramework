@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import org.kira.automation.exceptions.FrameworkGenericException;
+import org.testng.log4testng.Logger;
 
 public class EmulatorUtil {
+  private static final Logger LOGGER = Logger.getLogger(EmulatorUtil.class);
 
   private EmulatorUtil() {
   }
@@ -14,13 +16,13 @@ public class EmulatorUtil {
   public static void startEmulator(String adbPath, String emulatorName) {
     File adbFile = new File(adbPath);
     if (!adbFile.exists()) {
-      System.err.println(String.format("ADB not found at the specified path : %s", adbPath));
+      LOGGER.error(String.format("ADB not found at the specified path : %s", adbPath));
       return;
     }
 
     String commandOutput = executeCommand(adbPath + " devices");
     if (commandOutput.contains(emulatorName)) {
-      System.err.println(String.format("Emulator %s is already running", emulatorName));
+      LOGGER.error(String.format("Emulator %s is already running", emulatorName));
       return;
     }
     executeCommand(adbPath + " emulator -avd " + emulatorName);
@@ -41,6 +43,7 @@ public class EmulatorUtil {
       }
       process.waitFor();
     } catch (InterruptedException | IOException e) {
+      Thread.currentThread().interrupt();
       throw new FrameworkGenericException("Error while starting emulator", e);
     }
     return builder.toString();
