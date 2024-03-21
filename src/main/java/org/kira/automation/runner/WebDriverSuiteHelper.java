@@ -8,6 +8,7 @@ import static org.kira.automation.constants.FrameworkConstants.FIREFOX;
 import static org.kira.automation.constants.FrameworkConstants.OS;
 import static org.kira.automation.constants.FrameworkConstants.OS_VERSION;
 import static org.kira.automation.constants.FrameworkConstants.RESOLUTION;
+import static org.kira.automation.drivers.mobile.MobileDriverFactory.addMobileDriver;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -23,8 +24,8 @@ import org.kira.automation.annotations.Web;
 import org.kira.automation.annotations.WebCloud;
 import org.kira.automation.annotations.iOS;
 import org.kira.automation.configuration.Configuration;
-import org.kira.automation.drivers.cloud.factory.RemoteDriverFactory;
 import org.kira.automation.drivers.DriverConsumer;
+import org.kira.automation.drivers.cloud.factory.RemoteDriverFactory;
 import org.kira.automation.drivers.mobile.AndroidDriverServiceInjector;
 import org.kira.automation.drivers.mobile.IosDriverServiceInjector;
 import org.kira.automation.drivers.web.ChromeBrowserServiceInjector;
@@ -51,7 +52,7 @@ public class WebDriverSuiteHelper {
     } else if ((isAnnotationPresent(method, Android.class)) && isAnnotationPresent(method, Mobile.class)) {
       addAndroidDriver(context, configuration);
     } else if (isAnnotationPresent(method, Mobile.class)) {
-      addAndroidDriver(context, configuration);
+      addMobileDriver(context, configuration, configuration.getMobile().getPlatform());
     } else {
       throw new AnnotationMissingException(
           "Please provide valid annotations like  like @Web , @Chrome, @Firefox, @Mobile, @iOS and @Android to initialise the webdriver"

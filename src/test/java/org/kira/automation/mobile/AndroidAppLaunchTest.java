@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class AndroidAppLaunchTest extends TestSuiteRunner {
 
 
-  @Test @Android @Mobile
+  @Test @Mobile @Android
   public void launchApp() {
     AndroidDriver driver = (AndroidDriver) getDriver();
     System.out.println("Location service is enabled ? : " + driver.isLocationServicesEnabled());

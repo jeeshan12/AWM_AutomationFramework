@@ -148,7 +148,7 @@
     "fullReset": true,
     "eventTimings": false,
     "printPageSourceOnFindFailure": false,
-    "platform": "android",
+    "platform": "ios",
     "android": {
       "deviceLock" : {
         "enabled": false,
