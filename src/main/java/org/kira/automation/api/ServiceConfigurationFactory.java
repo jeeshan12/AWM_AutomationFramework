@@ -10,7 +10,11 @@ import org.kira.automation.exceptions.FrameworkGenericException;
 public class ServiceConfigurationFactory {
 
   private ServiceConfigurationFactory() {}
-  private static final Map<String, Function<ApiConfiguration, ServiceConfiguration>> configurationMap = new HashMap<>();
+
+  private static final Map<
+    String,
+    Function<ApiConfiguration, ServiceConfiguration>
+  > configurationMap = new HashMap<>();
 
   static {
     configurationMap.put(Backend.REST.getApi(), ApiConfiguration::getRestConfiguration);
@@ -19,7 +23,9 @@ public class ServiceConfigurationFactory {
 
   public static ServiceConfiguration createConfiguration(ApiConfiguration apiConfiguration) {
     String backend = apiConfiguration.getBackend();
-    Function<ApiConfiguration, ServiceConfiguration> configurationFunction = configurationMap.get(backend);
+    Function<ApiConfiguration, ServiceConfiguration> configurationFunction = configurationMap.get(
+      backend
+    );
 
     if (configurationFunction == null) {
       throw new FrameworkGenericException("Unsupported backend: " + backend);

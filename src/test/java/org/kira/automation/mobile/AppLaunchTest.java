@@ -8,12 +8,12 @@ import org.testng.annotations.Test;
 
 public class AppLaunchTest extends TestSuiteRunner {
 
-
   @Test
   @Mobile
   public void launchAppAndroid() {
     System.out.println(
-        "Run this test to test Android when platform is set to Android in config.json");
+      "Run this test to test Android when platform is set to Android in config.json"
+    );
     AndroidDriver androidDriver = (AndroidDriver) getDriver();
     System.out.println("Current Activity : " + androidDriver.currentActivity());
   }
@@ -25,5 +25,4 @@ public class AppLaunchTest extends TestSuiteRunner {
     IOSDriver iosDriver = (IOSDriver) getDriver();
     System.out.println("Is Device locked : " + iosDriver.isDeviceLocked());
   }
-
 }

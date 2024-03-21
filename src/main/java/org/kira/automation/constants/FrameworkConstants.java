@@ -10,16 +10,27 @@ public final class FrameworkConstants {
 
   public static final String USER_DIRECTORY = SystemUtils.getUserDir() + File.separator;
   public static final String TEST_RESOURCE_FOLDER =
-      USER_DIRECTORY + "src" + File.separator + "test" + File.separator + "resources"
-          + File.separator;
+    USER_DIRECTORY +
+    "src" +
+    File.separator +
+    "test" +
+    File.separator +
+    "resources" +
+    File.separator;
   public static final String DEFAULT_REPORTS_FOLDER = Optional.ofNullable(
-      TestSuiteHelper.getConfiguration().getReport().getPath()).orElse("target/spark/spark.html");
+    TestSuiteHelper.getConfiguration().getReport().getPath()
+  ).orElse("target/spark/spark.html");
   public static final String REPORTS_CONFIG_JSON = Optional.ofNullable(
-          TestSuiteHelper.getConfiguration().getReport().getConfigPath())
-      .orElse("src/test/resources/spark.config.json");
+    TestSuiteHelper.getConfiguration().getReport().getConfigPath()
+  ).orElse("src/test/resources/spark.config.json");
   public static final String MAIN_RESOURCE_FOLDER =
-      USER_DIRECTORY + "src" + File.separator + "main" + File.separator + "resources"
-          + File.separator;
+    USER_DIRECTORY +
+    "src" +
+    File.separator +
+    "main" +
+    File.separator +
+    "resources" +
+    File.separator;
   public static final String CONFIG_FILE_NAME = "config.json";
   public static final String CHROME = "chrome";
   public static final String FIREFOX = "firefox";
@@ -40,14 +51,17 @@ public final class FrameworkConstants {
   public static final String OS_VERSION = "osVersion";
   public static final String BROWSER_NAME = "browserName";
   public static final String RESOLUTION = "resolution";
-  private static final String[] MANDATE_ANNOTATIONS = {"org.kira.automation.annotations.Web",
-      "org.kira.automation.annotations.Api", "org.kira.automation.annotations.Mobile"};
-  private FrameworkConstants() {
-  }
+  private static final String[] MANDATE_ANNOTATIONS = {
+    "org.kira.automation.annotations.Web",
+    "org.kira.automation.annotations.Api",
+    "org.kira.automation.annotations.Mobile",
+  };
+
+  private FrameworkConstants() {}
 
   public static final String GRAPHQL_QUERY_PATH = Optional.ofNullable(
-          TestSuiteHelper.getConfiguration().getApi().getGraphQLConfiguration().getQueryPath())
-      .orElse("src/test/resources/queries/");
+    TestSuiteHelper.getConfiguration().getApi().getGraphQLConfiguration().getQueryPath()
+  ).orElse("src/test/resources/queries/");
 
   public static String[] getMandateAnnotations() {
     return Arrays.copyOf(MANDATE_ANNOTATIONS, MANDATE_ANNOTATIONS.length);

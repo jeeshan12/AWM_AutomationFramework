@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Builder
-public class AndroidConfiguration extends CommonMobileConfiguration{
+public class AndroidConfiguration extends CommonMobileConfiguration {
 
   @Builder.Default
   private String appActivity = "";

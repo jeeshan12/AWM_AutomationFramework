@@ -18,5 +18,4 @@ public class GridConfiguration {
 
   @SerializedName("port")
   private String gridPort;
-
 }

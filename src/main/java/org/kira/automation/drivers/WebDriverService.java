@@ -9,18 +9,20 @@ import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 
 public interface WebDriverService {
-
   WebDriver getWebDriver(final Configuration configuration);
 
   static String getCapabilityWithAppiumPrefix(String capabilityName) {
     return String.format("%s%s", CapabilityHelpers.APPIUM_PREFIX, capabilityName);
   }
 
-  default void addAdditionalCapabilities(List<String> additionalCapabilities, MutableCapabilities capabilities) {
+  default void addAdditionalCapabilities(
+    List<String> additionalCapabilities,
+    MutableCapabilities capabilities
+  ) {
     for (String capability : additionalCapabilities) {
       String[] caps = capability.split(",");
-      for (String cap: caps) {
-        String[] capArray =  cap.split("=");
+      for (String cap : caps) {
+        String[] capArray = cap.split("=");
         String key = getCapabilityWithAppiumPrefix(capArray[0]);
         String value = capArray[1];
         if (ConverterUtil.isBoolean(value)) {
@@ -31,16 +33,17 @@ public interface WebDriverService {
           capabilities.setCapability(key, value);
         }
       }
-
     }
   }
 
-  default void addGlobalCapabilitiesForAppium(MobileConfiguration mobileConfiguration, MutableCapabilities capabilities) {
+  default void addGlobalCapabilitiesForAppium(
+    MobileConfiguration mobileConfiguration,
+    MutableCapabilities capabilities
+  ) {
     capabilities.setCapability("noReset", mobileConfiguration.isNoReset());
     capabilities.setCapability("fullReset", mobileConfiguration.isFullReset());
     capabilities.setCapability("eventTimings", mobileConfiguration.isEventTimings());
     capabilities.setCapability("fullReset", mobileConfiguration.isPrintPageSourceOnFindFailure());
     capabilities.setCapability("newCommandTimeout", mobileConfiguration.getNewCommandTimeout());
-
   }
 }

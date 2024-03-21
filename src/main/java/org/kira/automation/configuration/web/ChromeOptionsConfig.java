@@ -12,5 +12,4 @@ public class ChromeOptionsConfig {
 
   private List<String> options;
   private DownloadOption downloadOption;
-
 }

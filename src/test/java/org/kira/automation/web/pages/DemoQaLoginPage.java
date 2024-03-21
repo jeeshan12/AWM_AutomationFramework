@@ -5,13 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class DemoQaLoginPage extends BasePage{
+public class DemoQaLoginPage extends BasePage {
+
   public DemoQaLoginPage(WebDriver driver) {
     super(driver);
   }
 
   @FindBy(id = "userName")
   private WebElement usernameTextBox;
+
   @FindBy(id = "password")
   private WebElement passwordTextBox;
 
@@ -29,8 +31,7 @@ public class DemoQaLoginPage extends BasePage{
   @Override
   public boolean isLoaded() {
     return this.webDriverWait.until(
-        (d) -> this.usernameTextBox.isDisplayed() && this.usernameTextBox.isEnabled()
-    );
+        d -> this.usernameTextBox.isDisplayed() && this.usernameTextBox.isEnabled()
+      );
   }
-
 }

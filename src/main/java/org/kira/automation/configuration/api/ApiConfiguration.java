@@ -21,5 +21,4 @@ public class ApiConfiguration {
   private RestConfiguration restConfiguration;
 
   private String backend;
-
 }

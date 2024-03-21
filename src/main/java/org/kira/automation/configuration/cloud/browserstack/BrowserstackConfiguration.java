@@ -42,5 +42,4 @@ public class BrowserstackConfiguration {
 
   @SerializedName("edge")
   private CloudBrowserConfiguration edgeConfig;
-
 }

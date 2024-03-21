@@ -19,5 +19,4 @@ public class Configuration {
   private ApiConfiguration api;
 
   private ReportConfiguration report;
-
 }

@@ -13,6 +13,5 @@ import lombok.ToString;
 @Builder(builderMethodName = "create")
 public class EpisodeId {
 
-    private String episodeId;
-
+  private String episodeId;
 }

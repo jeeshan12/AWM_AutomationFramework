@@ -35,116 +35,126 @@ import org.kira.automation.exceptions.FrameworkGenericException;
 
 public class WebDriverSuiteHelper {
 
-  private WebDriverSuiteHelper() {
-  }
+  private WebDriverSuiteHelper() {}
 
   static void setWebDriver(final MethodContextImpl context, final Configuration configuration) {
     Method method = context.method;
     String browser = System.getenv(BROWSER);
-    if ((isAnnotationPresent(method, Chrome.class)
-        || CHROME.equalsIgnoreCase(browser)) && isAnnotationPresent(method, Web.class)) {
+    if (
+      (isAnnotationPresent(method, Chrome.class) || CHROME.equalsIgnoreCase(browser)) &&
+      isAnnotationPresent(method, Web.class)
+    ) {
       addChromeDriver(context, configuration);
-    } else if ((isAnnotationPresent(method, Firefox.class) ||
-        FIREFOX.equalsIgnoreCase(browser)) && isAnnotationPresent(method, Web.class)) {
+    } else if (
+      (isAnnotationPresent(method, Firefox.class) || FIREFOX.equalsIgnoreCase(browser)) &&
+      isAnnotationPresent(method, Web.class)
+    ) {
       addFirefoxDriver(context, configuration);
-    } else if ((isAnnotationPresent(method, iOS.class)) && isAnnotationPresent(method, Mobile.class)) {
+    } else if (
+      (isAnnotationPresent(method, iOS.class)) && isAnnotationPresent(method, Mobile.class)
+    ) {
       addiOSDriver(context, configuration);
-    } else if ((isAnnotationPresent(method, Android.class)) && isAnnotationPresent(method, Mobile.class)) {
+    } else if (
+      (isAnnotationPresent(method, Android.class)) && isAnnotationPresent(method, Mobile.class)
+    ) {
       addAndroidDriver(context, configuration);
     } else if (isAnnotationPresent(method, Mobile.class)) {
       addMobileDriver(context, configuration, configuration.getMobile().getPlatform());
     } else {
       throw new AnnotationMissingException(
-          "Please provide valid annotations like  like @Web , @Chrome, @Firefox, @Mobile, @iOS and @Android to initialise the webdriver"
+        "Please provide valid annotations like  like @Web , @Chrome, @Firefox, @Mobile, @iOS and @Android to initialise the webdriver"
       );
     }
   }
 
-
-  static void addDefaultWebDriver(final MethodContextImpl context,
-      final Configuration configuration) {
+  static void addDefaultWebDriver(
+    final MethodContextImpl context,
+    final Configuration configuration
+  ) {
     addChromeDriver(context, configuration);
   }
 
   static void addiOSDriver(final MethodContextImpl context, final Configuration configuration) {
     Injector iosDriverServiceInjector = Guice.createInjector(new IosDriverServiceInjector());
     DriverConsumer driverConsumer = iosDriverServiceInjector.getInstance(DriverConsumer.class);
-    context.setWebDriver(
-        driverConsumer.getWebDriver(configuration)
-    );
+    context.setWebDriver(driverConsumer.getWebDriver(configuration));
   }
 
   static void addAndroidDriver(final MethodContextImpl context, final Configuration configuration) {
-    Injector androidDriverServiceInjector = Guice.createInjector(new AndroidDriverServiceInjector());
-    DriverConsumer driverConsumer = androidDriverServiceInjector.getInstance(DriverConsumer.class);
-    context.setWebDriver(
-        driverConsumer.getWebDriver(configuration)
+    Injector androidDriverServiceInjector = Guice.createInjector(
+      new AndroidDriverServiceInjector()
     );
+    DriverConsumer driverConsumer = androidDriverServiceInjector.getInstance(DriverConsumer.class);
+    context.setWebDriver(driverConsumer.getWebDriver(configuration));
   }
 
   static void addFirefoxDriver(final MethodContextImpl context, final Configuration configuration) {
     Injector firefoxDriverInjector = Guice.createInjector(new FirefoxBrowserServiceInjector());
     DriverConsumer driverConsumer = firefoxDriverInjector.getInstance(DriverConsumer.class);
-    context.setWebDriver(
-        driverConsumer.getWebDriver(configuration)
-    );
+    context.setWebDriver(driverConsumer.getWebDriver(configuration));
   }
 
   static void addChromeDriver(final MethodContextImpl context, final Configuration configuration) {
     Injector chromeDriverInjector = Guice.createInjector(new ChromeBrowserServiceInjector());
     DriverConsumer driverConsumer = chromeDriverInjector.getInstance(DriverConsumer.class);
-    context.setWebDriver(
-        driverConsumer.getWebDriver(configuration)
-    );
+    context.setWebDriver(driverConsumer.getWebDriver(configuration));
   }
 
   public static void setRemoteDriver(MethodContextImpl context, Configuration configuration) {
-
     if (configuration.getWeb().getCloud().isCloudExecutionEnabled()) {
       setWebCloudRemoteDriver(context, configuration);
     } else if (configuration.getWeb().getSeleniumGrid().isGridEnabled()) {
-      context.setWebDriver(RemoteDriverFactory.getRemoteWebDriver(
-              configuration.getWeb().getCloud().getCloudProvider())
-          .getWebDriver(configuration, Optional.empty()));
+      context.setWebDriver(
+        RemoteDriverFactory.getRemoteWebDriver(
+          configuration.getWeb().getCloud().getCloudProvider()
+        ).getWebDriver(configuration, Optional.empty())
+      );
     } else {
       throw new FrameworkGenericException(
-          "Please provide valid cloud provider or grid properties for remote execution");
+        "Please provide valid cloud provider or grid properties for remote execution"
+      );
     }
   }
 
-  private static void setWebCloudRemoteDriver(MethodContextImpl context,
-      Configuration configuration) {
-
+  private static void setWebCloudRemoteDriver(
+    MethodContextImpl context,
+    Configuration configuration
+  ) {
     Method method = context.method;
 
     if (method.isAnnotationPresent(WebCloud.class)) {
       WebCloud webCloudAnnotation = method.getAnnotation(WebCloud.class);
       Map<String, String> capabilityMap = Map.of(
-          BROWSER_VERSION, webCloudAnnotation.browserVersion(),
-          OS, webCloudAnnotation.os(),
-          OS_VERSION, webCloudAnnotation.osVersion(),
-          BROWSER_NAME, webCloudAnnotation.browserName(),
-          RESOLUTION, webCloudAnnotation.resolution()
+        BROWSER_VERSION,
+        webCloudAnnotation.browserVersion(),
+        OS,
+        webCloudAnnotation.os(),
+        OS_VERSION,
+        webCloudAnnotation.osVersion(),
+        BROWSER_NAME,
+        webCloudAnnotation.browserName(),
+        RESOLUTION,
+        webCloudAnnotation.resolution()
       );
 
       context.setWebDriver(
-          RemoteDriverFactory.getRemoteWebDriver(
-                  configuration.getWeb().getCloud().getCloudProvider())
-              .getWebDriver(configuration, Optional.of(capabilityMap))
+        RemoteDriverFactory.getRemoteWebDriver(
+          configuration.getWeb().getCloud().getCloudProvider()
+        ).getWebDriver(configuration, Optional.of(capabilityMap))
       );
-
     } else {
       context.setWebDriver(
-          RemoteDriverFactory.getRemoteWebDriver(
-                  configuration.getWeb().getCloud().getCloudProvider())
-              .getWebDriver(configuration, Optional.empty())
+        RemoteDriverFactory.getRemoteWebDriver(
+          configuration.getWeb().getCloud().getCloudProvider()
+        ).getWebDriver(configuration, Optional.empty())
       );
     }
   }
 
   private static boolean isAnnotationPresent(
-      Method method, Class<? extends Annotation> annotation
+    Method method,
+    Class<? extends Annotation> annotation
   ) {
-      return method.isAnnotationPresent(annotation);
+    return method.isAnnotationPresent(annotation);
   }
 }

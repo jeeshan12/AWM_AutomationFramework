@@ -31,11 +31,10 @@ import org.testng.ITestResult;
 public class TestSuiteHelper {
 
   private static final BiPredicate<Method, Boolean> SCREENSHOT_REQUIRED = (method, enabled) ->
-      method.isAnnotationPresent(Web.class) && enabled ||
-          method.isAnnotationPresent(Mobile.class) && enabled;
+    (method.isAnnotationPresent(Web.class) && enabled) ||
+    (method.isAnnotationPresent(Mobile.class) && enabled);
 
-  private TestSuiteHelper() {
-  }
+  private TestSuiteHelper() {}
 
   /**
    * Method to return the framework configuration.
@@ -43,9 +42,12 @@ public class TestSuiteHelper {
    * @return {@link Configuration}
    */
   public static Configuration getConfiguration() {
-    return JsonParserUtil.readJsonFile(FileUtils.readFileAsString(
+    return JsonParserUtil.readJsonFile(
+      FileUtils.readFileAsString(
         FrameworkConstants.TEST_RESOURCE_FOLDER + FrameworkConstants.CONFIG_FILE_NAME
-    ), Configuration.class);
+      ),
+      Configuration.class
+    );
   }
 
   static void addWebDriver(MethodContextImpl context) {
@@ -60,18 +62,24 @@ public class TestSuiteHelper {
     // Check if required annotations (@Mobile, @Web, @Api) are available
     if (!isRequiredAnnotationAvailable(method.getAnnotations())) {
       throw new AnnotationMissingException(
-          "Please provide annotations like @Mobile, @Web and @Api to distinguish the tests"
+        "Please provide annotations like @Mobile, @Web and @Api to distinguish the tests"
       );
     }
 
-    if (getConfiguration().getWeb().getSeleniumGrid().isGridEnabled() || getConfiguration().getWeb()
-        .getCloud().isCloudExecutionEnabled()) {
+    if (
+      getConfiguration().getWeb().getSeleniumGrid().isGridEnabled() ||
+      getConfiguration().getWeb().getCloud().isCloudExecutionEnabled()
+    ) {
       WebDriverSuiteHelper.setRemoteDriver(context, getConfiguration());
       return;
     }
 
     // Check if the method is not annotated with @Chrome or @Firefox but annotated with @Web
-    if (!method.isAnnotationPresent(Chrome.class) && !method.isAnnotationPresent(Firefox.class) && method.isAnnotationPresent(Web.class)) {
+    if (
+      !method.isAnnotationPresent(Chrome.class) &&
+      !method.isAnnotationPresent(Firefox.class) &&
+      method.isAnnotationPresent(Web.class)
+    ) {
       WebDriverSuiteHelper.addDefaultWebDriver(context, getConfiguration());
       return;
     }
@@ -80,56 +88,63 @@ public class TestSuiteHelper {
     WebDriverSuiteHelper.setWebDriver(context, getConfiguration());
   }
 
-
   static void setUpApiConfig(final MethodContextImpl context) {
     Method method = context.method;
-      if (!method.isAnnotationPresent(Api.class)) {
-          return;
-      }
+    if (!method.isAnnotationPresent(Api.class)) {
+      return;
+    }
     RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
     ApiSuiteHelper.setUpApiConfig(context, getConfiguration());
   }
 
-
   private static boolean isRequiredAnnotationAvailable(final Annotation[] annotations) {
     List<String> annotationsNameList = Arrays.stream(annotations)
-        .map(annotation -> annotation.annotationType()
-            .getName())
-        .toList();
-    return Arrays.stream(FrameworkConstants.getMandateAnnotations())
-        .anyMatch(annotationsNameList::contains);
+      .map(annotation -> annotation.annotationType().getName())
+      .toList();
+    return Arrays.stream(FrameworkConstants.getMandateAnnotations()).anyMatch(
+      annotationsNameList::contains
+    );
   }
 
   static void takeScreenShot(MethodContextImpl context, Configuration configuration) {
-    if (!isScreenShotEnabled(context, configuration)
-    ) {
+    if (!isScreenShotEnabled(context, configuration)) {
       return;
     }
-    String screenshot = ((TakesScreenshot) context.getWebDriver())
-        .getScreenshotAs(OutputType.BASE64);
-    context.getTest()
-        .fail(MediaEntityBuilder.createScreenCaptureFromBase64String(screenshot).build());
+    String screenshot =
+      ((TakesScreenshot) context.getWebDriver()).getScreenshotAs(OutputType.BASE64);
+    context
+      .getTest()
+      .fail(MediaEntityBuilder.createScreenCaptureFromBase64String(screenshot).build());
     context.getTest().addScreenCaptureFromBase64String(screenshot);
   }
 
-  private static boolean isScreenShotEnabled(final MethodContextImpl context,
-      final Configuration configuration) {
-    return
-        SCREENSHOT_REQUIRED.test(context.method, configuration.getWeb().getScreenshot().isEnabled())
-            &&
-            SCREENSHOT_REQUIRED.test(context.method,
-                configuration.getMobile().getScreenshotConfiguration().isEnabled());
+  private static boolean isScreenShotEnabled(
+    final MethodContextImpl context,
+    final Configuration configuration
+  ) {
+    return (
+      SCREENSHOT_REQUIRED.test(
+        context.method,
+        configuration.getWeb().getScreenshot().isEnabled()
+      ) &&
+      SCREENSHOT_REQUIRED.test(
+        context.method,
+        configuration.getMobile().getScreenshotConfiguration().isEnabled()
+      )
+    );
   }
 
   private static String getMethodNameWithClassName(final Method method) {
-    return method.getDeclaringClass().getSimpleName() + ":" + method.getName();
+    return (method.getDeclaringClass().getSimpleName() + ":" + method.getName());
   }
 
   static void addTestReporting(final MethodContextImpl context) {
     context.setExtentTest(
-        ExtentTestManager.startTest(getMethodNameWithClassName(context.method),
-            context.method.getName())
+      ExtentTestManager.startTest(
+        getMethodNameWithClassName(context.method),
+        context.method.getName()
+      )
     );
   }
 
@@ -138,28 +153,49 @@ public class TestSuiteHelper {
       if (!context.method.isAnnotationPresent(Api.class)) {
         takeScreenShot(context, getConfiguration());
       }
-      context.getTest().fail(
-          MarkupHelper.createLabel(String.format("Test %s failed", context.method.getName()),
-              ExtentColor.RED));
+      context
+        .getTest()
+        .fail(
+          MarkupHelper.createLabel(
+            String.format("Test %s failed", context.method.getName()),
+            ExtentColor.RED
+          )
+        );
     } else if (testResult.getStatus() == ITestResult.SUCCESS) {
-      context.getTest().pass(
-          MarkupHelper.createLabel(String.format("Test %s passed", context.method.getName()),
-              ExtentColor.GREEN));
+      context
+        .getTest()
+        .pass(
+          MarkupHelper.createLabel(
+            String.format("Test %s passed", context.method.getName()),
+            ExtentColor.GREEN
+          )
+        );
     } else {
-      context.getTest().skip(
-          MarkupHelper.createLabel(String.format("Test %s skipped", context.method.getName()),
-              ExtentColor.AMBER));
+      context
+        .getTest()
+        .skip(
+          MarkupHelper.createLabel(
+            String.format("Test %s skipped", context.method.getName()),
+            ExtentColor.AMBER
+          )
+        );
     }
   }
 
-   static void setUpRedis(SuiteContextImpl suiteContext) {
-     StorageStateConfiguration storageStateConfiguration = TestSuiteHelper.getConfiguration()
-         .getWeb().getStorageStateConfiguration();
-     if (storageStateConfiguration.isStorageStateEnabled() && storageStateConfiguration.isRedisEnabled()) {
-       RedisManager redisManager = new RedisManager(
-           storageStateConfiguration.getRedisUrl(), storageStateConfiguration.getRedisPort(), storageStateConfiguration.getStorageStateKey()
-       );
-       suiteContext.setRedisManager(redisManager);
-     }
+  static void setUpRedis(SuiteContextImpl suiteContext) {
+    StorageStateConfiguration storageStateConfiguration = TestSuiteHelper.getConfiguration()
+      .getWeb()
+      .getStorageStateConfiguration();
+    if (
+      storageStateConfiguration.isStorageStateEnabled() &&
+      storageStateConfiguration.isRedisEnabled()
+    ) {
+      RedisManager redisManager = new RedisManager(
+        storageStateConfiguration.getRedisUrl(),
+        storageStateConfiguration.getRedisPort(),
+        storageStateConfiguration.getStorageStateKey()
+      );
+      suiteContext.setRedisManager(redisManager);
+    }
   }
 }

@@ -9,11 +9,15 @@ public class RickAndMortyService {
 
   private RickAndMortyService() {}
 
-
   public static EpisodeDetails getEpisodeDetailsWithStatusOkAndReturnEpisodeDetails(
-      final RequestSpecBuilder requestSpecBuilder, final GraphQLQuery graphQLQuery, final int statusCode) {
+    final RequestSpecBuilder requestSpecBuilder,
+    final GraphQLQuery graphQLQuery,
+    final int statusCode
+  ) {
     return RickAndMortyClient.getEpisodeDetailsWithStatusOkAndReturnEpisodeDetails(
-        requestSpecBuilder, graphQLQuery, statusCode
+      requestSpecBuilder,
+      graphQLQuery,
+      statusCode
     );
   }
 }

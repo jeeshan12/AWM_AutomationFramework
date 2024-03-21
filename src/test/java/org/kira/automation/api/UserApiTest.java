@@ -17,9 +17,7 @@ import org.testng.annotations.Test;
 
 public class UserApiTest extends TestSuiteRunner {
 
-
   private Faker faker;
-
 
   @BeforeMethod
   public void setup() {
@@ -29,17 +27,16 @@ public class UserApiTest extends TestSuiteRunner {
   @Test
   @Api
   public void createUser() {
-
     var userRequest = UserRequest.create()
-        .name(this.faker.name().fullName())
-        .job(this.faker.job().field())
-        .build();
+      .name(this.faker.name().fullName())
+      .job(this.faker.job().field())
+      .build();
 
-    UserResponse userResponse =
-        UserService.createUserWithStatusCreatedAndReturnResponse(getRequestSpecBuilder(),
-            userRequest,
-            HttpStatus.SC_CREATED
-        );
+    UserResponse userResponse = UserService.createUserWithStatusCreatedAndReturnResponse(
+      getRequestSpecBuilder(),
+      userRequest,
+      HttpStatus.SC_CREATED
+    );
 
     SoftAssertions.assertSoftly(softly -> {
       softly.assertThat(userResponse.getName()).as("User name").isEqualTo(userRequest.getName());
@@ -49,17 +46,16 @@ public class UserApiTest extends TestSuiteRunner {
     });
   }
 
-
   @Test
   @Api
   public void getUserDetails() {
     UserDetailsQuery.createUserQuery("2").accept(getRequestSpecBuilder());
 
-    UserDetails userDetails =
-        UserService.getUserDetailsWithStatusOkAndReturnUserDetailsResponse(getRequestSpecBuilder(),
-            "2",
-            HttpStatus.SC_OK
-        );
+    UserDetails userDetails = UserService.getUserDetailsWithStatusOkAndReturnUserDetailsResponse(
+      getRequestSpecBuilder(),
+      "2",
+      HttpStatus.SC_OK
+    );
 
     SoftAssertions.assertSoftly(softly -> {
       softly.assertThat(userDetails.getPage()).as("Page").isEqualTo(2);
@@ -69,6 +65,4 @@ public class UserApiTest extends TestSuiteRunner {
     });
     assertThat(userDetails.getData()).hasSize(6);
   }
-
-
 }

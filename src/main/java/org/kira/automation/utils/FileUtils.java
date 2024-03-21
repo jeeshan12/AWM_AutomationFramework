@@ -8,8 +8,7 @@ import org.kira.automation.exceptions.FrameworkGenericException;
 
 public final class FileUtils {
 
-  private FileUtils() {
-  }
+  private FileUtils() {}
 
   public static String readFileAsString(@NonNull String filePath) {
     byte[] encodedBytes = new byte[0];
@@ -17,7 +16,8 @@ public final class FileUtils {
       encodedBytes = Files.readAllBytes(Paths.get(filePath));
     } catch (IOException e) {
       throw new FrameworkGenericException(
-          String.format("File with name %s not found. Exception : %s", filePath, e.toString()));
+        String.format("File with name %s not found. Exception : %s", filePath, e.toString())
+      );
     }
     return new String(encodedBytes);
   }

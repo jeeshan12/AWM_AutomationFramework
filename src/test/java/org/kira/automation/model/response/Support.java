@@ -6,5 +6,4 @@ public class Support {
 
   private URL url;
   private String text;
-
 }

@@ -12,8 +12,7 @@ import org.kira.automation.exceptions.FrameworkGenericException;
 
 public class ExtentManager {
 
-  private ExtentManager() {
-  }
+  private ExtentManager() {}
 
   public static ExtentReports getInstance() {
     return ExtentManagerHolder.INSTANCE;
@@ -21,9 +20,12 @@ public class ExtentManager {
 
   private static class ExtentManagerHolder {
 
-    static final File SPARK_CONFIG_FILE = Optional.of(new File(REPORTS_CONFIG_JSON))
-        .orElseThrow(() -> new FrameworkGenericException(
-            "Please provide the path for spark config file to load the extent reports configuration"));
+    static final File SPARK_CONFIG_FILE = Optional.of(new File(REPORTS_CONFIG_JSON)).orElseThrow(
+      () ->
+        new FrameworkGenericException(
+          "Please provide the path for spark config file to load the extent reports configuration"
+        )
+    );
     private static final ExtentReports INSTANCE = createInstance();
 
     private static ExtentReports createInstance() {
@@ -39,5 +41,4 @@ public class ExtentManager {
       return extentReports;
     }
   }
-
 }

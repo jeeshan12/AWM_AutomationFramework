@@ -9,5 +9,7 @@ public enum Backend {
 
   private String api;
 
-  Backend(String api) {this.api = api;}
+  Backend(String api) {
+    this.api = api;
+  }
 }

@@ -10,7 +10,6 @@ import org.kira.automation.configuration.api.GraphQLQuery;
 import org.openqa.selenium.WebDriver;
 
 public interface MethodContext {
-
   WebDriver getWebDriver();
 
   ExtentTest getTest();
@@ -28,5 +27,4 @@ public interface MethodContext {
   GraphQLQuery getGraphQlQueryInstance();
 
   JSONObject getGraphQlQueryVariablesObject();
-
 }

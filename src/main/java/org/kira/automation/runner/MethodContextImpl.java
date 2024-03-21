@@ -79,7 +79,6 @@ public class MethodContextImpl implements MethodContext {
     return this.responseSpecBuilder;
   }
 
-
   public void setResponseSpecBuilder(final ResponseSpecBuilder responseSpecBuilder) {
     this.responseSpecBuilder = responseSpecBuilder;
   }
@@ -105,5 +104,4 @@ public class MethodContextImpl implements MethodContext {
   public void setGraphQlVariablesObject(JSONObject graphQlObject) {
     this.graphQlObject = graphQlObject;
   }
-
 }

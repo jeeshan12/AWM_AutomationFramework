@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum CloudProvider {
-
   LAMBDATEST("lambdatest"),
   BROWSERSTACK("browserstack"),
   K8S("k8s");
@@ -14,5 +13,4 @@ public enum CloudProvider {
   CloudProvider(String providerName) {
     this.providerName = providerName;
   }
-
 }

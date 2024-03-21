@@ -15,15 +15,16 @@ import org.kira.automation.configuration.api.GraphQlConfiguration;
 
 public class ApiSuiteHelper {
 
-  private ApiSuiteHelper() {
-  }
+  private ApiSuiteHelper() {}
 
   static void setUpApiConfig(final MethodContextImpl context, final Configuration configuration) {
     Method method = context.method;
     if (!method.isAnnotationPresent(Api.class)) {
       return;
     }
-    ServiceConfiguration serviceConfiguration = ServiceConfigurationFactory.createConfiguration(configuration.getApi());
+    ServiceConfiguration serviceConfiguration = ServiceConfigurationFactory.createConfiguration(
+      configuration.getApi()
+    );
     if (serviceConfiguration instanceof GraphQlConfiguration) {
       setUpGraphQlConfig(context);
     }
@@ -40,12 +41,14 @@ public class ApiSuiteHelper {
     context.setGraphQlVariablesObject(new JSONObject());
   }
 
-  private static RequestSpecBuilder getRequestSpecBuilder(final ServiceConfiguration serviceConfiguration) {
+  private static RequestSpecBuilder getRequestSpecBuilder(
+    final ServiceConfiguration serviceConfiguration
+  ) {
     RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
     return requestSpecBuilder
-        .setBaseUri(serviceConfiguration.getBaseurl())
-        .setBasePath(serviceConfiguration.getBasePath())
-        .setContentType(ContentType.JSON);
+      .setBaseUri(serviceConfiguration.getBaseurl())
+      .setBasePath(serviceConfiguration.getBasePath())
+      .setContentType(ContentType.JSON);
   }
 
   private static ResponseSpecBuilder getResponseSpecBuilder() {

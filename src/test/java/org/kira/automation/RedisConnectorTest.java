@@ -27,10 +27,9 @@ public class RedisConnectorTest {
     assertThat(jedis).isNotNull();
   }
 
-
   @Test
   public void testReflectionSingletonViolation()
-      throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
     Constructor<RedisConnector> constructor = RedisConnector.class.getDeclaredConstructor();
     constructor.setAccessible(true);
     constructor.newInstance();

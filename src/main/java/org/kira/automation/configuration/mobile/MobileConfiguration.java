@@ -28,12 +28,11 @@ public class MobileConfiguration {
 
   private boolean printPageSourceOnFindFailure;
 
-  private String  platform;
+  private String platform;
 
   @SerializedName("android")
   private AndroidConfiguration androidConfiguration;
 
   @SerializedName("ios")
-  private  IosConfiguration iosConfiguration;
-
+  private IosConfiguration iosConfiguration;
 }

@@ -17,6 +17,7 @@ public class WebConfiguration {
   private boolean isHeadless;
   private BrowserOptionsConfig browserOptions;
   private CloudConfiguration cloud;
+
   @SerializedName("grid")
   private GridConfiguration seleniumGrid;
 

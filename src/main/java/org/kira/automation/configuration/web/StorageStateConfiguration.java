@@ -31,5 +31,4 @@ public class StorageStateConfiguration {
   private int redisPort;
 
   private boolean redisEnabled;
-
 }

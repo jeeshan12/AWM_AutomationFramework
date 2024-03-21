@@ -9,11 +9,12 @@ import org.testng.annotations.Test;
 
 public class IosAppLaunchTest extends TestSuiteRunner {
 
-
-  @Test @Android @Mobile @iOS
+  @Test
+  @Android
+  @Mobile
+  @iOS
   public void launchApp() {
     IOSDriver driver = (IOSDriver) getDriver();
     System.out.println("Location service is enabled ? : " + driver.isDeviceLocked());
   }
-
 }

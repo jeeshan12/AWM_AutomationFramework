@@ -17,5 +17,4 @@ public class CloudProviderConfiguration {
 
   @SerializedName("lambdatest")
   private LambdatestConfiguration lambdatestConfiguration;
-
 }

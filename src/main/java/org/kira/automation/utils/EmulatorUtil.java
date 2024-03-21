@@ -11,8 +11,7 @@ public class EmulatorUtil {
 
   private static final Logger LOGGER = Logger.getLogger(EmulatorUtil.class);
 
-  private EmulatorUtil() {
-  }
+  private EmulatorUtil() {}
 
   public static void startEmulator(String adbPath, String emulatorName) {
     File adbFile = new File(adbPath);
@@ -40,7 +39,8 @@ public class EmulatorUtil {
     try {
       Process process = processBuilder.start();
       BufferedReader bufferedReader = new BufferedReader(
-          new InputStreamReader(process.getInputStream()));
+        new InputStreamReader(process.getInputStream())
+      );
       String line;
       while ((line = bufferedReader.readLine()) != null) {
         builder.append(line).append(System.lineSeparator());

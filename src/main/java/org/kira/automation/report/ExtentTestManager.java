@@ -9,8 +9,8 @@ public class ExtentTestManager {
 
   static Map<Integer, ExtentTest> extentTestMap = new HashMap<>();
   static ExtentReports extent = ExtentManager.getInstance();
-  private ExtentTestManager() {
-  }
+
+  private ExtentTestManager() {}
 
   public static synchronized ExtentTest getTest() {
     return extentTestMap.get((int) Thread.currentThread().threadId());
