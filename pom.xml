@@ -3,6 +3,7 @@
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>kira</artifactId>
+  <!-- Profiles -->
   <build>
     <plugins>
       <plugin>
@@ -36,7 +37,37 @@
         <groupId>org.apache.maven.plugins</groupId>
         <version>${maven.surefire.version}</version>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${maven.deploy.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven.jar.version}</version>
+        <configuration>
+          <!-- Exclude test sources -->
+          <excludes>
+            <exclude>src/test/**</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <!-- Maven Deploy Plugin configuration -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <configuration>
+            <repositoryId>${project.distributionManagement.repository.id}</repositoryId>
+            <url>${project.distributionManagement.repository.url}</url>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
   <dependencies>
 
@@ -142,6 +173,38 @@
       </build>
       <id>bs-test</id>
     </profile>
+    <profile>
+      <id>nexus-profile</id>
+      <distributionManagement>
+        <repository>
+          <id>nexus</id>
+          <name>Nexus Repository</name>
+          <url>http://3.110.106.240:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+          <id>nexus-snapshots</id>
+          <name>Nexus Snapshot Repository</name>
+          <url>http://3.110.106.240:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+      </distributionManagement>
+    </profile>
+
+    <!-- Profile for Maven -->
+    <profile>
+      <id>maven-profile</id>
+      <distributionManagement>
+        <repository>
+          <id>maven</id>
+          <name>Maven Repository</name>
+          <url>http://your-maven-url/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+          <id>maven-snapshots</id>
+          <name>Maven Snapshot Repository</name>
+          <url>http://your-maven-url/repository/maven-snapshots/</url>
+        </snapshotRepository>
+      </distributionManagement>
+    </profile>
   </profiles>
 
   <properties>
@@ -159,6 +222,8 @@
     <tesng.version>7.9.0</tesng.version>
     <json.version>20240205</json.version>
     <appium.version>9.1.0</appium.version>
+    <maven.deploy.version>3.1.1</maven.deploy.version>
+    <maven.jar.version>3.3.0</maven.jar.version>
   </properties>
 
   <url>http://maven.apache.org</url>
