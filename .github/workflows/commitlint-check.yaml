@@ -10,4 +10,4 @@ on:
 
 jobs:
   test:
-    uses: jeeshan12/resusable_workflows/.github/workflows/commitlint.yml@v2.2.0
+    uses: jeeshan12/resusable_workflows/.github/workflows/commitlint.yaml@v2.2.0
