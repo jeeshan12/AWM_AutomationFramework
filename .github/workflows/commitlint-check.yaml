@@ -1,0 +1,11 @@
+
+
+name: Run commit lint for last commit
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  commitlint:
+    uses: jeeshan12/resusable_workflows/.github/workflows/commitlint.yaml@v2.2.1
