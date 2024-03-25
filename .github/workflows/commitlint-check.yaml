@@ -8,4 +8,4 @@ on:
 
 jobs:
   commitlint:
-    uses: jeeshan12/resusable_workflows/.github/workflows/commitlint.yaml@fix-commitlint-worfklow
+    uses: jeeshan12/resusable_workflows/.github/workflows/commitlint.yaml@v2.2.1
