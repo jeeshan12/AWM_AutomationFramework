@@ -18,3 +18,4 @@ logs/browserstack-plugin.log
 .auth/
 
 node_modules
+.DS_Store
