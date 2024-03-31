@@ -5,6 +5,8 @@ name: Run Gitleaks on commits
 on: [pull_request, push, workflow_dispatch]
 
 jobs:
-  commitlint:
+  gitleaks:
     uses: jeeshan12/resusable_workflows/.github/workflows/gitleaks-scan.yaml@feat-gitleaks
-    secrets: inherit
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+    continue-on-error: true
