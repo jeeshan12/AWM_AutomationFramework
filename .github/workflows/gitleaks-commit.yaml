@@ -2,7 +2,7 @@
 
 name: Run Gitleaks on commits
 
-on: [push, workflow_dispatch]
+on: [pull_request, workflow_dispatch]
 
 jobs:
   gitleaks:
