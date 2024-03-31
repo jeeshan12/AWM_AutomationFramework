@@ -9,4 +9,3 @@ jobs:
     uses: jeeshan12/resusable_workflows/.github/workflows/gitleaks-scan.yaml@feat-gitleaks
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
-    continue-on-error: true
