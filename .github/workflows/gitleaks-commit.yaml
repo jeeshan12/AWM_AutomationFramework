@@ -13,5 +13,4 @@ jobs:
   gitleaks:
     uses: jeeshan12/resusable_workflows/.github/workflows/gitleaks-scan.yaml@feat-gitleaks
     secrets:
-      token: ${{ secrets.GITHUBLEAKS_TOKEN }}
-    permissions: read-all
+      token: ${{ secrets.GITHUB_TOKEN }}
