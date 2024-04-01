@@ -9,10 +9,6 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  pull-requests: read
-
-
 jobs:
   gitleaks:
     uses: jeeshan12/resusable_workflows/.github/workflows/gitleaks-scan.yaml@feat-gitleaks
