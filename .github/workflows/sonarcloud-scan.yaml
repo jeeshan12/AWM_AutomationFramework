@@ -12,6 +12,7 @@ on:
 jobs:
   sonarcloud-scan:
     uses: jeeshan12/resusable_workflows/.github/workflows/sonarcloud-scan.yaml@feat-sonarcloud-workflow
-    secrets: inherit
+    secrets:
+      sonar-token: ${{ secrets.SONAR_TOKEN }}
     with:
      repository-name: jeeshan12_AWM_AutomationFramework
