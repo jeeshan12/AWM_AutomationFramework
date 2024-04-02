@@ -11,7 +11,7 @@ on:
 
 jobs:
   sonarcloud-scan:
-    uses: jeeshan12/resusable_workflows/.github/workflows/sonarcloud-scan.yaml@v2.5.1
+    uses: jeeshan12/resusable_workflows/.github/workflows/sonarcloud-scan.yaml@v2.5.2
     secrets:
       sonar-token: ${{ secrets.SONAR_TOKEN }}
     with:
