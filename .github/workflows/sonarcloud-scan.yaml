@@ -16,3 +16,4 @@ jobs:
       sonar-token: ${{ secrets.SONAR_TOKEN }}
     with:
      repository-name: jeeshan12_AWM_AutomationFramework
+     java-version: '21'
