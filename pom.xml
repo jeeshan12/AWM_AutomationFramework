@@ -6,12 +6,13 @@
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>19</source>
-          <target>19</target>
-        </configuration>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.version}</version>
+        <configuration>
+          <source>20</source>
+          <target>20</target>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -119,9 +120,7 @@
 
   </dependencies>
   <groupId>org.kira.automation</groupId>
-
   <modelVersion>4.0.0</modelVersion>
-
   <name>kira</name>
   <packaging>jar</packaging>
 
@@ -159,6 +158,9 @@
     <tesng.version>7.9.0</tesng.version>
     <json.version>20240205</json.version>
     <appium.version>9.1.0</appium.version>
+    <sonar.organization>mjeeshan</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <maven.compiler.version>3.13.0</maven.compiler.version>
   </properties>
 
   <url>http://maven.apache.org</url>
