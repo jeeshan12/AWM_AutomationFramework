@@ -1,0 +1,17 @@
+
+
+name: Run Sonarcloud on repository
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  sonarcloud-scan:
+    uses: jeeshan12/resusable_workflows/.github/workflows/sonarcloud-scan.yaml@feat-sonarcloud-workflow
+    secrets: inherit
+    with:
+     repository-name: jeeshan12_AWM_AutomationFramework
