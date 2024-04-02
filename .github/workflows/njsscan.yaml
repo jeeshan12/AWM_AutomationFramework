@@ -1,0 +1,14 @@
+
+
+name: Run njsscan on repository
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  njsscan:
+    uses: jeeshan12/resusable_workflows/.github/workflows/njsscan.yaml@feat-njsscan-workflow
