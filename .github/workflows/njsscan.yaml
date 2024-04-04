@@ -11,4 +11,4 @@ on:
 
 jobs:
   njsscan:
-    uses: jeeshan12/resusable_workflows/.github/workflows/njsscan.yaml@feat-njsscan-workflow
+    uses: jeeshan12/resusable_workflows/.github/workflows/njsscan.yaml@v2.6.0
