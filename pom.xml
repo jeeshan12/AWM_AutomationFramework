@@ -155,7 +155,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <restassured.version>5.4.0</restassured.version>
     <selenium.version>4.17.0</selenium.version>
-    <tesng.version>7.9.0</tesng.version>
+    <tesng.version>7.10.0</tesng.version>
     <json.version>20240205</json.version>
     <appium.version>9.1.0</appium.version>
     <sonar.organization>mjeeshan</sonar.organization>
