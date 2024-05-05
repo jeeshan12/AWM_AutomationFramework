@@ -1,6 +1,10 @@
 name: Run android tests on emulator
 
 on:
+  pull_request:
+    types: [ opened, synchronize ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
