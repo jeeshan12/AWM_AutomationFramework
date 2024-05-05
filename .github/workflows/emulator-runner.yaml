@@ -1,0 +1,10 @@
+name: Run android tests on emulator
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sonarcloud-scan:
+    uses: jeeshan12/resusable_workflows/.github/workflows/android-runner.yaml@feat-appium-android-gha
+    with:
+      java-version: "21"
