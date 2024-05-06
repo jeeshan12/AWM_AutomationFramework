@@ -14,4 +14,5 @@ jobs:
       java-version: "21"
       appium-test-server-port: "4567"
       appium-test-server-address: "127.0.0.1"
+      api-level: "34"
 
