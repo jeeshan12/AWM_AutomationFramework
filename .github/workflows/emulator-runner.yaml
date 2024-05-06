@@ -5,7 +5,7 @@ on:
 
 jobs:
   emulator-runner:
-    uses: jeeshan12/resusable_workflows/.github/workflows/android-runner.yaml@feat-appium-android-gha
+    uses: jeeshan12/resusable_workflows/.github/workflows/android-runner.yaml@v2.7.0
     with:
       java-version: "21"
       appium-test-server-port: "4567"
