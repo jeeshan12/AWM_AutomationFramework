@@ -1,5 +1,6 @@
 package org.kira.automation.drivers.mobile;
 
+import static org.kira.automation.utils.AppiumServerUtil.buildAppiumServerUrlString;
 import static org.kira.automation.utils.IosCapabilitiesUtil.configureCapabilities;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -29,13 +30,7 @@ public class IosDriverServiceImpl implements WebDriverService {
     addAdditionalCapabilities(iosConfiguration.getAdditionalCapabilities(), capabilities);
     try {
       return new IOSDriver(
-        new URI(
-          String.format(
-            "%s:%s",
-            configuration.getMobile().getServerUrl(),
-            configuration.getMobile().getPort()
-          )
-        ).toURL(),
+        new URI(buildAppiumServerUrlString(configuration.getMobile())).toURL(),
         capabilities
       );
     } catch (MalformedURLException | URISyntaxException e) {

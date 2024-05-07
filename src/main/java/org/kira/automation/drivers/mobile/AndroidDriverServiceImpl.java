@@ -2,6 +2,7 @@ package org.kira.automation.drivers.mobile;
 
 import static org.kira.automation.utils.AndroidCapabilitiesUtil.addDeviceLockCapabilities;
 import static org.kira.automation.utils.AndroidCapabilitiesUtil.configureCapabilities;
+import static org.kira.automation.utils.AppiumServerUtil.buildAppiumServerUrlString;
 
 import io.appium.java_client.android.AndroidDriver;
 import java.net.MalformedURLException;
@@ -42,13 +43,7 @@ public class AndroidDriverServiceImpl implements WebDriverService {
     addAdditionalCapabilities(androidConfiguration.getAdditionalCapabilities(), capabilities);
     try {
       return new AndroidDriver(
-        new URI(
-          String.format(
-            "%s:%s",
-            configuration.getMobile().getServerUrl(),
-            configuration.getMobile().getPort()
-          )
-        ).toURL(),
+        new URI(buildAppiumServerUrlString(configuration.getMobile())).toURL(),
         capabilities
       );
     } catch (MalformedURLException | URISyntaxException e) {

@@ -47,6 +47,7 @@ public final class FrameworkConstants {
   public static final String CLOUD_USERNAME = "CLOUD_USERNAME";
   public static final String CLOUD_ACCESS_KEY = "CLOUD_ACCESS_KEY";
   public static final String BROWSER_VERSION = "browserVersion";
+
   public static final String OS = "os";
   public static final String OS_VERSION = "osVersion";
   public static final String BROWSER_NAME = "browserName";
@@ -66,4 +67,7 @@ public final class FrameworkConstants {
   public static String[] getMandateAnnotations() {
     return Arrays.copyOf(MANDATE_ANNOTATIONS, MANDATE_ANNOTATIONS.length);
   }
+
+  public static final String APPIUM_SERVER = "appiumServer";
+  public static final String APPIUM_Port = "appiumPort";
 }
