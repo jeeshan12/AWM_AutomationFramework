@@ -54,37 +54,36 @@ public class CookieUtils {
     }
 
     if (
-      cookieMap.containsKey("Domain") &&
-      cookieMap.containsKey("Path") &&
-      cookieMap.containsKey("Value")
+      !(cookieMap.containsKey("Domain") &&
+        cookieMap.containsKey("Path") &&
+        cookieMap.containsKey("Value"))
     ) {
-      Cookie.Builder builder = new Cookie.Builder(cookieMap.get("Name"), cookieMap.get("Value"))
-        .domain(cookieMap.get("Domain"))
-        .path(cookieMap.get("Path"));
-
-      if (cookieMap.containsKey("Expires")) {
-        try {
-          builder.expiresOn(
-            new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z").parse(cookieMap.get("Expires"))
-          );
-        } catch (ParseException e) {
-          throw new FrameworkGenericException(
-            String.format("Error while parsing date %s", e.getMessage())
-          );
-        }
-      }
-
-      if (cookieMap.containsKey("Secure")) {
-        builder.isSecure(Boolean.parseBoolean(cookieMap.get("Secure")));
-      }
-
-      if (cookieMap.containsKey("HttpOnly")) {
-        builder.isHttpOnly(Boolean.parseBoolean(cookieMap.get("HttpOnly")));
-      }
-
-      return builder.build();
-    } else {
       return null;
     }
+
+    Cookie.Builder builder = new Cookie.Builder(cookieMap.get("Name"), cookieMap.get("Value"))
+      .domain(cookieMap.get("Domain"))
+      .path(cookieMap.get("Path"));
+
+    if (cookieMap.containsKey("Expires")) {
+      try {
+        builder.expiresOn(
+          new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z").parse(cookieMap.get("Expires"))
+        );
+      } catch (ParseException e) {
+        throw new FrameworkGenericException(
+          String.format("Error while parsing date %s", e.getMessage())
+        );
+      }
+    }
+
+    if (cookieMap.containsKey("Secure")) {
+      builder.isSecure(Boolean.parseBoolean(cookieMap.get("Secure")));
+    }
+
+    if (cookieMap.containsKey("HttpOnly")) {
+      builder.isHttpOnly(Boolean.parseBoolean(cookieMap.get("HttpOnly")));
+    }
+    return builder.build();
   }
 }

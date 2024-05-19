@@ -4,8 +4,8 @@
       "enabled": true
     },
     "storageState" : {
-      "redisEnabled": false,
-      "enabled": false,
+      "redisEnabled": true,
+      "enabled": true,
       "sessionStorage": true,
       "path": ".auth/",
       "key": "login",
