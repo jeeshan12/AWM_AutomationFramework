@@ -1,6 +1,6 @@
 package org.kira.automation.drivers;
 
-import jakarta.inject.Inject;
+import com.google.inject.Inject;
 import org.kira.automation.configuration.Configuration;
 import org.openqa.selenium.WebDriver;
 
