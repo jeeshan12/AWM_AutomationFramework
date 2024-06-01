@@ -98,6 +98,14 @@
       <version>${json.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+
 
     <dependency>
       <artifactId>javafaker</artifactId>
@@ -161,6 +169,7 @@
     <sonar.organization>mjeeshan</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <maven.compiler.version>3.13.0</maven.compiler.version>
+    <mockito.version>5.12.0</mockito.version>
   </properties>
 
   <url>http://maven.apache.org</url>
