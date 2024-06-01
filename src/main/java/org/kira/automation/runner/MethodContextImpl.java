@@ -6,6 +6,7 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import java.lang.reflect.Method;
+import lombok.Setter;
 import org.json.JSONObject;
 import org.kira.automation.configuration.api.GraphQLQuery;
 import org.openqa.selenium.WebDriver;
@@ -13,13 +14,26 @@ import org.openqa.selenium.WebDriver;
 public class MethodContextImpl implements MethodContext {
 
   final Method method;
+
+  @Setter
   private WebDriver webDriver;
+
+  @Setter
   private ExtentTest extentTest;
+
+  @Setter
   private RequestSpecification requestSpecification;
+
+  @Setter
   private ResponseSpecification responseSpecification;
+
+  @Setter
   private RequestSpecBuilder requestSpecBuilder;
+
+  @Setter
   private ResponseSpecBuilder responseSpecBuilder;
 
+  @Setter
   private GraphQLQuery graphQLQuery;
 
   private JSONObject graphQlObject;
@@ -31,10 +45,6 @@ public class MethodContextImpl implements MethodContext {
   @Override
   public WebDriver getWebDriver() {
     return this.webDriver;
-  }
-
-  public void setWebDriver(final WebDriver webDriver) {
-    this.webDriver = webDriver;
   }
 
   @Override
@@ -52,17 +62,9 @@ public class MethodContextImpl implements MethodContext {
     return this.requestSpecification;
   }
 
-  public void setRequestSpecification(final RequestSpecification requestSpecification) {
-    this.requestSpecification = requestSpecification;
-  }
-
   @Override
   public ResponseSpecification getResponseSpecification() {
     return this.responseSpecification;
-  }
-
-  public void setResponseSpecification(final ResponseSpecification responseSpecification) {
-    this.responseSpecification = responseSpecification;
   }
 
   @Override
@@ -70,17 +72,9 @@ public class MethodContextImpl implements MethodContext {
     return this.requestSpecBuilder;
   }
 
-  public void setRequestSpecBuilder(final RequestSpecBuilder requestSpecBuilder) {
-    this.requestSpecBuilder = requestSpecBuilder;
-  }
-
   @Override
   public ResponseSpecBuilder getResponseSpecBuilder() {
     return this.responseSpecBuilder;
-  }
-
-  public void setResponseSpecBuilder(final ResponseSpecBuilder responseSpecBuilder) {
-    this.responseSpecBuilder = responseSpecBuilder;
   }
 
   @Override
@@ -91,14 +85,6 @@ public class MethodContextImpl implements MethodContext {
   @Override
   public JSONObject getGraphQlQueryVariablesObject() {
     return this.graphQlObject;
-  }
-
-  public void setExtentTest(final ExtentTest extentTest) {
-    this.extentTest = extentTest;
-  }
-
-  public void setGraphQLQuery(GraphQLQuery graphQLQuery) {
-    this.graphQLQuery = graphQLQuery;
   }
 
   public void setGraphQlVariablesObject(JSONObject graphQlObject) {
