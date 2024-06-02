@@ -8,7 +8,7 @@ public enum CloudProvider {
   BROWSERSTACK("browserstack"),
   K8S("k8s");
 
-  private String providerName;
+  private final String providerName;
 
   CloudProvider(String providerName) {
     this.providerName = providerName;

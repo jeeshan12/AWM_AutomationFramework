@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,13 +29,13 @@ public class RedisManagerTest {
 
   private RedisManager redisManager;
 
-  private final String url = "localhost";
-  private final int port = 6379;
   private String stateKey = "test_key";
 
   @BeforeMethod
   public void setUp() {
     MockitoAnnotations.openMocks(this);
+    int port = 6379;
+    String url = "localhost";
     when(this.redisConnectorMock.getRedisConnection(url, port)).thenReturn(jedisMock);
     this.redisManager = new RedisManager(url, port, stateKey, redisConnectorMock);
   }
@@ -115,7 +116,7 @@ public class RedisManagerTest {
     }
 
     // Verify result
-    assertEquals(null, retrievedState);
+    assertNull(retrievedState);
   }
 
   @Test

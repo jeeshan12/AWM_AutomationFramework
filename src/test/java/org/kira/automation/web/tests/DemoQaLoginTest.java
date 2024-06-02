@@ -13,13 +13,12 @@ import org.testng.annotations.Test;
 
 public class DemoQaLoginTest extends TestSuiteRunner {
 
-  private DemoQaLoginPage demoQaLoginPage;
   private BookStoreLandingPage bookStoreLandingPage;
 
   @BeforeMethod
   public void setStorageState() {
     Set<String> storedState = getRedisManager().retrieveState();
-    this.demoQaLoginPage = new DemoQaLoginPage(getDriver());
+    DemoQaLoginPage demoQaLoginPage = new DemoQaLoginPage(getDriver());
     this.bookStoreLandingPage = new BookStoreLandingPage(getDriver());
     if (storedState.isEmpty()) {
       getDriver().navigate().to("https://demoqa.com/login");

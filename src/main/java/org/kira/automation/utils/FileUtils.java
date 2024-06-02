@@ -11,12 +11,12 @@ public final class FileUtils {
   private FileUtils() {}
 
   public static String readFileAsString(@NonNull String filePath) {
-    byte[] encodedBytes = new byte[0];
+    byte[] encodedBytes;
     try {
       encodedBytes = Files.readAllBytes(Paths.get(filePath));
     } catch (IOException e) {
       throw new FrameworkGenericException(
-        String.format("File with name %s not found. Exception : %s", filePath, e.toString())
+        String.format("File with name %s not found. Exception : %s", filePath, e.getMessage())
       );
     }
     return new String(encodedBytes);
