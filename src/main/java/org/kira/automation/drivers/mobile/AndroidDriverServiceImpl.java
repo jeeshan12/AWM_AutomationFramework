@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.mobile.AndroidConfiguration;
+import org.kira.automation.configuration.mobile.DeviceLockConfiguration;
 import org.kira.automation.drivers.WebDriverService;
 import org.kira.automation.exceptions.FrameworkGenericException;
 import org.openqa.selenium.MutableCapabilities;
@@ -25,7 +26,8 @@ public class AndroidDriverServiceImpl implements WebDriverService {
     MutableCapabilities capabilities = new MutableCapabilities();
     addGlobalCapabilitiesForAppium(configuration.getMobile(), capabilities);
     configureCapabilities(androidConfiguration, capabilities);
-    Optional.ofNullable(androidConfiguration.getDeviceLockConfiguration().isDeviceLockEnabled())
+    Optional.ofNullable(androidConfiguration.getDeviceLockConfiguration())
+      .map(DeviceLockConfiguration::isDeviceLockEnabled)
       .filter(Boolean::booleanValue)
       .ifPresent(enabled -> addDeviceLockCapabilities(androidConfiguration, capabilities));
     Optional.ofNullable(androidConfiguration.getBrowserName())
