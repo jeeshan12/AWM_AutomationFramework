@@ -18,6 +18,7 @@ import org.kira.automation.annotations.Mobile;
 import org.kira.automation.annotations.Web;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.web.StorageStateConfiguration;
+import org.kira.automation.connector.RedisConnector;
 import org.kira.automation.connector.RedisManager;
 import org.kira.automation.constants.FrameworkConstants;
 import org.kira.automation.exceptions.AnnotationMissingException;
@@ -193,7 +194,8 @@ public class TestSuiteHelper {
       RedisManager redisManager = new RedisManager(
         storageStateConfiguration.getRedisUrl(),
         storageStateConfiguration.getRedisPort(),
-        storageStateConfiguration.getStorageStateKey()
+        storageStateConfiguration.getStorageStateKey(),
+        RedisConnector.getInstance()
       );
       suiteContext.setRedisManager(redisManager);
     }

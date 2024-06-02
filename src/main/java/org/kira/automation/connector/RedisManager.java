@@ -13,8 +13,8 @@ public class RedisManager {
 
   private final int port;
 
-  public RedisManager(String url, int port, String stateKey) {
-    this.redisConnector = RedisConnector.getInstance();
+  public RedisManager(String url, int port, String stateKey, RedisConnector redisConnector) {
+    this.redisConnector = redisConnector;
     this.url = url;
     this.port = port;
     this.stateKey = stateKey;

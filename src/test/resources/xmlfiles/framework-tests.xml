@@ -11,6 +11,7 @@
       <class name="org.kira.automation.framework.ServiceConfigurationFactoryTest"/>
       <class name="org.kira.automation.framework.IosCapabilitiesUtilTest"/>
       <class name="org.kira.automation.framework.JsonParserUtilTest"/>
+      <class name="org.kira.automation.framework.RedisManagerTest"/>
 
     </classes>
   </test>
