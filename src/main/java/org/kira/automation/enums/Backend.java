@@ -7,7 +7,7 @@ public enum Backend {
   REST("rest"),
   GRAPHQL("graphql");
 
-  private String api;
+  private final String api;
 
   Backend(String api) {
     this.api = api;

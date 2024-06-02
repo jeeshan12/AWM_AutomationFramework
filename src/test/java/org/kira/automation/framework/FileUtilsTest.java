@@ -30,7 +30,7 @@ public class FileUtilsTest {
   }
 
   @Test
-  public void testReadFileAsStringSuccess() throws IOException {
+  public void testReadFileAsStringSuccess() {
     String content = FileUtils.readFileAsString(validFilePath);
     assertEquals(content, "Unit Test Content");
   }
