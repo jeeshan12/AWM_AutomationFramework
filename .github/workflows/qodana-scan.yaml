@@ -9,7 +9,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  sonarcloud-scan:
+  qodana-scan:
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
     uses: jeeshan12/resusable_workflows/.github/workflows/qodana.yaml@feat-qodana-workflow
     secrets:
       qodana-token: ${{ secrets.QODANA_TOKEN }}
