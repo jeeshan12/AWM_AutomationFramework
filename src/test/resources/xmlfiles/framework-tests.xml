@@ -9,6 +9,9 @@
       <class name="org.kira.automation.framework.CookieUtilsTest"/>
       <class name="org.kira.automation.framework.FileUtilsTest"/>
       <class name="org.kira.automation.framework.ServiceConfigurationFactoryTest"/>
+      <class name="org.kira.automation.framework.IosCapabilitiesUtilTest"/>
+      <class name="org.kira.automation.framework.JsonParserUtilTest"/>
+
     </classes>
   </test>
 </suite>
