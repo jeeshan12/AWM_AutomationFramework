@@ -1,0 +1,15 @@
+
+name: Run Qodana Scan on repository
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  sonarcloud-scan:
+    uses: jeeshan12/resusable_workflows/.github/workflows/qodana.yaml@feat-qodana-workflow
+    secrets:
+      qodana-token: ${{ secrets.QODANA_TOKEN }}
