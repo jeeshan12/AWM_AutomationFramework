@@ -14,8 +14,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Chrome;
 import org.kira.automation.annotations.Firefox;
@@ -37,7 +37,7 @@ public class WebDriverSuiteHelper {
 
   private WebDriverSuiteHelper() {}
 
-  static void setWebDriver(final MethodContextImpl context, final Configuration configuration) {
+  static void setWebDriver(MethodContextImpl context, Configuration configuration) {
     Method method = context.method;
     String browser = System.getenv(BROWSER);
     if (
@@ -67,20 +67,17 @@ public class WebDriverSuiteHelper {
     }
   }
 
-  static void addDefaultWebDriver(
-    final MethodContextImpl context,
-    final Configuration configuration
-  ) {
+  static void addDefaultWebDriver(MethodContextImpl context, Configuration configuration) {
     addChromeDriver(context, configuration);
   }
 
-  static void addiOSDriver(final MethodContextImpl context, final Configuration configuration) {
+  static void addiOSDriver(MethodContextImpl context, Configuration configuration) {
     Injector iosDriverServiceInjector = Guice.createInjector(new IosDriverServiceInjector());
     DriverConsumer driverConsumer = iosDriverServiceInjector.getInstance(DriverConsumer.class);
     context.setWebDriver(driverConsumer.getWebDriver(configuration));
   }
 
-  static void addAndroidDriver(final MethodContextImpl context, final Configuration configuration) {
+  static void addAndroidDriver(MethodContextImpl context, Configuration configuration) {
     Injector androidDriverServiceInjector = Guice.createInjector(
       new AndroidDriverServiceInjector()
     );
@@ -88,13 +85,13 @@ public class WebDriverSuiteHelper {
     context.setWebDriver(driverConsumer.getWebDriver(configuration));
   }
 
-  static void addFirefoxDriver(final MethodContextImpl context, final Configuration configuration) {
+  static void addFirefoxDriver(MethodContextImpl context, Configuration configuration) {
     Injector firefoxDriverInjector = Guice.createInjector(new FirefoxBrowserServiceInjector());
     DriverConsumer driverConsumer = firefoxDriverInjector.getInstance(DriverConsumer.class);
     context.setWebDriver(driverConsumer.getWebDriver(configuration));
   }
 
-  static void addChromeDriver(final MethodContextImpl context, final Configuration configuration) {
+  static void addChromeDriver(MethodContextImpl context, Configuration configuration) {
     Injector chromeDriverInjector = Guice.createInjector(new ChromeBrowserServiceInjector());
     DriverConsumer driverConsumer = chromeDriverInjector.getInstance(DriverConsumer.class);
     context.setWebDriver(driverConsumer.getWebDriver(configuration));
@@ -107,7 +104,7 @@ public class WebDriverSuiteHelper {
       context.setWebDriver(
         RemoteDriverFactory.getRemoteWebDriver(
           configuration.getWeb().getCloud().getCloudProvider()
-        ).getWebDriver(configuration, Optional.empty())
+        ).getWebDriver(configuration, Collections.emptyMap())
       );
     } else {
       throw new FrameworkGenericException(
@@ -140,13 +137,13 @@ public class WebDriverSuiteHelper {
       context.setWebDriver(
         RemoteDriverFactory.getRemoteWebDriver(
           configuration.getWeb().getCloud().getCloudProvider()
-        ).getWebDriver(configuration, Optional.of(capabilityMap))
+        ).getWebDriver(configuration, capabilityMap)
       );
     } else {
       context.setWebDriver(
         RemoteDriverFactory.getRemoteWebDriver(
           configuration.getWeb().getCloud().getCloudProvider()
-        ).getWebDriver(configuration, Optional.empty())
+        ).getWebDriver(configuration, Collections.emptyMap())
       );
     }
   }

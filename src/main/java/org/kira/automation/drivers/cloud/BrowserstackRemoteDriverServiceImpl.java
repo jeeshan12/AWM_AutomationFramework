@@ -41,10 +41,7 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
   }
 
   @Override
-  public WebDriver getWebDriver(
-    Configuration configuration,
-    Optional<Map<String, String>> capabilityMapOptional
-  ) {
+  public WebDriver getWebDriver(Configuration configuration, Map<String, String> capabilityMap) {
     BrowserstackConfiguration browserstackConfiguration = configuration
       .getWeb()
       .getCloud()
@@ -67,7 +64,7 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
     try {
       return new RemoteWebDriver(
         new URI(url).toURL(),
-        getPlatformSpecificCapabilities(configuration.getWeb().getCloud(), capabilityMapOptional)
+        this.getPlatformSpecificCapabilities(configuration.getWeb().getCloud(), capabilityMap)
       );
     } catch (URISyntaxException | MalformedURLException e) {
       throw new FrameworkGenericException(
@@ -95,23 +92,25 @@ public class BrowserstackRemoteDriverServiceImpl implements CloudRemoteDriverSer
   @Override
   public MutableCapabilities getPlatformSpecificCapabilities(
     CloudConfiguration cloudConfiguration,
-    Optional<Map<String, String>> capabilityMapOptional
+    Map<String, String> capabilityMap
   ) {
     BrowserstackConfiguration browserstackConfiguration = cloudConfiguration
       .getProvider()
       .getBrowserstackConfiguration();
     MutableCapabilities capabilities = new MutableCapabilities();
     Map<String, Object> bstackOptions = new HashMap<>();
-    String browserName = capabilityMapOptional.isPresent()
-      ? capabilityMapOptional.get().get(BROWSER_NAME)
+    String browserName = !capabilityMap.isEmpty()
+      ? capabilityMap.get(BROWSER_NAME)
       : browserstackConfiguration.getBrowserName();
-    CloudBrowserConfiguration browserSpecificCapabilities = getBrowserSpecificCapabilities(
-      browserstackConfiguration,
-      browserName
-    );
+    CloudBrowserConfiguration browserSpecificCapabilities =
+      this.getBrowserSpecificCapabilities(browserstackConfiguration, browserName);
     if (Platform.WEB.name().equalsIgnoreCase(cloudConfiguration.getPlatform())) {
       capabilities.setCapability(BROWSER_NAME, browserName);
-      capabilityMapOptional.ifPresentOrElse(
+
+      Optional<Map<String, String>> capabilityOptionalMap = CloudRemoteDriverService.toOptionalMap(
+        capabilityMap
+      );
+      capabilityOptionalMap.ifPresentOrElse(
         map -> {
           bstackOptions.put(OS, map.get(OS));
           bstackOptions.put(BROWSER_VERSION, map.get(BROWSER_VERSION));
