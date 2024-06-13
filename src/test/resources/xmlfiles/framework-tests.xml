@@ -6,7 +6,6 @@
       <class name="org.kira.automation.framework.AndroidCapabilitiesUtilTest"/>
       <class name="org.kira.automation.framework.AppiumServerUtilTest"/>
       <class name="org.kira.automation.framework.ConverterUtilTest"/>
-      <class name="org.kira.automation.framework.CookieUtilsTest"/>
       <class name="org.kira.automation.framework.FileUtilsTest"/>
       <class name="org.kira.automation.framework.ServiceConfigurationFactoryTest"/>
       <class name="org.kira.automation.framework.IosCapabilitiesUtilTest"/>

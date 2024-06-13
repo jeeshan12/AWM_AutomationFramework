@@ -26,14 +26,16 @@ public class CookieUtils {
   }
 
   private static String serializeCookie(Cookie cookie) {
-    StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append(cookie.getName()).append("=").append(cookie.getValue()).append(";");
-    stringBuilder.append("Domain=").append(cookie.getDomain()).append(";");
-    stringBuilder.append("Path=").append(cookie.getPath()).append(";");
-    stringBuilder.append("Expiry=").append(cookie.getExpiry()).append(";");
-    stringBuilder.append("Secure=").append(cookie.isSecure()).append(";");
-    stringBuilder.append("HttpOnly=").append(cookie.isHttpOnly()).append(";");
-    return stringBuilder.toString();
+    return String.format(
+      "%s=%s; Domain=%s; Path=%s; Expiry=%s; Secure=%s; HttpOnly=%s;",
+      cookie.getName(),
+      cookie.getValue(),
+      cookie.getDomain(),
+      cookie.getPath(),
+      cookie.getExpiry(),
+      cookie.isSecure(),
+      cookie.isHttpOnly()
+    );
   }
 
   public static void restoreState(WebDriver driver, Set<String> state) {

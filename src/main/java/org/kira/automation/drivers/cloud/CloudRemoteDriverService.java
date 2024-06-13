@@ -8,13 +8,14 @@ import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 
 public interface CloudRemoteDriverService {
-  WebDriver getWebDriver(
-    final Configuration configuration,
-    Optional<Map<String, String>> capabilityMapOptional
-  );
+  WebDriver getWebDriver(Configuration configuration, Map<String, String> capabilityMap);
 
   MutableCapabilities getPlatformSpecificCapabilities(
     CloudConfiguration cloudConfiguration,
-    Optional<Map<String, String>> capabilityMapOptional
+    Map<String, String> capabilityMap
   );
+
+  public static Optional<Map<String, String>> toOptionalMap(Map<String, String> capabilityMap) {
+    return Optional.ofNullable(capabilityMap).filter(m -> !m.isEmpty());
+  }
 }
