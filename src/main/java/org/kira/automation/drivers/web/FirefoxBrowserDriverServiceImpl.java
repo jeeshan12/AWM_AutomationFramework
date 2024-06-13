@@ -1,5 +1,6 @@
 package org.kira.automation.drivers.web;
 
+import static org.kira.automation.constants.FrameworkConstants.HEADLESS;
 import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
 import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
 import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
@@ -27,7 +28,10 @@ public class FirefoxBrowserDriverServiceImpl implements WebDriverService {
       .getBrowserOptions()
       .getFirefox();
 
-    FIREFOX_HEADLESS_DECORATOR.accept(configuration.getWeb().isHeadless(), firefoxOptions);
+    boolean isHeadless = Boolean.valueOf(System.getProperty(HEADLESS))
+      ? true
+      : configuration.getWeb().isHeadless();
+    FIREFOX_HEADLESS_DECORATOR.accept(isHeadless, firefoxOptions);
 
     ADD_ARGUMENTS_DECORATOR.accept(firefoxOptionsConfig.getOptions(), firefoxOptions);
 
