@@ -1,6 +1,6 @@
 package org.kira.automation.framework;
 
-import static org.kira.automation.constants.FrameworkConstants.APPIUM_Port;
+import static org.kira.automation.constants.FrameworkConstants.APPIUM_PORT;
 import static org.kira.automation.constants.FrameworkConstants.APPIUM_SERVER;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -23,29 +23,33 @@ public class AppiumServerUtilTest {
 
   @BeforeMethod
   public void setUp() {
-    mobileConfiguration = mock(MobileConfiguration.class);
+    this.mobileConfiguration = mock(MobileConfiguration.class);
 
-    when(mobileConfiguration.getServerUrl()).thenReturn(DEFAULT_SERVER_URL);
-    when(mobileConfiguration.getPort()).thenReturn(DEFAULT_PORT);
+    when(this.mobileConfiguration.getServerUrl()).thenReturn(DEFAULT_SERVER_URL);
+    when(this.mobileConfiguration.getPort()).thenReturn(DEFAULT_PORT);
   }
 
   @AfterMethod
   public void tearDown() {
     System.clearProperty(APPIUM_SERVER);
-    System.clearProperty(APPIUM_Port);
+    System.clearProperty(APPIUM_PORT);
   }
 
   @Test
   public void testBuildAppiumServerUrlStringWithSystemProperties() {
     System.setProperty(APPIUM_SERVER, CUSTOM_SERVER_URL);
-    System.setProperty(APPIUM_Port, CUSTOM_PORT);
-    String appiumServerUrlString = AppiumServerUtil.buildAppiumServerUrlString(mobileConfiguration);
+    System.setProperty(APPIUM_PORT, CUSTOM_PORT);
+    String appiumServerUrlString = AppiumServerUtil.buildAppiumServerUrlString(
+      this.mobileConfiguration
+    );
     assertEquals(appiumServerUrlString, CUSTOM_SERVER_URL + ":" + CUSTOM_PORT);
   }
 
   @Test
   public void testBuildAppiumServerUrlStringWithoutSystemProperties() {
-    String appiumServerUrlString = AppiumServerUtil.buildAppiumServerUrlString(mobileConfiguration);
+    String appiumServerUrlString = AppiumServerUtil.buildAppiumServerUrlString(
+      this.mobileConfiguration
+    );
 
     assertEquals(appiumServerUrlString, DEFAULT_SERVER_URL + ":" + DEFAULT_PORT);
   }
@@ -54,16 +58,20 @@ public class AppiumServerUtilTest {
   public void testBuildAppiumServerUrlStringWithPartialSystemProperties() {
     System.setProperty(APPIUM_SERVER, CUSTOM_SERVER_URL);
 
-    String appiumServerUrlString = AppiumServerUtil.buildAppiumServerUrlString(mobileConfiguration);
+    String appiumServerUrlString = AppiumServerUtil.buildAppiumServerUrlString(
+      this.mobileConfiguration
+    );
 
     assertEquals(appiumServerUrlString, CUSTOM_SERVER_URL + ":" + DEFAULT_PORT);
   }
 
   @Test
   public void testBuildAppiumServerUrlStringWithOtherPartialSystemProperties() {
-    System.setProperty(APPIUM_Port, CUSTOM_PORT);
+    System.setProperty(APPIUM_PORT, CUSTOM_PORT);
 
-    String appiumServerUrlString = AppiumServerUtil.buildAppiumServerUrlString(mobileConfiguration);
+    String appiumServerUrlString = AppiumServerUtil.buildAppiumServerUrlString(
+      this.mobileConfiguration
+    );
 
     assertEquals(appiumServerUrlString, DEFAULT_SERVER_URL + ":" + CUSTOM_PORT);
   }

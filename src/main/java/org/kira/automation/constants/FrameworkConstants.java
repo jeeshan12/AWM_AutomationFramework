@@ -69,5 +69,7 @@ public final class FrameworkConstants {
   }
 
   public static final String APPIUM_SERVER = "appiumServer";
-  public static final String APPIUM_Port = "appiumPort";
+  public static final String APPIUM_PORT = "appiumPort";
+
+  public static final String HEADLESS = "headless";
 }

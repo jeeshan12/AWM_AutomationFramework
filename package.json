@@ -4,7 +4,7 @@
   "description": "Framework for mobile, web and api",
   "main": "index.js",
   "scripts": {
-    "test": "mvn clean install -f pom.xml -DskipTests",
+    "test": "mvn clean install -f pom.xml  -Dfile=src/test/resources/xmlfiles/framework-tests.xml",
     "pretest": "prettier --write \"src/**/*.java\"",
     "prepare": "husky"
   },

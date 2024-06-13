@@ -1,5 +1,6 @@
 package org.kira.automation.drivers.web;
 
+import static org.kira.automation.constants.FrameworkConstants.HEADLESS;
 import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.ADD_ARGUMENTS_DECORATOR;
 import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.DOWNLOAD_FILE_DECORATOR;
 import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
@@ -15,19 +16,21 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 public class FirefoxBrowserDriverServiceImpl implements WebDriverService {
 
   @Override
-  public WebDriver getWebDriver(final Configuration configuration) {
-    FirefoxOptions firefoxOptions = getBrowserOptions(configuration);
+  public WebDriver getWebDriver(Configuration configuration) {
+    FirefoxOptions firefoxOptions = this.getBrowserOptions(configuration);
     return new FirefoxDriver(firefoxOptions);
   }
 
-  private FirefoxOptions getBrowserOptions(final Configuration configuration) {
+  private FirefoxOptions getBrowserOptions(Configuration configuration) {
     FirefoxOptions firefoxOptions = new FirefoxOptions();
     FirefoxOptionsConfig firefoxOptionsConfig = configuration
       .getWeb()
       .getBrowserOptions()
       .getFirefox();
 
-    FIREFOX_HEADLESS_DECORATOR.accept(configuration.getWeb().isHeadless(), firefoxOptions);
+    boolean isHeadless =
+      Boolean.valueOf(System.getProperty(HEADLESS)) || configuration.getWeb().isHeadless();
+    FIREFOX_HEADLESS_DECORATOR.accept(isHeadless, firefoxOptions);
 
     ADD_ARGUMENTS_DECORATOR.accept(firefoxOptionsConfig.getOptions(), firefoxOptions);
 
