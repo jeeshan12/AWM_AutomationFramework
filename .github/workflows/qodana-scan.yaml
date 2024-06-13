@@ -1,0 +1,20 @@
+name: Run Qodana Scan on repository
+
+on:
+  pull_request:
+    types: [ opened, synchronize ]
+    branches:
+      - main
+      - 'feat-*'
+      - 'fix-*'
+  workflow_dispatch:
+
+jobs:
+  qodana-scan:
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+    uses: jeeshan12/resusable_workflows/.github/workflows/qodana.yaml@v2.9.0
+    secrets:
+      qodana-token: ${{ secrets.QODANA_TOKEN }}
