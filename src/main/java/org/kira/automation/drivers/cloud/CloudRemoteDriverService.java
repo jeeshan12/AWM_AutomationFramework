@@ -15,7 +15,7 @@ public interface CloudRemoteDriverService {
     Map<String, String> capabilityMap
   );
 
-  public static Optional<Map<String, String>> toOptionalMap(Map<String, String> capabilityMap) {
+  static Optional<Map<String, String>> toOptionalMap(Map<String, String> capabilityMap) {
     return Optional.ofNullable(capabilityMap).filter(m -> !m.isEmpty());
   }
 }
