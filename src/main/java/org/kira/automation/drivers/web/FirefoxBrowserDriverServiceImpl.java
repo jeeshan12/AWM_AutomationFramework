@@ -16,21 +16,20 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 public class FirefoxBrowserDriverServiceImpl implements WebDriverService {
 
   @Override
-  public WebDriver getWebDriver(final Configuration configuration) {
-    FirefoxOptions firefoxOptions = getBrowserOptions(configuration);
+  public WebDriver getWebDriver(Configuration configuration) {
+    FirefoxOptions firefoxOptions = this.getBrowserOptions(configuration);
     return new FirefoxDriver(firefoxOptions);
   }
 
-  private FirefoxOptions getBrowserOptions(final Configuration configuration) {
+  private FirefoxOptions getBrowserOptions(Configuration configuration) {
     FirefoxOptions firefoxOptions = new FirefoxOptions();
     FirefoxOptionsConfig firefoxOptionsConfig = configuration
       .getWeb()
       .getBrowserOptions()
       .getFirefox();
 
-    boolean isHeadless = Boolean.valueOf(System.getProperty(HEADLESS))
-      ? true
-      : configuration.getWeb().isHeadless();
+    boolean isHeadless =
+      Boolean.valueOf(System.getProperty(HEADLESS)) || configuration.getWeb().isHeadless();
     FIREFOX_HEADLESS_DECORATOR.accept(isHeadless, firefoxOptions);
 
     ADD_ARGUMENTS_DECORATOR.accept(firefoxOptionsConfig.getOptions(), firefoxOptions);
