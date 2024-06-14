@@ -13,8 +13,9 @@ jobs:
     strategy:
       matrix:
         xml: [ "src/test/resources/xmlfiles/testng.xml", "src/test/resources/xmlfiles/framework-tests.xml" ]
-    uses: jeeshan12/resusable_workflows/.github/workflows/selenium-e2e.yaml@v2.10.0
+    uses: jeeshan12/resusable_workflows/.github/workflows/selenium-e2e.yaml@feat-publish-reports
     with:
       java-version: "21"
       xml-file: ${{ matrix.xml }}
       pom-file: "pom.xml"
+      file-path: "target/surefire-reports/TEST-TestSuite.xml"
