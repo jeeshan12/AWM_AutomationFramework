@@ -13,3 +13,4 @@ jobs:
     with:
       java-version: "21"
       xml-file: "src/test/resources/xmlfiles/testng.xml"
+      pom-file: "pom.xml"
