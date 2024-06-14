@@ -1,0 +1,15 @@
+name: Run Selenium tests
+
+on:
+  pull_request:
+    types: [ opened, synchronize ]
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    uses: jeeshan12/resusable_workflows/.github/workflows/selenium-e2e.yaml@feat-run-e2e-maven
+    with:
+      java-version: "21"
+      xml-file: "src/test/resources/xmlfiles/testng.xml"
