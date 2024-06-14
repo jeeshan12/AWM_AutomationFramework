@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         xml: [ "src/test/resources/xmlfiles/testng.xml", "src/test/resources/xmlfiles/framework-tests.xml" ]
+    name: e2e-${{ matrix.xml }}
     uses: jeeshan12/resusable_workflows/.github/workflows/selenium-e2e.yaml@feat-publish-reports
     with:
       java-version: "21"
