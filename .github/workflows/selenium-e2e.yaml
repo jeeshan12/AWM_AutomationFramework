@@ -8,9 +8,13 @@ on:
   workflow_dispatch:
 
 jobs:
+
   e2e:
+    strategy:
+      matrix:
+        xml: [ "src/test/resources/xmlfiles/testng.xml", "src/test/resources/xmlfiles/framework-tests.xml" ]
     uses: jeeshan12/resusable_workflows/.github/workflows/selenium-e2e.yaml@feat-run-e2e-maven
     with:
       java-version: "21"
-      xml-file: "src/test/resources/xmlfiles/testng.xml"
+      xml-file: ${{ matrix.xml }}
       pom-file: "pom.xml"
