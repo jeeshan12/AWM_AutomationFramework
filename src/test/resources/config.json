@@ -3,7 +3,7 @@
     "screenshot": {
       "enabled": true
     },
-    "storageState" : {
+    "storageState": {
       "redisEnabled": false,
       "enabled": false,
       "sessionStorage": true,
@@ -13,16 +13,16 @@
       "port": 6379
     },
     "grid": {
-      "enabled": false,
+      "enabled": true,
       "provider": "k8s",
       "k8s": {
-        "url": "",
-        "port": ""
+        "url": "http://a202e25c7eb894a58948d7f4528b85c0-1244359393.us-east-1.elb.amazonaws.com/",
+        "port": "4444"
       }
     },
     "cloud": {
-      "enabled": false,
-      "option": "lambdatest",
+      "enabled": true,
+      "option": "grid",
       "platform": "web",
       "provider": {
         "browserstack": {
@@ -106,6 +106,11 @@
             "browser_version": "11.0",
             "resolution": "1680x1050"
           }
+        },
+        "grid": {
+          "url": "http://a202e25c7eb894a58948d7f4528b85c0-1244359393.us-east-1.elb.amazonaws.com",
+          "port": "4444",
+          "browserName": "chrome"
         }
       }
     },
@@ -150,7 +155,7 @@
     "printPageSourceOnFindFailure": false,
     "platform": "ios",
     "android": {
-      "deviceLock" : {
+      "deviceLock": {
         "enabled": false,
         "skipUnlock": true,
         "unlockType": "",
@@ -169,7 +174,9 @@
       "appPackage": "",
       "udid": "emulator-5554",
       "systemPort": 8201,
-      "options": ["autoGrantPermissions=true,autoLaunch=true,appWaitDuration=20000"]
+      "options": [
+        "autoGrantPermissions=true,autoLaunch=true,appWaitDuration=20000"
+      ]
     },
     "ios": {
       "browserName": "safari",
@@ -181,7 +188,9 @@
       "app": "src/test/resources/apps/ios/TestApp.app.zip",
       "isHeadless": false,
       "wdaLocalPort": 8100,
-      "options": ["shutdownOtherSimulators=false"]
+      "options": [
+        "shutdownOtherSimulators=false"
+      ]
     },
     "enabled": false,
     "cloud": {

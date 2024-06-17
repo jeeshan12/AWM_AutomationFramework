@@ -1,24 +1,20 @@
 package org.kira.automation.runner;
 
 import static org.kira.automation.constants.FrameworkConstants.BROWSER;
-import static org.kira.automation.constants.FrameworkConstants.BROWSER_NAME;
-import static org.kira.automation.constants.FrameworkConstants.BROWSER_VERSION;
 import static org.kira.automation.constants.FrameworkConstants.CHROME;
 import static org.kira.automation.constants.FrameworkConstants.FIREFOX;
-import static org.kira.automation.constants.FrameworkConstants.OS;
-import static org.kira.automation.constants.FrameworkConstants.OS_VERSION;
-import static org.kira.automation.constants.FrameworkConstants.RESOLUTION;
 import static org.kira.automation.drivers.mobile.MobileDriverFactory.addMobileDriver;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import org.kira.automation.annotations.Android;
 import org.kira.automation.annotations.Chrome;
 import org.kira.automation.annotations.Firefox;
+import org.kira.automation.annotations.Grid;
 import org.kira.automation.annotations.Mobile;
 import org.kira.automation.annotations.Web;
 import org.kira.automation.annotations.WebCloud;
@@ -31,7 +27,7 @@ import org.kira.automation.drivers.mobile.IosDriverServiceInjector;
 import org.kira.automation.drivers.web.ChromeBrowserServiceInjector;
 import org.kira.automation.drivers.web.FirefoxBrowserServiceInjector;
 import org.kira.automation.exceptions.AnnotationMissingException;
-import org.kira.automation.exceptions.FrameworkGenericException;
+import org.openqa.selenium.WebDriver;
 
 public class WebDriverSuiteHelper {
 
@@ -98,54 +94,12 @@ public class WebDriverSuiteHelper {
   }
 
   public static void setRemoteDriver(MethodContextImpl context, Configuration configuration) {
-    if (configuration.getWeb().getCloud().isCloudExecutionEnabled()) {
-      setWebCloudRemoteDriver(context, configuration);
-    } else if (configuration.getWeb().getSeleniumGrid().isGridEnabled()) {
-      context.setWebDriver(
-        RemoteDriverFactory.getRemoteWebDriver(
-          configuration.getWeb().getCloud().getCloudProvider()
-        ).getWebDriver(configuration, Collections.emptyMap())
-      );
-    } else {
-      throw new FrameworkGenericException(
-        "Please provide valid cloud provider or grid properties for remote execution"
-      );
-    }
-  }
-
-  private static void setWebCloudRemoteDriver(
-    MethodContextImpl context,
-    Configuration configuration
-  ) {
     Method method = context.method;
-
-    if (method.isAnnotationPresent(WebCloud.class)) {
-      WebCloud webCloudAnnotation = method.getAnnotation(WebCloud.class);
-      Map<String, String> capabilityMap = Map.of(
-        BROWSER_VERSION,
-        webCloudAnnotation.browserVersion(),
-        OS,
-        webCloudAnnotation.os(),
-        OS_VERSION,
-        webCloudAnnotation.osVersion(),
-        BROWSER_NAME,
-        webCloudAnnotation.browserName(),
-        RESOLUTION,
-        webCloudAnnotation.resolution()
-      );
-
-      context.setWebDriver(
-        RemoteDriverFactory.getRemoteWebDriver(
-          configuration.getWeb().getCloud().getCloudProvider()
-        ).getWebDriver(configuration, capabilityMap)
-      );
-    } else {
-      context.setWebDriver(
-        RemoteDriverFactory.getRemoteWebDriver(
-          configuration.getWeb().getCloud().getCloudProvider()
-        ).getWebDriver(configuration, Collections.emptyMap())
-      );
-    }
+    CapabilityBuilder capabilityBuilder = getCapabilityBuilder(method).orElse(
+      new DefaultCapabilityBuilder()
+    );
+    Map<String, String> capabilityMap = capabilityBuilder.buildCapabilities(method);
+    context.setWebDriver(getCloudWebDriver(configuration, capabilityMap));
   }
 
   private static boolean isAnnotationPresent(
@@ -153,5 +107,24 @@ public class WebDriverSuiteHelper {
     Class<? extends Annotation> annotation
   ) {
     return method.isAnnotationPresent(annotation);
+  }
+
+  private static Optional<CapabilityBuilder> getCapabilityBuilder(Method method) {
+    if (method.isAnnotationPresent(WebCloud.class)) {
+      return Optional.of(new WebCloudCapabilityBuilder());
+    } else if (method.isAnnotationPresent(Grid.class)) {
+      return Optional.of(new GridCapabilityBuilder());
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  private static WebDriver getCloudWebDriver(
+    Configuration configuration,
+    Map<String, String> capabilityMap
+  ) {
+    return RemoteDriverFactory.getRemoteWebDriver(
+      configuration.getWeb().getCloud().getCloudProvider()
+    ).getWebDriver(configuration, capabilityMap);
   }
 }

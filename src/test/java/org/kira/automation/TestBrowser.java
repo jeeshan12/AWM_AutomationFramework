@@ -2,8 +2,6 @@ package org.kira.automation;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import java.util.HashMap;
-import java.util.Map;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.constants.FrameworkConstants;
 import org.kira.automation.drivers.DriverConsumer;
@@ -42,7 +40,6 @@ public class TestBrowser {
 
   @Test
   public void testChromeBrowser() {
-    Map<String, String> map = new HashMap<>();
     Injector chromeDriverInjector = Guice.createInjector(new ChromeBrowserServiceInjector());
     DriverConsumer driverConsumer = chromeDriverInjector.getInstance(DriverConsumer.class);
     this.driver = driverConsumer.getWebDriver(this.webConfiguration);

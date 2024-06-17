@@ -67,10 +67,7 @@ public class TestSuiteHelper {
       );
     }
 
-    if (
-      getConfiguration().getWeb().getSeleniumGrid().isGridEnabled() ||
-      getConfiguration().getWeb().getCloud().isCloudExecutionEnabled()
-    ) {
+    if (getConfiguration().getWeb().getCloud().isCloudExecutionEnabled()) {
       WebDriverSuiteHelper.setRemoteDriver(context, getConfiguration());
       return;
     }

@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import org.kira.automation.drivers.cloud.BrowserstackRemoteDriverServiceImpl;
 import org.kira.automation.drivers.cloud.CloudRemoteDriverService;
 import org.kira.automation.drivers.cloud.LambdatestRemoteDriverServiceImpl;
+import org.kira.automation.drivers.remote.RemoteDriverServiceImpl;
 import org.kira.automation.enums.CloudProvider;
 
 public class RemoteDriverFactory {
@@ -16,6 +17,9 @@ public class RemoteDriverFactory {
   private static final Supplier<
     CloudRemoteDriverService
   > LAMBDATEST_REMOTE_DRIVER_SERVICE_SUPPLIER = LambdatestRemoteDriverServiceImpl::new;
+
+  private static final Supplier<CloudRemoteDriverService> REMOTE_DRIVER_SERVICE_SUPPLIER =
+    RemoteDriverServiceImpl::new;
   private static final Map<String, Supplier<CloudRemoteDriverService>> REMOTE_DRIVER_MAP =
     new HashMap<>();
 
@@ -28,6 +32,8 @@ public class RemoteDriverFactory {
       CloudProvider.LAMBDATEST.getProviderName(),
       LAMBDATEST_REMOTE_DRIVER_SERVICE_SUPPLIER
     );
+
+    REMOTE_DRIVER_MAP.put(CloudProvider.GRID.getProviderName(), REMOTE_DRIVER_SERVICE_SUPPLIER);
   }
 
   private RemoteDriverFactory() {}

@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum CloudProvider {
   LAMBDATEST("lambdatest"),
   BROWSERSTACK("browserstack"),
-  K8S("k8s");
+  GRID("grid");
 
   private final String providerName;
 
