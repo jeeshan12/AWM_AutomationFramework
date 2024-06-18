@@ -12,16 +12,8 @@
       "url": "localhost",
       "port": 6379
     },
-    "grid": {
-      "enabled": true,
-      "provider": "k8s",
-      "k8s": {
-        "url": "http://a202e25c7eb894a58948d7f4528b85c0-1244359393.us-east-1.elb.amazonaws.com/",
-        "port": "4444"
-      }
-    },
     "cloud": {
-      "enabled": true,
+      "enabled": false,
       "option": "grid",
       "platform": "web",
       "provider": {
