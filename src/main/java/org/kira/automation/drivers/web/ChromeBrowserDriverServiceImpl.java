@@ -28,7 +28,7 @@ public class ChromeBrowserDriverServiceImpl implements WebDriverService {
       .getChrome();
     ADD_ARGUMENTS_DECORATOR.accept(chromeOptionsConfig.getOptions(), chromeOptions);
     boolean isHeadless =
-      Boolean.valueOf(System.getProperty(HEADLESS)) || configuration.getWeb().isHeadless();
+      Boolean.parseBoolean(System.getProperty(HEADLESS)) || configuration.getWeb().isHeadless();
     CHROME_HEADLESS_DECORATOR.accept(isHeadless, chromeOptions);
 
     if (chromeOptionsConfig.getDownloadOption().isDownloadRequired()) {

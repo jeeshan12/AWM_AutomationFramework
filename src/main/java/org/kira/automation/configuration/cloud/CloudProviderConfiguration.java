@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import org.kira.automation.configuration.cloud.browserstack.BrowserstackConfiguration;
+import org.kira.automation.configuration.cloud.grid.GridConfiguration;
 import org.kira.automation.configuration.cloud.lambdatest.LambdatestConfiguration;
 
 @ToString
@@ -17,4 +18,7 @@ public class CloudProviderConfiguration {
 
   @SerializedName("lambdatest")
   private LambdatestConfiguration lambdatestConfiguration;
+
+  @SerializedName("grid")
+  private GridConfiguration gridConfiguration;
 }

@@ -1,4 +1,4 @@
-package org.kira.automation.configuration;
+package org.kira.automation.configuration.cloud.grid;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,11 @@ import lombok.ToString;
 @Getter
 public class GridConfiguration {
 
-  @SerializedName("enabled")
-  private boolean isGridEnabled;
-
   @SerializedName("url")
   private String gridUrl;
 
   @SerializedName("port")
   private String gridPort;
+
+  private String browserName;
 }
