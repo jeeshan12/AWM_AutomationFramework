@@ -51,8 +51,8 @@ public class RemoteDriverServiceImpl implements CloudRemoteDriverService {
       return gridBrowserOptions.getGridBrowserOptions(capabilityMap);
     }
     return (
-        cloudConfiguration.getProvider().getGridConfiguration().getBrowserName() ==
         Browsers.CHROME.getName()
+          .equals(cloudConfiguration.getProvider().getGridConfiguration().getBrowserName())
       )
       ? new ChromeOptions()
       : new FirefoxOptions();

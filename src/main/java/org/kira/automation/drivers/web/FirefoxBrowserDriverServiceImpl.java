@@ -29,7 +29,7 @@ public class FirefoxBrowserDriverServiceImpl implements WebDriverService {
       .getFirefox();
 
     boolean isHeadless =
-      Boolean.valueOf(System.getProperty(HEADLESS)) || configuration.getWeb().isHeadless();
+      Boolean.parseBoolean(System.getProperty(HEADLESS)) || configuration.getWeb().isHeadless();
     FIREFOX_HEADLESS_DECORATOR.accept(isHeadless, firefoxOptions);
 
     ADD_ARGUMENTS_DECORATOR.accept(firefoxOptionsConfig.getOptions(), firefoxOptions);
