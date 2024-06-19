@@ -184,7 +184,7 @@
     <selenium.version>4.17.0</selenium.version>
     <tesng.version>7.9.0</tesng.version>
     <json.version>20240205</json.version>
-    <appium.version>9.1.0</appium.version>
+    <appium.version>9.2.0</appium.version>
     <sonar.organization>mjeeshan</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <maven.compiler.version>3.13.0</maven.compiler.version>
