@@ -10,7 +10,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public final class ChromeOptionsDecorator {
 
-  static final BiConsumer<Boolean, ChromeOptions> CHROME_HEADLESS_DECORATOR = (
+  public static final BiConsumer<Boolean, ChromeOptions> CHROME_HEADLESS_DECORATOR = (
     isHeadless,
     chromeOptions
   ) -> {
