@@ -9,8 +9,8 @@ on:
 
 jobs:
 
-  e2e:
-    name: e2e-run
+  selenium-docker-grid:
+    name: Selenium docker grid execution
     uses: jeeshan12/resusable_workflows/.github/workflows/selenium-docker-grid.yaml@feat-selenium-grid-gha
     with:
       chrome-version: "latest"
