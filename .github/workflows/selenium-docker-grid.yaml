@@ -16,5 +16,5 @@ jobs:
       chrome-version: "latest"
       firefox-version: "latest"
       browser: "chrome"
-      xml-file: "src/test/resources/xmlfiles/testng.xml"
+      xml-file: "src/test/resources/xmlfiles/testng-grid.xml"
       pom-file: "pom.xml"
