@@ -1,5 +1,7 @@
 package org.kira.automation.drivers.remote;
 
+import static org.kira.automation.constants.FrameworkConstants.BROWSER;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -51,6 +53,7 @@ public class RemoteDriverServiceImpl implements CloudRemoteDriverService {
       return gridBrowserOptions.getGridBrowserOptions(capabilityMap);
     }
     return (
+        Browsers.CHROME.getName().equals(System.getProperty(BROWSER)) ||
         Browsers.CHROME.getName()
           .equals(cloudConfiguration.getProvider().getGridConfiguration().getBrowserName())
       )

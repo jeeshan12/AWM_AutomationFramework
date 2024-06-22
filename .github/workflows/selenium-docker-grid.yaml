@@ -15,3 +15,4 @@ jobs:
     with:
       chrome-version: "latest"
       firefox-version: "latest"
+      browser: "chrome"
