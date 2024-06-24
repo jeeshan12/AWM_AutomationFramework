@@ -29,7 +29,7 @@ public class RemoteDriverServiceImpl implements CloudRemoteDriverService {
         configuration.getWeb().getCloud().getProvider().getGridConfiguration().getGridUrl(),
         configuration.getWeb().getCloud().getProvider().getGridConfiguration().getGridPort()
       );
-
+      System.out.println("Grid URL : " + gridUrl);
       return new RemoteWebDriver(
         (new URI(gridUrl)).toURL(),
         this.getPlatformSpecificCapabilities(configuration.getWeb().getCloud(), capabilityMap)
