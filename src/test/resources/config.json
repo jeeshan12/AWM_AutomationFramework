@@ -100,7 +100,7 @@
           }
         },
         "grid": {
-          "url": "http://selenium-hub",
+          "url": "http://localhost",
           "port": "4444",
           "browserName": "chrome"
         }
