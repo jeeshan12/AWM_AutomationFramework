@@ -16,7 +16,7 @@ public final class ChromeOptionsDecorator {
   ) -> {
     if (Boolean.TRUE.equals(isHeadless)) {
       String[] headlessOptions = new String[] {
-        "--headless=new",
+        "--headless",
         "--no-sandbox",
         "--disable-gpu",
         "--disable-dev-shm-usage",
