@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 public @interface Grid {
   String browserName();
 
-  String platformName();
+  String platformName() default "Linux";
 
   String browserVersion();
 }

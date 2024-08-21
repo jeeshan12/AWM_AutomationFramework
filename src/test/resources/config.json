@@ -13,7 +13,7 @@
       "port": 6379
     },
     "cloud": {
-      "enabled": false,
+      "enabled": true,
       "option": "grid",
       "platform": "web",
       "provider": {
@@ -100,7 +100,7 @@
           }
         },
         "grid": {
-          "url": "http://a202e25c7eb894a58948d7f4528b85c0-1244359393.us-east-1.elb.amazonaws.com",
+          "url": "http://selenium-hub",
           "port": "4444",
           "browserName": "chrome"
         }

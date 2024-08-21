@@ -1,0 +1,20 @@
+name: Run Selenium tests
+
+on:
+  pull_request:
+    types: [ opened, synchronize ]
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+
+  selenium-docker-grid:
+    name: Selenium docker grid execution
+    uses: jeeshan12/resusable_workflows/.github/workflows/selenium-docker-grid.yaml@feat-selenium-grid-gha
+    with:
+      chrome-version: "latest"
+      firefox-version: "latest"
+      browser: "chrome"
+      xml-file: "src/test/resources/xmlfiles/testng-grid.xml"
+      pom-file: "pom.xml"

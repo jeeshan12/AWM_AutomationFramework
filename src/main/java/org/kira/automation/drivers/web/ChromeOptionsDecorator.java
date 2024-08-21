@@ -10,13 +10,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public final class ChromeOptionsDecorator {
 
-  static final BiConsumer<Boolean, ChromeOptions> CHROME_HEADLESS_DECORATOR = (
+  public static final BiConsumer<Boolean, ChromeOptions> CHROME_HEADLESS_DECORATOR = (
     isHeadless,
     chromeOptions
   ) -> {
     if (Boolean.TRUE.equals(isHeadless)) {
       String[] headlessOptions = new String[] {
-        "--headless=new",
+        "--headless",
         "--no-sandbox",
         "--disable-gpu",
         "--disable-dev-shm-usage",

@@ -6,8 +6,6 @@
   <test name="Grid-Tests">
     <classes>
       <class name="org.kira.automation.GridExecutionTest"/>
-
-
     </classes>
   </test>
 </suite>
