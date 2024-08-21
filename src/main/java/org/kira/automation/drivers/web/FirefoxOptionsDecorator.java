@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 
 public final class FirefoxOptionsDecorator {
 
-  static final BiConsumer<Boolean, FirefoxOptions> FIREFOX_HEADLESS_DECORATOR = (
+  public static final BiConsumer<Boolean, FirefoxOptions> FIREFOX_HEADLESS_DECORATOR = (
     isHeadless,
     firefoxOptions
   ) -> {

@@ -2,6 +2,7 @@ package org.kira.automation.drivers.remote;
 
 import static org.kira.automation.constants.FrameworkConstants.BROWSER;
 import static org.kira.automation.drivers.web.ChromeOptionsDecorator.CHROME_HEADLESS_DECORATOR;
+import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -55,12 +56,14 @@ public class RemoteDriverServiceImpl implements CloudRemoteDriverService {
     ChromeOptions chromeOptions = new ChromeOptions();
     CHROME_HEADLESS_DECORATOR.accept(true, chromeOptions);
 
+    FirefoxOptions firefoxOptions = new FirefoxOptions();
+    FIREFOX_HEADLESS_DECORATOR.accept(true, firefoxOptions);
     return (
         Browsers.CHROME.getName().equals(System.getProperty(BROWSER)) ||
         Browsers.CHROME.getName()
           .equals(cloudConfiguration.getProvider().getGridConfiguration().getBrowserName())
       )
       ? chromeOptions
-      : new FirefoxOptions();
+      : firefoxOptions;
   }
 }
