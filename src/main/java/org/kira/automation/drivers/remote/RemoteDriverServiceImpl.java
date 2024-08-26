@@ -1,9 +1,14 @@
 package org.kira.automation.drivers.remote;
 
+import static org.kira.automation.constants.FrameworkConstants.HEADLESS;
+import static org.kira.automation.drivers.web.ChromeOptionsDecorator.CHROME_HEADLESS_DECORATOR;
+import static org.kira.automation.drivers.web.FirefoxOptionsDecorator.FIREFOX_HEADLESS_DECORATOR;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.function.Function;
 import org.kira.automation.configuration.Configuration;
 import org.kira.automation.configuration.cloud.CloudConfiguration;
 import org.kira.automation.drivers.cloud.CloudRemoteDriverService;
@@ -50,11 +55,27 @@ public class RemoteDriverServiceImpl implements CloudRemoteDriverService {
       );
       return gridBrowserOptions.getGridBrowserOptions(capabilityMap);
     }
-    return (
+
+    return this.getBrowserCapabilities(
+        cloudConfiguration.getProvider().getGridConfiguration().getBrowserName()
+      );
+  }
+
+  private MutableCapabilities getBrowserCapabilities(String browserName) {
+    boolean isHeadless = Boolean.parseBoolean(System.getProperty(HEADLESS, "true"));
+    Function<Boolean, MutableCapabilities> optionsSupplier = browserName.equals(
         Browsers.CHROME.getName()
-          .equals(cloudConfiguration.getProvider().getGridConfiguration().getBrowserName())
       )
-      ? new ChromeOptions()
-      : new FirefoxOptions();
+      ? headless -> {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        CHROME_HEADLESS_DECORATOR.accept(headless, chromeOptions);
+        return chromeOptions;
+      }
+      : headless -> {
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        FIREFOX_HEADLESS_DECORATOR.accept(headless, firefoxOptions);
+        return firefoxOptions;
+      };
+    return optionsSupplier.apply(isHeadless);
   }
 }
